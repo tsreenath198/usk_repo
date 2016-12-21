@@ -1,0 +1,28 @@
+<form name="form" novalidate ng-controller="DashboardController as ctrl">
+                <div class="md-list-item-text">
+                    <div layout="row">
+                        <div flex="100">
+                            <br>Enter the new application name and click the Add button.</div>
+                    </div>
+                    <div layout="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Application Name</label>
+                            <input data-ng-model="self.name" name="application"  data-ng-pattern="/^\w+$/" required>
+                            <span data-ng-show="self.submitted && form.application.$error.required" class="error">
+     						 Application name is required
+    						</span>
+    						<span data-ng-show="self.submitted && form.application.$error.pattern" class="error">
+     						 Application name is does not match pattern
+    						</span>
+                        </md-input-container>
+                    </div>
+                    <div layout="row">
+                        <div flex="70">
+                            <md-button class="md-raised md-primary" data-ng-click="self.showAndHidePanel()">Cancel</md-button>
+                        </div>
+                        <div flex="30">
+                            <md-button class="md-raised md-primary" data-ng-click="self.addApplication(form.$valid)">Add</md-button>
+                        </div>
+                    </div>
+                </div>
+              </form>

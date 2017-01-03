@@ -35,5 +35,8 @@
     "karma-spec-reporter": "0.0.26",
     "run-sequence": "^1.2.2",
     "yargs": "^5.0.0"
+  },
+  "dependencies": {
+    "npm-git-install": "^0.2.0"
   }
 }

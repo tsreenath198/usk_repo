@@ -1,0 +1,22 @@
+[
+  {
+    "key": "notStarted",
+    "value": "1 - Not Started"
+  },
+  {
+    "key": "inProgress",
+    "value": "2 - In Progress"
+  },
+  {
+    "key": "rejected",
+    "value": "3 - Rejected"
+  },
+  {
+    "key": "pending",
+    "value": "4 - Pending"
+  },
+  {
+    "key": "closed",
+    "value": "5 - Closed"
+  }
+]

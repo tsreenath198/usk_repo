@@ -1,0 +1,10 @@
+[
+	{
+		"key": "paid",
+		"value": "1 - Paid"
+	},
+	{
+		"key": "notPaid",
+		"value": "2 - Not Paid"
+	}
+]

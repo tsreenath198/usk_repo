@@ -3,19 +3,19 @@ package in.uskcorp.tool.dmt.domain;
 import java.util.Date;
 
 public class InterviewSummary {
-	private Date interviewDate;
-	private String status;
-	private String consultancyName;
+	private Date interview_date;
 	private String traineeName;
-	private String employeeName;
-	private String client;
+	private String supported_By;
+	private String status;
 
-	public Date getInterviewDate() {
-		return interviewDate;
+	
+
+	public Date getInterview_date() {
+		return interview_date;
 	}
 
-	public void setInterviewDate(Date interviewDate) {
-		this.interviewDate = interviewDate;
+	public void setInterview_date(Date interview_date) {
+		this.interview_date = interview_date;
 	}
 
 	public String getStatus() {
@@ -25,14 +25,14 @@ public class InterviewSummary {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public String getConsultancyName() {
-		return consultancyName;
+/*
+	public String getConsultancy() {
+		return consultancy;
 	}
 
-	public void setConsultancyName(String consultancyName) {
-		this.consultancyName = consultancyName;
-	}
+	public void setConsultancy(String consultancy) {
+		this.consultancy = consultancy;
+	}*/
 
 	public String getTraineeName() {
 		return traineeName;
@@ -42,19 +42,25 @@ public class InterviewSummary {
 		this.traineeName = traineeName;
 	}
 
-	public String getEmployeeName() {
+	/*public String getEmployeeName() {
 		return employeeName;
 	}
 
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-
-	public String getClient() {
+*/
+/*	public String getClient() {
 		return client;
 	}
-
-	public void setClient(String client) {
-		this.client = client;
+*/
+	public String getSupported_By() {
+		return supported_By;
 	}
+
+	public void setSupported_By(String supported_By) {
+		this.supported_By = supported_By;
+	}
+
+	
 }

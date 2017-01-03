@@ -1,67 +1,72 @@
-/*package in.uskcorp.tool.dmt.dao;
+package in.uskcorp.tool.dmt.dao;
 
 import in.uskcorp.tool.dmt.dao.mapper.PaymentSummaryRowMapper;
-import in.uskcorp.tool.dmt.dao.setter.PaymentPreparedStatementSetter;
-import in.uskcorp.tool.dmt.domain.Invoice;
 import in.uskcorp.tool.dmt.domain.PaymentSummary;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-@Repository("paymentDaoImpl")
+@Repository("PaymentDAOImpl")
 public class PaymentDAOImpl extends PaymentDAO {
+	@Autowired
+	@Qualifier("jdbcTemplate")
+	private JdbcTemplate jdbcTemplate;
 
-	@Override
-	protected RowMapper<PaymentSummary> getRowMapper(Boolean isReadAll) {
-		return new PaymentSummaryRowMapper();
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
 	}
 
-	@Override
-	protected String getReadAllQuery() {
-
-		return SQLConstants.PAYMENT_SELECT;
-	}
-
-	@Override
-	protected String getReadQuery() {
-		return SQLConstants.PAYMENT_SELECT_BY_ID;
-	}
-
-	@Override
-	protected String getInsertQuery() {
-		return SQLConstants.PAYMENT_INSERT;
-	}
-
-	@Override
-	protected String getUpdateQuery() {
-		return SQLConstants.PAYMENT_UPDATE;
-	}
-
-	@Override
-	protected String getDeleteQuery() {
-		return SQLConstants.PAYMENT_DELETE;
-	}
-
-	@Override
-	protected PreparedStatementSetter getPreparedStatementSetter(Payment a,
-			boolean isInsert) {
-		return new PaymentPreparedStatementSetter(a, isInsert);
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 
 	@Override
 	public List<PaymentSummary> getSummary() {
-		return getJdbcTemplate().query(SQLConstants.PAYMENT_SELECT,
+		return getJdbcTemplate().query(SQLConstants.PAYMENT_DASHBOARD,
 				new PaymentSummaryRowMapper());
 	}
 
 	@Override
-	protected PreparedStatementSetter getPreparedStatementSetter(Invoice a,
-			boolean isInsert) {
-		// TODO Auto-generated method stub
+	protected RowMapper<PaymentSummary> getRowMapper(Boolean b) {
+
 		return null;
 	}
+
+	@Override
+	protected String getReadAllQuery() {
+		return null;
+	}
+
+	@Override
+	protected String getReadQuery() {
+		return null;
+	}
+
+	@Override
+	protected String getInsertQuery() {
+		return null;
+	}
+
+	@Override
+	protected String getUpdateQuery() {
+		return null;
+	}
+
+	@Override
+	protected String getDeleteQuery() {
+		return null;
+	}
+
+	@Override
+	protected PreparedStatementSetter getPreparedStatementSetter(
+			PaymentSummary a, boolean isInsert) {
+		return null;
+	}
+
 }
-*/

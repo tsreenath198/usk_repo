@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service("attendanceServiceImpl")
 public class AttendanceServiceImpl extends AttendanceService {
 	@Autowired
-	@Qualifier("attendanceDaoImpl")
+	@Qualifier("attendanceDAOImpl")
 	AttendanceDAO attendanceDAO;
 
 	@Override

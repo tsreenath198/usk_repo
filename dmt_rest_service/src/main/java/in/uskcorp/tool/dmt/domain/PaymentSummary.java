@@ -1,78 +1,42 @@
 package in.uskcorp.tool.dmt.domain;
 
-import java.util.Date;
 
 public class PaymentSummary {
-	private int id;
-	private String name;
-	private Date startDate;
-	private int month;
-	private int amount;
-	private String rec;
-	private String balance;
-	private int inr;
+	private String candidateName;
+	private String clientName;
+	private String category;
+	private String assistedBy;
 
-	public int getId() {
-		return id;
+	public String getCandidateName() {
+		return candidateName;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setCandidateName(String candidateName) {
+		this.candidateName = candidateName;
 	}
 
-	public String getName() {
-		return name;
+	public String getClientName() {
+		return clientName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
 	}
 
-	public Date getStartDate() {
-		return startDate;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public int getMonth() {
-		return month;
+	public String getAssistedBy() {
+		return assistedBy;
 	}
 
-	public void setMonth(int month) {
-		this.month = month;
+	public void setAssistedBy(String assistedBy) {
+		this.assistedBy = assistedBy;
 	}
 
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public String getRec() {
-		return rec;
-	}
-
-	public void setRec(String rec) {
-		this.rec = rec;
-	}
-
-	public String getBalance() {
-		return balance;
-	}
-
-	public void setBalance(String balance) {
-		this.balance = balance;
-	}
-
-	public int getInr() {
-		return inr;
-	}
-
-	public void setInr(int inr) {
-		this.inr = inr;
-	}
 }

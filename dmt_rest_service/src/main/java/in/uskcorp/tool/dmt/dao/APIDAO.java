@@ -1,6 +1,9 @@
 package in.uskcorp.tool.dmt.dao;
 
+import in.uskcorp.tool.dmt.domain.InterviewSummary;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,6 +27,8 @@ public abstract class APIDAO<T> {
 	protected abstract String getUpdateQuery();
 
 	protected abstract String getDeleteQuery();
+
+	//protected abstract List<T> getMultipleDeleteQuery();
 
 	protected abstract PreparedStatementSetter getPreparedStatementSetter(T a,
 			boolean isInsert);
@@ -54,4 +59,8 @@ public abstract class APIDAO<T> {
 	public void delete(Integer id) {
 		jdbcTemplate.update(getDeleteQuery(), id);
 	}
+
+	/*public void multipleDelete(List<T> listId) {
+		jdbcTemplate.update(getDeleteQuery(), listId);
+	}*/
 }

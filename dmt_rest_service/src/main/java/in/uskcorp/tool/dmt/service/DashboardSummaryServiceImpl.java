@@ -1,9 +1,9 @@
 package in.uskcorp.tool.dmt.service;
 
-import in.uskcorp.tool.dmt.dao.ClientDAO;
+import in.uskcorp.tool.dmt.dao.BatchDAO;
 import in.uskcorp.tool.dmt.dao.InterviewDAO;
+import in.uskcorp.tool.dmt.dao.PaymentDAO;
 import in.uskcorp.tool.dmt.dao.SupportDAO;
-import in.uskcorp.tool.dmt.dao.TraineeDAO;
 import in.uskcorp.tool.dmt.domain.DashboardSummary;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,37 +12,46 @@ import org.springframework.stereotype.Service;
 
 @Service("dashboardSummaryServiceImpl")
 public class DashboardSummaryServiceImpl extends DashboardSummaryService {
+
 	@Autowired
-	@Qualifier("traineeDaoImpl")
-	TraineeDAO traineeDAO;
+	@Qualifier("batchDAOImpl")
+	BatchDAO batchDAO;
+
 	@Autowired
 	@Qualifier("interviewDaoImpl")
 	InterviewDAO interviewDAO;
+
 	@Autowired
 	@Qualifier("supportDaoImpl")
 	SupportDAO supportDAO;
 
-/*	@Autowired
-	@Qualifier("clientDAOImpl")
-	ClientDAO clientDAO;
-*/
+	@Autowired
+	@Qualifier("PaymentDAOImpl")
+	PaymentDAO paymentDAO;
+
 	/*
+	 * 
 	 * @Autowired
 	 * 
-	 * @Qualifier("paymentDAOImpl") PaymentDAO paymentDAO;
+	 * @Qualifier("traineeDaoImpl") TraineeDAO traineeDAO;
 	 */
 
 	@Override
 	public DashboardSummary getDashboardSummary() {
 		DashboardSummary dashboardSummary = new DashboardSummary();
-		dashboardSummary.setTrainingSummaries(traineeDAO.getSummary());
+
 		dashboardSummary.setInterviewSummaries(interviewDAO.getSummary());
 		dashboardSummary.setSupportSummaries(supportDAO.getSummary());
-		
+		dashboardSummary.setPaymentSummaries(paymentDAO.getSummary());
+		dashboardSummary.setBatchSummaries(batchDAO.getSummary());
+
+		// dashboardSummary.setPaymentSummaries(paymentDAO.getSummary());
 		/*
 		 * dashboardSummary.setClientSummaries(clientDAO.getSummary());
 		 * dashboardSummary.setPaymentSummaries(paymentDAO.getSummary());
+		 * dashboardSummary.setTrainingSummaries(traineeDAO.getSummary());
 		 */
+
 		return dashboardSummary;
 
 	}

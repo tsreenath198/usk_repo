@@ -21,14 +21,18 @@ public interface DMTRestURIConstants {
 	String DASHBOARD_SUMMARY = "/dashboardSummary";
 	String INVOICES = "/invoices";
 	String ATTENDANCES = "/attendances";
-
+	String RESUMES = "/resumes";
+	String PIPELINES ="/pipelines";
 	/**
-	 * OPERATIONS HERE
+	 * OPERATIONS HERE	
 	 */
 	String READ_ALL = "/readAll";
 	String READ = "/read";
 	String CREATE = "/create";
 	String UPDATE = "/update";
 	String DELETE = "/delete";
-
+	String SUPPORT_DASHBOARD = "/supportDashboard";
+	String INTERVIEW_DASHBOARD = "/interviewDashboard";
+	String BATCH_DASHBOARD = "/batchDashboard";
+	String PAYMENT_DASHBOARD = "/paymentDashboard";
 }

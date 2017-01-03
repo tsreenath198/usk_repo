@@ -53,8 +53,7 @@ public class InterviewDaoImpl extends InterviewDAO {
 
 	@Override
 	public List<InterviewSummary> getSummary() {
-		// TODO Auto-generated method stub
-		return getJdbcTemplate().query(SQLConstants.INTERVIEW_SUMMARY,
+		return getJdbcTemplate().query(SQLConstants.INTERVIEW_DASHBOARD,
 				new InterviewSummaryRowMapper());
 
 	}

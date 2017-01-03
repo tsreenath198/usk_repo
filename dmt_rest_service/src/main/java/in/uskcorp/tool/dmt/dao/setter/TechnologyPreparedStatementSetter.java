@@ -6,7 +6,6 @@ import in.uskcorp.tool.dmt.util.ResultSetUtil;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
 import java.util.Date;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -26,6 +25,7 @@ public class TechnologyPreparedStatementSetter implements
 		arg0.setString(1, technology.getName());
 		arg0.setDate(2, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(3, technology.getDescription());
+		
 		if (!isInsert) {
 			arg0.setInt(4, technology.getId());
 		}

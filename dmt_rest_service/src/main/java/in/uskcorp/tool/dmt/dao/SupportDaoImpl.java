@@ -53,7 +53,7 @@ public class SupportDaoImpl extends SupportDAO {
 
 	@Override
 	public List<SupportSummary> getSummary() {
-		return getJdbcTemplate().query(SQLConstants.SUPPORT_SUMMARY,
+		return getJdbcTemplate().query(SQLConstants.SUPPORT_DASHBOARD,	
 				new SupportSummaryRowMapper());
 	}
 }

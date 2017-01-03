@@ -2,6 +2,7 @@ package in.uskcorp.tool.dmt.controller;
 
 import in.uskcorp.tool.dmt.domain.DashboardSummary;
 import in.uskcorp.tool.dmt.service.DashboardSummaryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -15,14 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(DMTRestURIConstants.DASHBOARD_SUMMARY)
 public class DashboardController {
+
 	@Autowired
 	@Qualifier("dashboardSummaryServiceImpl")
 	DashboardSummaryService dashboardSummaryService;
 
 	@RequestMapping(value = DMTRestURIConstants.READ_ALL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody
-	ResponseEntity<DashboardSummary> readAll() {
-		try {
+	public @ResponseBody ResponseEntity<DashboardSummary> readAll() {
+		try {		
 			DashboardSummary summary = dashboardSummaryService
 					.getDashboardSummary();
 			return new ResponseEntity<DashboardSummary>(summary, HttpStatus.OK);
@@ -33,4 +34,6 @@ public class DashboardController {
 					HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
+	
+
 }

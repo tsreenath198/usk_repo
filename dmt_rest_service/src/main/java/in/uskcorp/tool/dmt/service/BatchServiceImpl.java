@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service("batchServiceImpl")
 public class BatchServiceImpl extends BatchService {
+	
 	@Autowired
-	@Qualifier("batchDaoImpl")
+	@Qualifier("batchDAOImpl")
 	BatchDAO batchDAO;
 
 	@Override

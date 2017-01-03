@@ -12,10 +12,14 @@ public class SupportSummaryRowMapper implements RowMapper<SupportSummary> {
 	public SupportSummary mapRow(ResultSet resultSet, int i)
 			throws SQLException {
 		SupportSummary supportSummary = new SupportSummary();
-		supportSummary.setStartDate(ResultSetUtil.getDate(resultSet, "start"));
-		supportSummary.setEndDate(ResultSetUtil.getDate(resultSet, "end"));
-		supportSummary.setTraineeName(resultSet.getString("trainee_name"));
 		supportSummary.setSupportedBy(resultSet.getString("supported_by"));
+		supportSummary.setTraineeName(resultSet.getString("trainee_name"));
+		supportSummary.setStart_date(ResultSetUtil.getDate(resultSet, "start_date"));
+		supportSummary.setTechnology(resultSet.getString("technology"));
+		supportSummary.setStatus(resultSet.getString("status"));
+		//supportSummary.setStatus(resultSet.getString("status"));
+	//	supportSummary.setEndDate(ResultSetUtil.getDate(resultSet, "end"));
+		
 		return supportSummary;
 	}
 

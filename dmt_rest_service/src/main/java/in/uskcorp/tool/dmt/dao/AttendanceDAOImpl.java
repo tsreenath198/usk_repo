@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-@Repository("attendanceDaoImpl")
+@Repository("attendanceDAOImpl")
 public class AttendanceDAOImpl extends AttendanceDAO {
 
 	@Override

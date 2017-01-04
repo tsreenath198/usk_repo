@@ -13,10 +13,10 @@ public class InterviewSummaryRowMapper implements RowMapper<InterviewSummary> {
 			throws SQLException {
 		InterviewSummary interviewSummary = new InterviewSummary();
 
-		interviewSummary.setInterview_date(ResultSetUtil.getDate(resultSet,
+		interviewSummary.setInterviewDate(ResultSetUtil.getDate(resultSet,
 				"interview_date"));
 		interviewSummary.setTraineeName(resultSet.getString("trainee_name"));
-		interviewSummary.setSupported_By(resultSet.getString("supported_By"));
+		interviewSummary.setSupportedBy(resultSet.getString("supported_By"));
 		interviewSummary.setStatus(resultSet.getString("status"));
 
 		// interviewSummary.setConsultancyName(resultSet.getString("consultancy"));

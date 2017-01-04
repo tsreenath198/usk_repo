@@ -5,7 +5,7 @@ import java.util.Date;
 public class SupportSummary {
 	private String supportedBy;
 	private String traineeName;
-	private Date start_date;
+	private Date startDate;
 	private String technology;
 	private String status;
 	
@@ -27,12 +27,12 @@ public class SupportSummary {
 		this.traineeName = traineeName;
 	}
 
-	public Date getStart_date() {
-		return start_date;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setStart_date(Date start_date) {
-		this.start_date = start_date;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	public String getTechnology() {

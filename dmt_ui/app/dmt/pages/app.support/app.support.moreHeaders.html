@@ -1,0 +1,6 @@
+
+<md-select placeholder="Tasks" ng-model="moreOptions" ng-change="openMoreOptions(moreOptions)" multiple>
+<md-optgroup> More Tasks <md-option ng-value="{{header}}"
+	 ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
+</md-select>
+

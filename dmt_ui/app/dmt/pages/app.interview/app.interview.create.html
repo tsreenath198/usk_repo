@@ -1,0 +1,75 @@
+<md-content layout-padding>
+<form name="interviewCreateForm">
+<md-input-container class="md-block" flex-gt-sm> <label>Trainee</label>
+	<md-select ng-model="record.traineeId"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="trainee in trainees"
+		ng-selected="trainee.id === record.traineeId" ng-value="trainee.id">
+	{{trainee.name}} </md-option> </md-select> </md-input-container>
+
+
+<md-input-container class="md-block" flex-gt-sm> <label>Assisted
+		By</label> <md-select ng-model="record.assistedBy"> <md-optgroup
+		label="Employee"> <md-option
+		ng-repeat="employee in employees" ng-value="{{employee.id}}"
+		ng-selected="employee.id === record.employee">{{
+	employee.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Client
+		</label> <md-select ng-model="record.clientId"> <md-optgroup
+		label="Client"> <md-option
+		ng-repeat="client in clients" ng-value="{{client.id}}"
+		ng-selected="client.id === record.clientId">{{
+	client.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block"> <label>End Client</label>
+	<input required name="interviewer" ng-model="record.interviewer"> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Time</label> <md-select ng-model="record.time"> <md-optgroup
+		label="time"> <md-option
+		ng-repeat="time in times" ng-value="time.value"
+		ng-selected="time.key === record.time">{{
+	time.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Paid Status</label> <md-select ng-model="record.paidStatus"> <md-optgroup
+		label="paidStatus"> <md-option
+		ng-repeat="paidStatus in paidStatuses" ng-value="paidStatus.value"
+		ng-selected="paidStatus.key === record.paidStatus">{{
+	paidStatus.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Received Status</label> <md-select ng-model="record.receivedStatus"> <md-optgroup
+		label="receivedStatus"> <md-option
+		ng-repeat="receivedStatus in receivedStatuses" ng-value="receivedStatus.value"
+		ng-selected="receivedStatus.key === record.receivedStatus">{{
+	receivedStatus.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Status</label> <md-select ng-model="record.status"> <md-optgroup
+		label="status"> <md-option
+		ng-repeat="status in statuses" ng-value="status.value"
+		ng-selected="status.value === record.status">{{
+	status.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+	
+	
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+
+
+
+	<md-input-container class="md-block"> <label>Interview Date</label> <input required type="date" name="Estimated Days"
+		ng-model="create.estimatedDays"> </md-input-container>
+	<md-input-container class="md-block"> <label>Description</label>
+	<input required name="Description" ng-model="record.description">
+
+	</md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-click="updateRecord()"
+		ng-show="updatePage"> Update </md-button>
+	<md-button class="md-raised " ng-click="saveRecord()">
+	Cancel </md-button>
+</form>
+
+</md-content>
+
+
+

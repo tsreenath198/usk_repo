@@ -85,6 +85,37 @@
                                                     }
                                                 }
                                             });
+                                    $stateProvider
+                                    .state(
+                                            'app.interview',
+                                            {
+                                                name : "interview",
+                                                url : "/interview",
+                                                views : {
+
+                                                    "content@" : {
+                                                        controller : "interviewController",
+                                                        controllerAs : 'self',
+                                                        templateUrl : "pages/app.interview/app.interview.html"
+                                                    }
+                                                }
+                                            });
+
+  $stateProvider
+                                    .state(
+                                            'app.support',
+                                            {
+                                                name : "support",
+                                                url : "/support",
+                                                views : {
+
+                                                    "content@" : {
+                                                        controller : "supportController",
+                                                        controllerAs : 'self',
+                                                        templateUrl : "pages/app.support/app.support.html"
+                                                    }
+                                                }
+                                            });
                 $stateProvider
                     .state('app.rules', {
                         name: "rules",
@@ -106,7 +137,7 @@
                             }
                         }
                     });
-                $urlRouterProvider.otherwise("/course");
+                $urlRouterProvider.otherwise("/interview");
             }
         ]);
 

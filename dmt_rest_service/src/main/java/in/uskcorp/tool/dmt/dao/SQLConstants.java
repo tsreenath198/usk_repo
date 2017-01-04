@@ -145,7 +145,7 @@ public class SQLConstants {
 			+ "status as 'feeStatus',i.`received_status` as 'receivedStatus',i.`paid_status` as 'paidStatus',time as 'timezone',date as'interviewCreate' FROM interview i, client c, "
 			+ "trainee tr,employee e,technology tech WHERE i.client_id = c.id and i.trainee_id = tr.id and i.assisted_by=e.id AND tr.technology_id = tech.id AND "
 			+ "i.status !='7 - Closed' order by i.created_date desc";
-	public static final String INTERVIEWSELECTINCLUDE = "SELECT i.*, c.name as client_name, tr.name as trainee_name,"
+	public static final String INTERVIEW_SELECT_INCLUDE = "SELECT i.*, c.name as client_name, tr.name as trainee_name,"
 			+ "tech.name as technology,e.name as employee_name FROM interview i, client c, trainee tr,employee e,technology tech "
 			+ "WHERE i.client_id = c.id and i.trainee_id = tr.id and i.assisted_by=e.id AND tr.technology_id = tech.id AND "
 			+ "i.status = '7 - Closed' order by i.created_date desc";

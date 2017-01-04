@@ -10,6 +10,10 @@ public class Interview {
 	private String interviewer;
 	private String time;
 	private String status;
+	private String technology;
+	private String employeeName;
+	private String clientName;
+	private String traineeName;
 	private String paidStatus;
 	private String receivedStatus;
 	private Date createdDate;
@@ -23,6 +27,30 @@ public class Interview {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getTechnology() {
+		return technology;
+	}
+
+	public void setTechnology(String technology) {
+		this.technology = technology;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
 	}
 
 	public int getTraineeId() {
@@ -119,6 +147,14 @@ public class Interview {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getTraineeName() {
+		return traineeName;
+	}
+
+	public void setTraineeName(String traineeName) {
+		this.traineeName = traineeName;
 	}
 
 }

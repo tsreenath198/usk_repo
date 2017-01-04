@@ -20,6 +20,10 @@ public class InterviewRowMapper implements RowMapper<Interview> {
 		interview.setTime(resultSet.getString("time"));
 		interview.setStatus(resultSet.getString("status"));
 		interview.setPaidStatus(resultSet.getString("paid_status"));
+		interview.setTechnology(resultSet.getString("technology"));
+		interview.setEmployeeName(resultSet.getString("employee_name"));
+		interview.setTraineeName(resultSet.getString("trainee_name"));
+		interview.setClientName(resultSet.getString("client_name"));
 		interview.setReceivedStatus(resultSet.getString("received_status"));
 		interview.setCreatedDate(resultSet.getDate("created_date"));
 		interview.setUpdatedDate(resultSet.getDate("updated_date"));

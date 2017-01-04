@@ -5,6 +5,7 @@ import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
@@ -39,7 +40,7 @@ public class SupportPreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(10, support.getReceivedStatus());
 		arg0.setString(11, support.getTechnologyUsed());
 		arg0.setDate(12,
-				ResultSetUtil.converttoSQLDate(support.getCreatedDate()));
+				ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(13, support.getDescription());
 		arg0.setString(14, support.getPaidBy());
 

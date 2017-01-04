@@ -1,0 +1,88 @@
+<md-content layout-padding>
+<form name="SupportCreateForm">
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Trainee</label>
+	<md-select ng-model="record.traineeId"> <md-optgroup
+		label="trainee"> <md-option
+		ng-repeat="trainee in trainees" ng-value="{{trainee.id}}"
+		ng-selected="trainee.id === record.traineeId">{{
+	trainee.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Trainer</label>
+	<md-select ng-model="record.trainerId"> <md-optgroup
+		label="trainer"> <md-option
+		ng-repeat="trainer in trainers" ng-value="trainer.id"
+		ng-selected="trainer.id === record.trainerId">{{
+	trainer.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	
+
+	<md-input-container class="md-block"> <label>Start
+		Date</label> <input type="date" ng-model="record.startDate" /> </md-input-container>
+	<md-input-container class="md-block"> <label>End
+		Date</label> <input type="date" ng-model="record.endDate" /> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Alloted
+		Time</label> <md-select ng-model="record.allottedTime"> <md-optgroup
+		label="Employees"> <md-option
+		ng-repeat="time in timeConstants" ng-value="time.value"
+		ng-selected="time.value === record.allottedTime.value">{{
+	time.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block"> <label>End
+		Client</label> <input required name="endclient" ng-model="record.endClient">
+	</md-input-container>
+
+	<md-input-container class="md-block"> <label>Technology
+		Used</label> <input required name="Technology Used"
+		ng-model="record.technologyUsed"> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Paid
+		By</label> <md-select ng-model="record.paidBy"> <md-optgroup
+		label="Paid BY"> <md-option
+		ng-repeat="paidBy in paidByConstants" ng-value="paidBy.value"
+		ng-selected="paidBy.value === record.paidBy">{{
+	paidBy.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Paid
+		Status</label> <md-select ng-model="record.paidStatus"> <md-optgroup
+		label="Paid Status"> <md-option
+		ng-repeat="paid in paidConstants" ng-value="paid.value"
+		ng-selected="paid.value === record.paidStatus">{{
+	paid.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Received
+		Status</label> <md-select ng-model="record.receivedStatus"> <md-optgroup
+		label="Received Status"> <md-option
+		ng-repeat="received in receivedConstants" ng-value="received.value"
+		ng-selected="received.value === record.receivedStatus">{{
+	received.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Status</label>
+	<md-select ng-model="record.status"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="status in statuses"
+		ng-selected="status.value === record.status" ng-value="status.value">
+	{{status.value}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+
+
+	<md-input-container class="md-block"> <label>Description</label>
+	<input required name="Description" ng-model="record.description">
+
+	</md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-click="updateRecord()"
+		ng-show="updatePage"> Update </md-button>
+	<md-button class="md-raised " ng-click="saveRecord()">
+	Cancel </md-button>
+</form>
+
+</md-content>
+
+
+

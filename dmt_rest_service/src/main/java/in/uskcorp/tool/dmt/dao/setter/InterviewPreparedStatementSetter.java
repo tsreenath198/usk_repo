@@ -5,6 +5,7 @@ import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
@@ -33,12 +34,12 @@ public class InterviewPreparedStatementSetter implements
 		arg0.setString(5, interview.getTime());
 		arg0.setString(6, interview.getStatus());
 		arg0.setDate(7,
-				ResultSetUtil.converttoSQLDate(interview.getCreatedDate()));
+				ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(8, interview.getPaidStatus());
 		arg0.setString(9, interview.getReceivedStatus());
 		arg0.setString(10, interview.getDescription());
-		arg0.setDate(11, ResultSetUtil.converttoSQLDate(interview.getDate()));
-
+		arg0.setDate(11, ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setString(10, interview.getTechnology());
 		if (!isInsert) {
 			arg0.setInt(12, interview.getId());
 		}

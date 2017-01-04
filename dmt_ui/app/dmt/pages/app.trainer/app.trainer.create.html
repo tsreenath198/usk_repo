@@ -1,0 +1,43 @@
+<md-content layout-padding>
+<form name="trainerCreateForm">
+	<md-input-container class="md-block"> <label>Trainer</label>
+	<input required name="name" ng-model="record.trainerName"> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Referred By</label>
+	<md-select ng-model="record.referredBy"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
+		ng-selected="employee.id === record.employee" ng-value="{{employee.id}}">
+	{{employee.name}} </md-option> </md-select> </md-input-container>
+
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Technology
+	</label> <md-select ng-model="record.technologyId"> <md-optgroup
+		label="Employees"> <md-option
+		ng-repeat="technology in technologies" ng-value="{{technology.id}}"
+		ng-selected="technology.id === record.technology">{{
+	technology.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+
+	<md-input-container class="md-block"> <label>Phone</label>
+	<input required name="phone" ng-model="record.phone"> </md-input-container>
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"></md-input-container>
+	<md-input-container class="md-block"> <label>Email
+		</label> <input required name="Email"
+		ng-model="record.email"> </md-input-container>
+	<md-input-container class="md-block"> <label>Description</label>
+	<input required name="Description" ng-model="record.description">
+	</md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-click="updateData()"
+		ng-show="updatePage"> Update </md-button>
+	<md-button class="md-raised " ng-click="saveRecord()">
+	Cancel </md-button>
+</form>
+
+</md-content>
+
+
+

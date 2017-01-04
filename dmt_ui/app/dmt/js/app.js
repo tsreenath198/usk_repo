@@ -137,7 +137,23 @@
                             }
                         }
                     });
+                $stateProvider
+                    .state(
+                            'app.trainer',
+                            {
+                                name : "trainer",
+                                url : "/trainer",
+                                views : {
+
+                                    "content@" : {
+                                        controller : "TrainerController",
+                                        controllerAs : 'self',
+                                        templateUrl : "pages/app.trainer/trainer.course.html"
+                                    }
+                                }
+                            });
                 $urlRouterProvider.otherwise("/interview");
+
             }
         ]);
 

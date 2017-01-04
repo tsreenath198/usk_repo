@@ -23,6 +23,7 @@ public interface DMTRestURIConstants {
 	String ATTENDANCES = "/attendances";
 	String RESUMES = "/resumes";
 	String PIPELINES ="/pipelines";
+	String USERDETAILS ="/userDetails";
 	/**
 	 * OPERATIONS HERE	
 	 */
@@ -31,6 +32,7 @@ public interface DMTRestURIConstants {
 	String CREATE = "/create";
 	String UPDATE = "/update";
 	String DELETE = "/delete";
+	String READ_BY_VALUES = "/readByValues";
 	String SUPPORT_DASHBOARD = "/supportDashboard";
 	String INTERVIEW_DASHBOARD = "/interviewDashboard";
 	String BATCH_DASHBOARD = "/batchDashboard";

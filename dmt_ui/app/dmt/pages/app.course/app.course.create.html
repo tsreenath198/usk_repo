@@ -2,29 +2,29 @@
 <form name="courseCreateForm">
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Technology</label>
-	<md-select ng-model="create.technology_id"> <md-option>
+	<md-select ng-model="record.technologyId"> <md-option>
 	<em>None</em> </md-option> <md-option ng-repeat="tech in technologies"
-		ng-selected="tech.id === create.technology_id" ng-value="{{tech.id}}">
+		ng-selected="tech.id === record.technologyId" ng-value="{{tech.id}}">
 	{{tech.name}} </md-option> </md-select> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Name</label>
-	<input required name="Name" ng-model="create.name"> </md-input-container>
+	<input required name="Name" ng-model="record.name"> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Estimated
 		Hours</label> <input required name="Estimated Hours"
-		ng-model="create.est_hrs"> </md-input-container>
+		ng-model="record.estHrs"> </md-input-container>
 
 
 	<md-input-container class="md-block"> <label>Description
-	</label> <input required name="Description" ng-model="create.description">
+	</label> <input required name="Description" ng-model="record.description">
 	</md-input-container>
 
 	<md-input-container class="md-block"> <input
-		type="hidden" name="Id" ng-model="create.id"> </md-input-container>
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
 		ng-hide="updatePage"> Save </md-button>
-	<md-button class="md-raised md-primary" ng-click="updateData()"
+	<md-button class="md-raised md-primary" ng-click="updateRecord()"
 		ng-show="updatePage"> Update </md-button>
 	<md-button class="md-raised " ng-click="saveRecord()">
 	Cancel </md-button>

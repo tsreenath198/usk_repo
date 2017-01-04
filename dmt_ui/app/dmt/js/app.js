@@ -106,7 +106,7 @@
                             }
                         }
                     });
-                $urlRouterProvider.otherwise("/rules");
+                $urlRouterProvider.otherwise("/course");
             }
         ]);
 

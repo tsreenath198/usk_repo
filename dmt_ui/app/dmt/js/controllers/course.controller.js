@@ -20,14 +20,13 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 		$scope.headerEnable = {};
 		$scope.exportData = [];
 
-		$scope.create = {
-			"id" : "",
-			"technology_id" : "",
+		$scope.record = {
+			
+			"technologyId" : "",
 			"name" : "",
-			"est_hrs" : "",
-			"description" : "",
-			"created_date" : "",
-			"updated_date" : ""
+			"estHrs" : "",
+			"createdDate" : "",
+			"description" : ""
 		};
 		courseService.getAllTechnologies().then(function(response) {
 			$scope.technologies = response.data;
@@ -51,13 +50,9 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 		});
 
 		$scope.saveRecord = function() {
-			console.log($scope.create);
-			
-			var jsonData = $scope.create;
-			var sendDataForCreate = [ jsonData.technology_id, jsonData.name,
-					jsonData.est_hrs, new Date(), jsonData.description ];
-
-			courseService.create(sendDataForCreate).then(function(response) {
+			console.log($scope.record);		
+				
+			courseService.create($scope.record).then(function(response) {
 				console.log("resp", response);
 			});
 			$mdSidenav('right').close().then(function() {
@@ -65,37 +60,32 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 			});
 		}
 
-		$scope.updateRow = function(row) {
-			console.log(row);
+		$scope.setRowData = function(row) {
+			
 			$scope.rowData = row;
 			$scope.updatePage = true;
-			$scope.create = {
-				"id" : row.id,
-				"technology_id" : row.technologyId,
+			$scope.record = {				
+				"technologyId" : row.technologyId,
 				"name" : row.name,
-				"est_hrs" : row.estHrs,
-				"description" : row.description,
-				"created_date" : "",
-				"updated_date" : new Date()
+				"estHrs" : row.estHrs,
+				"updatedDate":"",
+				"description" : row.description,				
+				"id" : row.id
 			};
 			// console.log($scope.create.status);
 		};
-		$scope.updateData = function() {
-			//console.log($scope.create);
+		$scope.updateRecord = function() {
+			console.log($scope.record);
+			courseService.update($scope.record).then(function(response) {
+				console.log("resp", response);
+			});
 			$mdSidenav('right').close().then(function() {
 				$log.debug("close RIGHT is done");
 			});
 		}
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
-			$scope.create = {
-				"technology_id" : "",
-				"name" : "",
-				"est_hrs" : "",
-				"description" : "",
-				"created_date" : "",
-				"updated_date" : new Date()
-			};
+			
 		};
 
 		$scope.rowSelect = function(row) {
@@ -103,8 +93,8 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 		};
 		$scope.selectAll = function() {
 			for ( var i in $scope.coursesData) {
-				$scope.tasksData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.tasksData[i].id);
+				$scope.coursesData[i]["checkboxValue"] = 'on';
+				$scope.selected.push($scope.coursesData[i].id);
 			}
 			;
 		};

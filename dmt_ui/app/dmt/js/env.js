@@ -2,10 +2,10 @@
   window.__env = window.__env || {};
  
   // Base url
-  window.__env.baseUrl = 'http://policy2.admin.base.url.dev';
+  window.__env.baseUrl = 'http://localhost:8080';
  
   // context will be prepended to policy2-admin relative paths
-  window.__env.context = '/dmt';
+  window.__env.context = '/dmt_rest_service';
  
  // relative path to logout
   window.__env.logoutPath = '/logout';

@@ -41,7 +41,7 @@
         });
 
         $scope.$on('IdleWarn', function(e, countdown) {
-            console.log("IdleWarn");
+          //  console.log("IdleWarn");
         });
 
         $scope.$on('IdleTimeout', function() {
@@ -49,11 +49,11 @@
         });
 
         $scope.$on('IdleEnd', function() {
-            console.log("IdleEnd");
+           // console.log("IdleEnd");
         });
         //Not used, retained for further use if need be
         $scope.$on('Keepalive', function() {
-            console.log("Keepalive");
+          //  console.log("Keepalive");
         });
 
         function callTimeCheck() {
@@ -94,7 +94,7 @@
                     Idle.watch();
                 }
             },function(error) {
-                console.log("error",error);
+               // console.log("error",error);
                 self.errorDialog(error);
             });
         }
@@ -118,7 +118,7 @@
 
                 controller: function ($scope) {
                     $scope.closeDialog = function() {
-                        console.log("ERROR logout");
+                       // console.log("ERROR logout");
                         Idle.unwatch();
                         $mdDialog.cancel("sessionTimer");
                         SessionManagementService.logout();

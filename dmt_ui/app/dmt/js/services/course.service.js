@@ -4,18 +4,11 @@ function courseService($http, $window, __env) {
 	var service = {
 		getAllCourses : getAllCourses,
 		getAllTechnologies : getAllTechnologies,
-		create : create
-	}, url = __env.baseUrl + __env.context,
-	data =  {
-			
-			"technologyId": 34,
-			"name": "anging Dimensions an",
-			"estHrs": 1,
-			"createdDate": "2015-02-27",
-			"updatedDate": "2015-02-27",
-			"description": "java"
-			};
+		create : create,
+		update : update
+	}, url = __env.baseUrl + __env.context
 	return service;
+	
 	function getAllCourses() {
 		return $http.get(url + "/courses/readAll");
 	}
@@ -27,7 +20,18 @@ function courseService($http, $window, __env) {
 		return $http({
 			url : url + '/courses/create',
 			method : "POST",
-			data : data
+			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+	function update(jsonData) {
+		return $http({
+			url : url + '/courses/update',
+			method : "POST",
+			data : jsonData
 		}).then(function(response) {
 			// success
 		}, function(response) { // optional

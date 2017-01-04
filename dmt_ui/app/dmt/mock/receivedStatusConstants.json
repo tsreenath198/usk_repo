@@ -1,0 +1,10 @@
+[
+	{
+		"key": "received",
+		"value": "1 - Received"
+	},
+	{
+		"key": "notReceived",
+		"value": "2 - Not Received"
+	}
+]

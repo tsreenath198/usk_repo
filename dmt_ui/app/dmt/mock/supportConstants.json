@@ -1,0 +1,26 @@
+[
+	{
+		"key": "notStarted",
+		"value": "1 - Not Started"
+	},
+	{
+		"key": "inProgress",
+		"value": "2 - In Progress"
+	},
+	{
+		"key": "paymentPending",
+		"value": "3 - Payment Pending"
+	},
+	{
+		"key": "paidInProgress",
+		"value": "4 - Paid In Progress"
+	},
+	{
+		"key": "closed",
+		"value": "5 - Closed"
+	},
+	{
+		"key": "cancelled",
+		"value": "6 - Cancelled"
+	}
+]

@@ -14,7 +14,7 @@ public class SupportSummaryRowMapper implements RowMapper<SupportSummary> {
 		SupportSummary supportSummary = new SupportSummary();
 		supportSummary.setSupportedBy(resultSet.getString("supported_by"));
 		supportSummary.setTraineeName(resultSet.getString("trainee_name"));
-		supportSummary.setStart_date(ResultSetUtil.getDate(resultSet, "start_date"));
+		supportSummary.setStartDate(ResultSetUtil.getDate(resultSet, "start_date"));
 		supportSummary.setTechnology(resultSet.getString("technology"));
 		supportSummary.setStatus(resultSet.getString("status"));
 		//supportSummary.setStatus(resultSet.getString("status"));

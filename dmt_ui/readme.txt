@@ -10,6 +10,7 @@ Copy the following Commands
 >npm install gulp -g
 
 >npm install bower -g
+> bower install angular-material-data-table --save
 
  Server starts with
  

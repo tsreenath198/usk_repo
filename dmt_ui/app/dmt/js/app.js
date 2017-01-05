@@ -70,6 +70,7 @@
                             }
                         }
                     });
+<<<<<<< HEAD
                       $stateProvider
                     .state('app.userDetails', {
                         name: "userDetails",
@@ -93,6 +94,97 @@
                                 controller: "TechnologyController",
                                 controllerAs: 'self',
                                 templateUrl: "pages/app.technology/technology.html"
+=======
+                    $stateProvider
+                    .state('app.timesheet', {
+                        name: "timesheet",
+                        url: "/timesheet",
+                        views: {
+
+                            "content@": {
+                                controller: "timesheetController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.timesheet/app.timesheet.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.employee', {
+                        name: "employee",
+                        url: "/employee",
+                        views: {
+
+                            "content@": {
+                                controller: "employeeController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.employee/app.employee.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.trainee', {
+                        name: "trainee",
+                        url: "/trainee",
+                        views: {
+
+                            "content@": {
+                                controller: "traineeController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.trainee/app.trainee.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.batch', {
+                        name: "batch",
+                        url: "/batch",
+                        views: {
+
+                            "content@": {
+                                controller: "batchController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.batch/app.batch.html"
+                            }
+                        }
+                    });
+
+                    $stateProvider
+                    .state('app.client', {
+                        name: "client",
+                        url: "/client",
+                        views: {
+
+                            "content@": {
+                                controller: "clientController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.client/app.client.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.salary', {
+                        name: "salary",
+                        url: "/salary",
+                        views: {
+
+                            "content@": {
+                                controller: "salaryController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.salary/app.salary.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.oppurtunityTracker', {
+                        name: "oppurtunityTracker",
+                        url: "/oppurtunityTracker",
+                        views: {
+
+                            "content@": {
+                                controller: "oppurtunityTrackerController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.oppurtunityTracker/app.oppurtunityTracker.html"
+>>>>>>> 46be221f51c67098a2147cc47888bd3e58bf5551
                             }
                         }
                     });

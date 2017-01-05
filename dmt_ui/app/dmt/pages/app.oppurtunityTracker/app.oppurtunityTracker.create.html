@@ -1,0 +1,60 @@
+<md-content layout-padding>
+<form name="oppurtunityTrackerCreateForm">
+
+	<!-- <md-input-container class="md-block" flex-gt-sm> <label>Type</label>
+ <md-select ng-model="record.type" ng-change="changed(record.type)" ng-value="record.type" placeholder="Type">
+      <md-option >trainee</md-option>
+      <md-option >trainer</md-option>
+      <md-option >client</md-option>
+      <md-option >employee</md-option>
+    </md-select></md-input-container> -->
+
+    <md-input-container class="md-block" flex-gt-sm> <label>Type1</label>
+ <md-select ng-model="record.type" ng-change="changed(record.type)"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="type in types" ng-value="type.key">
+	{{type.value}} </md-option> </md-select></md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Category</label>
+	<md-select ng-model="record.category"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="category in categories"
+		ng-selected="category.value === record.category" ng-value="category.value">
+	{{category.value}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Provided For</label>
+	<md-select ng-model="record.providedFor"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="provide in provides"
+		ng-selected="provide.id === record.providedFor" ng-value="provide.id">
+	{{provide.name}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Provided By</label>
+	<md-select ng-model="record.providedBy"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
+		ng-selected="employee.id === record.providedBy" ng-value="employee.id">
+	{{employee.name}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Date</label>
+	<input type="date" required name="Name" ng-model="record.opportunityDate"> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Paid</label>
+	<md-select ng-model="record.paid"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="paid in paidStatus"
+		ng-selected="paid.value === record.paid" ng-value="paid.value">
+	{{paid.value}} </md-option> </md-select> </md-input-container>
+
+	
+
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-click="updateRecord()"
+		ng-show="updatePage"> Update </md-button>
+	<md-button class="md-raised " ng-click="saveRecord()">
+	Cancel </md-button>
+</form>
+
+</md-content>
+
+
+

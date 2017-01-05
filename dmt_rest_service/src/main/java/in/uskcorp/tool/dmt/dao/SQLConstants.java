@@ -28,9 +28,9 @@ public class SQLConstants {
 			+ " WHEN 'Employee' THEN (select name from employee emp where ot.`provided_for` = emp.id)"
 			+ " WHEN 'Client' THEN (select name from client cl where ot.`provided_for` = cl.id)END AS provided_for,date"
 			+ " FROM opportunity_tracker ot , employee e where e.id = ot.provided_by ORDER BY date desc";
-	public static final String OPPURTINITY_TRACKER_INSERT = "INSERT INTO opportunity_tracker(type,provided_by,provided_for,opportunity_date,category) values(?,?,?,?,?)";
+	public static final String OPPURTINITY_TRACKER_INSERT = "INSERT INTO opportunity_tracker(type,provided_by,provided_for,date,category,paid) values(?,?,?,?,?,?)";
 	public static final String OPPURTINITY_TRACKER_DELETE = "DELETE FROM opportunity_tracker  WHERE id = ?";
-	public static final String OPPURTINITY_TRACKER_UPDATE = "UPDATE opportunity_tracker set type= ?, provided_by=?, provided_for=?, opportunity_date=?, category=? WHERE id = ?";
+	public static final String OPPURTINITY_TRACKER_UPDATE = "UPDATE opportunity_tracker set type= ?, provided_by=?, provided_for=?, date=?, category=? ,paid=? WHERE id = ?";
 	public static final String OPPURTINITY_TRACKER_SELECT_BY_ID = "SELECT * FROM  opportunity_tracker where id = ?";
 
 	public static final String SUPPORT_GROUP_BY_TRAINEE_ID = "SELECT `trainee_id`,count(`trainee_id`) as totalCount FROM `support` group by `trainee_id`";

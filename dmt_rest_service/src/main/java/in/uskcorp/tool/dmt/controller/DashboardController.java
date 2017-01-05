@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(DMTRestURIConstants.DASHBOARD_SUMMARY)
 public class DashboardController {
-	
+
 	@Autowired
 	@Qualifier("dashboardSummaryServiceImpl")
 	DashboardSummaryService dashboardSummaryService;

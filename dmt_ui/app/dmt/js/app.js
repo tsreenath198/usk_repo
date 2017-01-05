@@ -70,6 +70,98 @@
                             }
                         }
                     });
+                    $stateProvider
+                    .state('app.timesheet', {
+                        name: "timesheet",
+                        url: "/timesheet",
+                        views: {
+
+                            "content@": {
+                                controller: "timesheetController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/timesheet/timesheet.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.employee', {
+                        name: "employee",
+                        url: "/employee",
+                        views: {
+
+                            "content@": {
+                                controller: "employeeController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/employee/employee.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.trainee', {
+                        name: "trainee",
+                        url: "/trainee",
+                        views: {
+
+                            "content@": {
+                                controller: "traineeController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/trainee/trainee.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.batch', {
+                        name: "batch",
+                        url: "/batch",
+                        views: {
+
+                            "content@": {
+                                controller: "batchController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/batch/batch.html"
+                            }
+                        }
+                    });
+
+                    $stateProvider
+                    .state('app.client', {
+                        name: "client",
+                        url: "/client",
+                        views: {
+
+                            "content@": {
+                                controller: "clientController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/client/client.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.salary', {
+                        name: "salary",
+                        url: "/salary",
+                        views: {
+
+                            "content@": {
+                                controller: "salaryController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/salary/salary.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.oppurtunityTracker', {
+                        name: "oppurtunityTracker",
+                        url: "/oppurtunityTracker",
+                        views: {
+
+                            "content@": {
+                                controller: "oppurtunityTrackerController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/oppurtunityTracker/oppurtunityTracker.html"
+                            }
+                        }
+                    });
                         $stateProvider
                                     .state(
                                             'app.course',

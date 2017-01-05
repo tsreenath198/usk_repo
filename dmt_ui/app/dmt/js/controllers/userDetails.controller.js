@@ -215,7 +215,7 @@ dmtApplication.directive('createUser', function($state) {
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/userdetails/userDetails.create.html';
+            return '../dmt/pages/userdetails/user.details.create.html';
         }
     };
 });

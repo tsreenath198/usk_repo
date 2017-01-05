@@ -70,7 +70,7 @@
                             }
                         }
                     });
-<<<<<<< HEAD
+
                       $stateProvider
                     .state('app.userDetails', {
                         name: "userDetails",
@@ -80,7 +80,7 @@
                             "content@": {
                                 controller: "UserDetailsController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/userDetails/userDetails.html"
+                                templateUrl: "pages/userdetails/user.details.html"
                             }
                         }
                     });
@@ -94,7 +94,10 @@
                                 controller: "TechnologyController",
                                 controllerAs: 'self',
                                 templateUrl: "pages/app.technology/technology.html"
-=======
+                                }
+                        }
+                    });
+
                     $stateProvider
                     .state('app.timesheet', {
                         name: "timesheet",
@@ -184,7 +187,7 @@
                                 controller: "oppurtunityTrackerController",
                                 controllerAs: 'self',
                                 templateUrl: "pages/app.oppurtunityTracker/app.oppurtunityTracker.html"
->>>>>>> 46be221f51c67098a2147cc47888bd3e58bf5551
+
                             }
                         }
                     });
@@ -219,7 +222,7 @@
                                                 }
                                             });
 
-  $stateProvider
+                                $stateProvider
                                     .state(
                                             'app.support',
                                             {

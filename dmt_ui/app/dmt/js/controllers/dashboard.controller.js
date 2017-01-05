@@ -22,10 +22,53 @@
      
         function init(){
             DashboardService.getAllApplications().then(function(response) {
-                    self.applications = response.data;
-                    },function(error){
+                    $scope.applications = response.data;
+                    $scope.paymentSummariesLength = $scope.applications.paymentSummaries.length;
+                     $scope.paymentSummariesOptions = [ 5, 10, 15 ];
+             $scope.paymentSummariesPage = {
+                pageSelect : true
+            };
+            $scope.query = {
+                order : 'name',
+                limit : 5,
+                page : 1
+            };
+                    $scope.supportSummariesLength = $scope.applications.supportSummaries.length;
+                     $scope.supportSummariesOptions = [ 5, 10, 15 ];
+                    $scope.supportSummariesPage = {
+                    pageSelect : true
+            };
+            $scope.query = {
+                order : 'name',
+                limit : 5,
+                page : 1
+            };
 
-            });
+             $scope.interviewSummariesLength = $scope.applications.interviewSummaries.length;
+                     $scope.interviewSummariesOptions = [ 5, 10, 15 ];
+                    $scope.interviewSummariesPage = {
+                    pageSelect : true
+            };
+            $scope.query = {
+                order : 'name',
+                limit : 5,
+                page : 1
+            };
+            $scope.batchSummariesLength = $scope.applications.batchSummaries.length;
+                     $scope.batchSummariesOptions = [ 5, 10, 15 ];
+                    $scope.batchSummariesPage = {
+                    pageSelect : true
+            };
+            $scope.query = {
+                order : 'name',
+                limit : 5,
+                page : 1
+            };
+
+        }, function(error) {
+
+        });
+                    
         }
         function addApplication(){
             var item = {"app":self.name};

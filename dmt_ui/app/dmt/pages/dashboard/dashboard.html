@@ -2,9 +2,143 @@
     <div layout="row">
         <div flex="100" class="mB20 mL20"></div>
     </div>
+      
     <div layout="row" layout-xs="column" layout-sm="column" layout-margin >
+<div flex="50">
+<div><h4>Payment Pending</h4></div>
+	<md-table-container>
+    <table md-table id="paymentTable">
+        <thead md-head md-order="query.order">
+            <tr md-row>
+                <th md-column><span> </span></th>
+                <th md-column ><span>CandidateName</span></th>
+                <th md-column ><span>ClientName</span></th>
+                <th md-column>Category</th>
+                <th md-column>AssistedBy</th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row
+                ng-repeat="data in applications.paymentSummaries | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+                <td md-cell></td>
+                <td md-cell >{{data.candidateName}}</td>
+                <td md-cell >{{data.clientName}}</td>
+                 <td md-cell >{{data.category}}</td>
+                  <td md-cell >{{data.assistedBy}}</td>
+                <td md-cell><span> <md-tooltip>Update </md-tooltip> <i
+                        class="material-icons" ng-click="updateRow(data);toggleRight()"
+                        ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
+                        {{data.description}}</md-tooltip> <i class="material-icons">description</i></span></td>
+            </tr>
+        </tbody>
+    </table>
+    </md-table-container> <md-table-pagination md-limit="query.limit"
+        md-limit-options="paymentSummariesOptions" md-page="query.page"
+        md-total="{{paymentSummariesLength}}" md-page-select="paymentSummariesPage .pageSelect"></md-table-pagination>
+</div>
 
+<div flex="50">
+<div><h4>Support</h4></div>
+	<md-table-container>
+    <table md-table id="supportTable">
+        <thead md-head md-order="query.order">
+            <tr md-row>
+                <th md-column><span> </span></th>
+                <th md-column ><span>SupportedBy</span></th>
+                <th md-column ><span>TraineeName</span></th>
+                <th md-column>StartDate</th>
+                <th md-column>Technology</th>
+                <th md-column>Status</th>
+
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row
+                ng-repeat="data in applications.supportSummaries | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+                <td md-cell></td>
+                <td md-cell >{{data.supportedBy}}</td>
+                <td md-cell >{{data.traineeName}}</td>
+                <td md-cell >{{data.startDate}}</td>
+                <td md-cell >{{data.technology}}</td>
+                <td md-cell >{{data.status}}</td>
+                <td md-cell><span> <md-tooltip>Update </md-tooltip> <i
+                        class="material-icons" ng-click="updateRow(data);toggleRight()"
+                        ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
+                        {{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
+            </tr>
+        </tbody>
+    </table>
+    </md-table-container> <md-table-pagination md-limit="query.limit"
+        md-limit-options="supportSummariesOptions" md-page="query.page"
+        md-total="{{supportSummariesLength}}" md-page-select="supportSummariesPage .pageSelect"></md-table-pagination>
+</div>
+</div>
+
+<div layout="row" layout-xs="column" layout-sm="column" layout-margin >
+<div flex="50">
+<div><h4>Interview</h4></div>
+	<md-table-container>
+    <table md-table id="interviewTable">
+        <thead md-head md-order="query.order">
+            <tr md-row>
+                <th md-column><span> </span></th>
+                <th md-column ><span>InterviewDate</span></th>
+                <th md-column ><span>TraineeName</span></th>
+                <th md-column>SupportedBy</th>
+                <th md-column>Status</th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row
+                ng-repeat="data in applications.interviewSummaries | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+                <td md-cell></td>
+                <td md-cell >{{data.interviewDate}}</td>
+                <td md-cell >{{data.traineeName}}</td>
+                 <td md-cell >{{data.supportedBy}}</td>
+                  <td md-cell >{{data.status}}</td>
+                <td md-cell><span> <md-tooltip>Update </md-tooltip> <i
+                        class="material-icons" ng-click="updateRow(data);toggleRight()"
+                        ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
+                        {{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
+            </tr>
+        </tbody>
+    </table>
+    </md-table-container> <md-table-pagination md-limit="query.limit"
+        md-limit-options="interviewSummariesOptions" md-page="query.page"
+        md-total="{{interviewSummariesLength}}" md-page-select="interviewSummariesPage .pageSelect"></md-table-pagination>
+</div>
+<div flex="50">
+<div><h4>Batch</h4></div>
+	<md-table-container>
+    <table md-table id="batchTable">
+        <thead md-head md-order="query.order">
+            <tr md-row>
+                <th md-column><span> </span></th>
+                <th md-column ><span>BatchId</span></th>
+                <th md-column ><span>NumberOfStudents</span></th>
+                <th md-column>TrainerName</th>
+                <th md-column>Technology</th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row
+                ng-repeat="data in applications.batchSummaries | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+                <td md-cell></td>
+                <td md-cell >{{data.batchId}}</td>
+                <td md-cell >{{data.numberOfStudent}}</td>
+                <td md-cell >{{data.trainerName}}</td>
+                <td md-cell >{{data.technology}}</td>
+                <td md-cell><span> <md-tooltip>Update </md-tooltip> <i
+                        class="material-icons" ng-click="updateRow(data);toggleRight()"
+                        ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
+                        {{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
+            </tr>
+        </tbody>
+    </table>
+    </md-table-container> <md-table-pagination md-limit="query.limit"
+        md-limit-options="batchSummariesOptions" md-page="query.page"
+        md-total="{{batchSummariesLength}}" md-page-select="batchSummariesPage .pageSelect"></md-table-pagination>
+</div></div>
     <!--start-->
-     
-   Dashboard Content
-    </div>
+ 
+  </div></div>

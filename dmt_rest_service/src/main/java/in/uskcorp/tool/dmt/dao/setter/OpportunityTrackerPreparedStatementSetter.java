@@ -1,4 +1,4 @@
-package in.uskcorp.tool.dmt.dao.setter;
+	package in.uskcorp.tool.dmt.dao.setter;
 
 import in.uskcorp.tool.dmt.domain.OpportunityTracker;
 import in.uskcorp.tool.dmt.util.ResultSetUtil;
@@ -25,8 +25,9 @@ public class OpportunityTrackerPreparedStatementSetter implements
 		arg0.setDate(4, ResultSetUtil.converttoSQLDate(opportunityTracker
 				.getOpportunityDate()));
 		arg0.setString(5, opportunityTracker.getCategory());
+		arg0.setString(6, opportunityTracker.getPaid());
 		if (!isInsert) {
-			arg0.setInt(6, opportunityTracker.getId());
+			arg0.setInt(7, opportunityTracker.getId());
 		}
 	}
 }

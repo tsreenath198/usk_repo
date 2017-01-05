@@ -26,11 +26,11 @@ public class SQLConstants {
 			+ " WHEN 'Trainee' THEN (select name from trainee te where ot.`provided_for` = te.id)"
 			+ " WHEN 'Trainer' THEN (select name from trainer tr where ot.`provided_for` = tr.id)"
 			+ " WHEN 'Employee' THEN (select name from employee emp where ot.`provided_for` = emp.id)"
-			+ " WHEN 'Client' THEN (select name from client cl where ot.`provided_for` = cl.id)END AS provided_for,opportunity_date"
-			+ " FROM opportunity_tracker ot , employee e where e.id = ot.provided_by ORDER BY opportunity_date desc";
-	public static final String OPPURTINITY_TRACKER_INSERT = "INSERT INTO opportunity_tracker(type,provided_by,provided_for,opportunity_date,category) values(?,?,?,?,?)";
+			+ " WHEN 'Client' THEN (select name from client cl where ot.`provided_for` = cl.id)END AS provided_for,date"
+			+ " FROM opportunity_tracker ot , employee e where e.id = ot.provided_by ORDER BY date desc";
+	public static final String OPPURTINITY_TRACKER_INSERT = "INSERT INTO opportunity_tracker(type,provided_by,provided_for,date,category,paid) values(?,?,?,?,?,?)";
 	public static final String OPPURTINITY_TRACKER_DELETE = "DELETE FROM opportunity_tracker  WHERE id = ?";
-	public static final String OPPURTINITY_TRACKER_UPDATE = "UPDATE opportunity_tracker set type= ?, provided_by=?, provided_for=?, opportunity_date=?, category=? WHERE id = ?";
+	public static final String OPPURTINITY_TRACKER_UPDATE = "UPDATE opportunity_tracker set type= ?, provided_by=?, provided_for=?, date=?, category=? ,paid=? WHERE id = ?";
 	public static final String OPPURTINITY_TRACKER_SELECT_BY_ID = "SELECT * FROM  opportunity_tracker where id = ?";
 
 	public static final String SUPPORT_GROUP_BY_TRAINEE_ID = "SELECT `trainee_id`,count(`trainee_id`) as totalCount FROM `support` group by `trainee_id`";
@@ -130,7 +130,7 @@ public class SQLConstants {
 	public static final String BATCH_UPDATE = "UPDATE batch set  technology_id=?,trainer_id=?,start_date=?,end_date=?,duration=?,status=?,updated_date=?,description=?,time=? WHERE id = ?";
 	public static final String BATCH_SELECT_BY_ID = "SELECT * FROM batch where id = ?";
 	public static final String BATCH_DASHBOARD = "SELECT b.id as 'batchId' , tr.name as 'trainername', tech.name as 'technology',count(tre.id) as 'numberOfStudents' FROM batch b, technology tech , trainer tr,trainee tre where b.trainer_id = tr.id AND b.technology_id = tech.id"
-			+ " AND tre.batch_id = b.id AND YEAR(b.start_date) = YEAR(CURRENT_DATE - INTERVAL 0 MONTH) AND MONTH(b.start_date) = MONTH(CURRENT_DATE - INTERVAL 0 MONTH) GROUP BY b.id";
+			+ " AND tre.batch_id = b.id AND YEAR(b.start_date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(b.start_date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) GROUP BY b.id";
 	public static final String BATCH_DASHBOARD_YEAR = "SELECT b.id as 'batchId' , tr.name as 'name', tech.name as 'technologyName',count(tre.id) as 'noofStudent' FROM batch b, technology tech , "
 			+ "trainer tr,trainee tre where b.trainer_id = tr.id AND b.technology_id = tech.id AND tre.batch_id = b.id AND (b.start_date BETWEEN ? AND ?) GROUP BY b.id";
 
@@ -183,8 +183,8 @@ public class SQLConstants {
 			+ "employee e where i.status ='5 - Payment Pending' AND i.trainee_id=tr.id AND cl.id = tr.client_id AND i.assisted_by = e.id UNION SELECT tr.name as 'name',cl.name AS client ,'Training' as category , tr.name AS assistedBy"
 			+ " From trainee tr , batch b ,client cl where cl.id= tr.client_id AND b.id = tr.batch_id AND b.status IN (SELECT status from batch b where b.status = '3 - Payment Pending')";
 
-	public static final String SUPPORT_DASHBOARD = "SELECT e.name AS 'supported_by' , tra.name AS 'trainee_name' , s.`start_date` AS 'start_date' ,s.`technology_used` AS 'technology', s.status AS status FROM support s,employee e,trainee tra,technology t where e.id = s.supported_by AND tra.id = s.`trainee_id` AND YEAR(s.start_date) = YEAR(CURRENT_DATE - INTERVAL '?' MONTH) AND MONTH(s.start_date) = MONTH(CURRENT_DATE - INTERVAL '?' MONTH) GROUP BY tra.name";
-	public static final String INTERVIEW_DASHBOARD = "SELECT i.`date` AS 'interview_date', tra.name AS 'trainee_name', e.name AS 'supported_By',i.status AS 'status' FROM `interview` i,employee e,trainee tra WHERE i.`trainee_id` = tra.id AND e.id = i.`assisted_by` AND YEAR(i.date) = YEAR(CURRENT_DATE - INTERVAL 0 MONTH) AND MONTH(i.date) = MONTH(CURRENT_DATE - INTERVAL 0 MONTH) GROUP BY tra.name";
+	public static final String SUPPORT_DASHBOARD = "SELECT e.name AS 'supported_by' , tra.name AS 'trainee_name' , s.`start_date` AS 'start_date' ,s.`technology_used` AS 'technology', s.status AS status FROM support s,employee e,trainee tra,technology t where e.id = s.supported_by AND tra.id = s.`trainee_id` AND YEAR(s.start_date) = YEAR(CURRENT_DATE - INTERVAL '1' MONTH) AND MONTH(s.start_date) = MONTH(CURRENT_DATE - INTERVAL '1' MONTH) GROUP BY tra.name";
+	public static final String INTERVIEW_DASHBOARD = "SELECT i.`date` AS 'interview_date', tra.name AS 'trainee_name', e.name AS 'supported_By',i.status AS 'status' FROM `interview` i,employee e,trainee tra WHERE i.`trainee_id` = tra.id AND e.id = i.`assisted_by` AND YEAR(i.date) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(i.date) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) GROUP BY tra.name";
 	public static final String INTERVIEW_DASHBOARD_YEAR = "SELECT i.`date` AS 'date', tra.name AS 'trainee', e.name AS 'supportedBy',i.status AS 'status' FROM `interview` i,employee e,trainee tra WHERE i.`trainee_id` = tra.id AND e.id = i.`assisted_by` AND (i.date BETWEEN ? AND ?) GROUP BY tra.name ";
 
 	public static final String CLOSE_TRASACTION_CLIENT = "SELECT distinct c.name AS 'client' , count(tre.id) AS 'training' FROM `client` c,trainee tre where c.id = tre.client_id AND "
@@ -224,7 +224,6 @@ public class SQLConstants {
 	public static final String PAYMENT_DELETE = "UPDATE client set active_flag=1   WHERE id = ?";
 	public static final String PAYMENT_UPDATE = "UPDATE client set name=?, address=?,updated_date=?,description=? WHERE id = ?";
 	public static final String PAYMENT_SELECT_BY_ID = "SELECT * FROM client where id = ?";
-	public static final String PAYMENT_DASHBOARD = "SELECT tr.name as 'candidatename',cl.name AS clientName ,'Training' as category , tr.name AS assistedBy From trainee tr, batch b ,client cl where cl.id= tr.client_id AND b.id = tr.batch_id AND b.status IN (SELECT status from batch b where b.status = '3 - Payment Pending') UNION SELECT tr.name as 'name' ,cl.name AS client ,'Interview' as category , e.name AS assistedBy FROM interview i, trainee tr, client cl, employee e where i.status ='3 - Payment Pending' AND i.trainee_id=tr.id AND cl.id = tr.client_id AND i.assisted_by = e.id union SELECT tr.name as 'name' , cl.name AS client ,'Support' as category , e.name AS assistedBy FROM support s , trainee tr ,client cl,employee e where s.status ='3 - Payment Pending' AND s.trainee_id=tr.id AND cl.id = tr.client_id AND s.supported_by = e.id";
-;
+	public static final String PAYMENT_DASHBOARD = "SELECT tr.name as 'candidatename',cl.name AS clientName ,'Training' as category , tr.name AS assistedBy From trainee tr, batch b ,client cl where cl.id= tr.client_id AND b.id = tr.batch_id AND b.status IN (SELECT status from batch b where b.status = '3 - Payment Pending') UNION SELECT tr.name as 'name' ,cl.name AS client ,'Interview' as category , e.name AS assistedBy FROM interview i, trainee tr, client cl, employee e where i.status ='3 - Payment Pending' AND i.trainee_id=tr.id AND cl.id = tr.client_id AND i.assisted_by = e.id union SELECT tr.name as 'name' , cl.name AS client ,'Support' as category , e.name AS assistedBy FROM support s , trainee tr ,client cl,employee e where s.status ='3 - Payment Pending' AND s.trainee_id=tr.id AND cl.id = tr.client_id AND s.supported_by = e.id";;
 
 }

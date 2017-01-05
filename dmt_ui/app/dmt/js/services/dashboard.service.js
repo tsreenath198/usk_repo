@@ -13,7 +13,7 @@
     	 return service;
        function getAllApplications() {
         		    //return $http.get(__env.baseUrl+__env.context+__env.api+"/app");
-                return $http.get("./mock/applications.json");
+                return $http.get("http://localhost:8011/dmt_rest_service/dashboardSummary/readAll");
 		   }
 
        function getApplicationByName(data) {

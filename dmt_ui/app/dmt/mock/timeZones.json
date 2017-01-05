@@ -1,0 +1,22 @@
+[
+  {
+    "key": "ist",
+    "value": "IST"
+  },
+  {
+    "key": "pst",
+    "value": "PST"
+  },
+  {
+    "key": "est",
+    "value": "EST"
+  },
+  {
+    "key": "cst",
+    "value": "CST"
+  },
+  {
+    "key": "mst",
+    "value": "MST"
+  }
+]

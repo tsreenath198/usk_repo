@@ -1,0 +1,28 @@
+<md-content layout-padding>
+<form name="employeeCreateForm">
+	<md-input-container class="md-block"> <label>Name</label>
+	<input required name="name" ng-model="record.name"> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Phone</label>
+	<input required name="phone" ng-model="record.phone"> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Email</label>
+	<input required name="email" ng-model="record.email"> </md-input-container>
+	
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Description</label>
+	<input  name="Description" ng-model="record.description">
+
+	</md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage"> Save </md-button>
+		
+	<md-button class="md-raised md-primary" ng-click="updateData()"
+		ng-show="updatePage"> Update </md-button>
+	<md-button class="md-raised ">
+	Cancel </md-button>
+</form>
+</md-content>

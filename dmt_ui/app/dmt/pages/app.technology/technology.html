@@ -1,0 +1,87 @@
+<div class="demo-md-panel-animation md-padding">
+    <div layout="row" layout-xs="column" layout-sm="column" layout-margin>
+        <div flex="40">
+            <md-input-container class="md-block"> <label>{{currentRoute
+                | capitalize}} Search</label> <input required name="filter"
+                ng-model="filter"> </md-input-container>
+        </div>
+        <div flex="40">
+            <md-button class="md-fab md-warn md-mini" aria-label="Create Button"
+                ng-click="toggleRight();emptyForm1()" ng-hide="isOpenRight();">
+            <md-tooltip> Add New </md-tooltip> <i class="material-icons">create_new_folder</i>
+            </md-button>
+            <md-button class="md-fab md-warn md-mini" aria-label="Select Button"
+                ng-click="selectAll()"> <md-tooltip> Select
+            All </md-tooltip> <i class="material-icons">select_all</i> </md-button>
+            <md-button class="md-fab md-warn md-mini"
+                aria-label="DeSelect Button" ng-click="deSelectAll()"> <md-tooltip>
+            Deselect All </md-tooltip> <i class="material-icons">tab_unselected</i> </md-button>
+            <md-button class="md-fab md-warn md-mini" aria-label="Delete Button"
+                ng-click="deleteSelected($event)"> <md-tooltip>
+            Delete </md-tooltip> <i class="material-icons">delete_forever</i> </md-button>
+            <md-button class="md-fab md-warn md-mini" aria-label="Export Button"
+                ng-click="export('#technologyTable')"> <md-tooltip>
+            Export </md-tooltip> <i class="material-icons">import_export</i> </md-button>
+
+            <md-button class="md-fab md-warn md-mini"
+                aria-label="Export All Button" ng-csv="tasksData"
+                csv-header="['Id','Name','Created Date', 'Updated Date', 'Description']"
+                filename="technology-list.csv"> <md-tooltip>
+            Export All</md-tooltip> <i class="material-icons">file_download</i> </md-button>
+
+        </div>
+    </div>
+
+    <div class="moreHeaders">
+        <md-select placeholder="Technologies" ng-model="moreOptions"
+            ng-change="openMoreOptions(moreOptions)" multiple> <md-optgroup>
+        More Technologies <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
+        </md-select>
+    </div>
+
+    <md-content layout="column" flex> <md-table-container>
+    <table md-table id="technologyTable">
+        <thead md-head md-order="query.order">
+            <tr md-row>
+                <th md-column><span> </span></th>
+                <th md-column ><span>Name</span></th>
+                <th md-column ><span>Description</span></th>
+                <th md-column>Actions</th>
+            </tr>
+        </thead>
+        <tbody md-body>
+            <tr md-row
+                ng-repeat="data in technologiesData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+                <td md-cell><md-checkbox ng-model="data.checkboxValue"
+                        ng-click="rowSelect(data)" aria-label="Checkbox 2"
+                        ng-true-value="'on'" ng-false-value="'off'"
+                        class="md-warn md-align-top-left" flex></td>
+                <td md-cell >{{data.name}}</td>
+                <td md-cell >{{data.description}}</td>
+                <td md-cell><span> <md-tooltip>Update </md-tooltip> <i
+                        class="material-icons" ng-click="updateRow(data);toggleRight()"
+                        ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
+                        {{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
+            </tr>
+        </tbody>
+    </table>
+    </md-table-container> <md-table-pagination md-limit="query.limit"
+        md-limit-options="technologiesOptions" md-page="query.page"
+        md-total="{{technologiesLength}}" md-page-select="technologyPage.pageSelect"></md-table-pagination>
+    </md-content>
+
+    <div layout="column" ng-cloak>
+        <section layout="row" flex>
+            <md-sidenav class="md-sidenav-right md-whiteframe-4dp"
+                md-component-id="right"> <md-toolbar
+                class="md-theme-light">
+            <h1 class="md-toolbar-tools">Technology Create</h1>
+            </md-toolbar> <create-technology /></md-sidenav>
+        </section>
+    </div>
+
+
+</div>
+<div ng-if="morecolumns == true">
+    <h1>123456</h1>
+</div>

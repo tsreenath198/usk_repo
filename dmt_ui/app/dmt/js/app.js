@@ -70,6 +70,32 @@
                             }
                         }
                     });
+                      $stateProvider
+                    .state('app.userDetails', {
+                        name: "userDetails",
+                        url: "/userDetails",
+                        views: {
+
+                            "content@": {
+                                controller: "UserDetailsController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/userDetails/userDetails.html"
+                            }
+                        }
+                    });
+                      $stateProvider
+                    .state('app.technology', {
+                        name: "technology",
+                        url: "/technology",
+                        views: {
+
+                            "content@": {
+                                controller: "TechnologyController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.technology/technology.html"
+                            }
+                        }
+                    });
                         $stateProvider
                                     .state(
                                             'app.course',

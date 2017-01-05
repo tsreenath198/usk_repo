@@ -26,8 +26,8 @@ public class SQLConstants {
 			+ " WHEN 'Trainee' THEN (select name from trainee te where ot.`provided_for` = te.id)"
 			+ " WHEN 'Trainer' THEN (select name from trainer tr where ot.`provided_for` = tr.id)"
 			+ " WHEN 'Employee' THEN (select name from employee emp where ot.`provided_for` = emp.id)"
-			+ " WHEN 'Client' THEN (select name from client cl where ot.`provided_for` = cl.id)END AS provided_for,opportunity_date"
-			+ " FROM opportunity_tracker ot , employee e where e.id = ot.provided_by ORDER BY opportunity_date desc";
+			+ " WHEN 'Client' THEN (select name from client cl where ot.`provided_for` = cl.id)END AS provided_for,date"
+			+ " FROM opportunity_tracker ot , employee e where e.id = ot.provided_by ORDER BY date desc";
 	public static final String OPPURTINITY_TRACKER_INSERT = "INSERT INTO opportunity_tracker(type,provided_by,provided_for,opportunity_date,category) values(?,?,?,?,?)";
 	public static final String OPPURTINITY_TRACKER_DELETE = "DELETE FROM opportunity_tracker  WHERE id = ?";
 	public static final String OPPURTINITY_TRACKER_UPDATE = "UPDATE opportunity_tracker set type= ?, provided_by=?, provided_for=?, opportunity_date=?, category=? WHERE id = ?";
@@ -224,7 +224,6 @@ public class SQLConstants {
 	public static final String PAYMENT_DELETE = "UPDATE client set active_flag=1   WHERE id = ?";
 	public static final String PAYMENT_UPDATE = "UPDATE client set name=?, address=?,updated_date=?,description=? WHERE id = ?";
 	public static final String PAYMENT_SELECT_BY_ID = "SELECT * FROM client where id = ?";
-	public static final String PAYMENT_DASHBOARD = "SELECT tr.name as 'candidatename',cl.name AS clientName ,'Training' as category , tr.name AS assistedBy From trainee tr, batch b ,client cl where cl.id= tr.client_id AND b.id = tr.batch_id AND b.status IN (SELECT status from batch b where b.status = '3 - Payment Pending') UNION SELECT tr.name as 'name' ,cl.name AS client ,'Interview' as category , e.name AS assistedBy FROM interview i, trainee tr, client cl, employee e where i.status ='3 - Payment Pending' AND i.trainee_id=tr.id AND cl.id = tr.client_id AND i.assisted_by = e.id union SELECT tr.name as 'name' , cl.name AS client ,'Support' as category , e.name AS assistedBy FROM support s , trainee tr ,client cl,employee e where s.status ='3 - Payment Pending' AND s.trainee_id=tr.id AND cl.id = tr.client_id AND s.supported_by = e.id";
-;
+	public static final String PAYMENT_DASHBOARD = "SELECT tr.name as 'candidatename',cl.name AS clientName ,'Training' as category , tr.name AS assistedBy From trainee tr, batch b ,client cl where cl.id= tr.client_id AND b.id = tr.batch_id AND b.status IN (SELECT status from batch b where b.status = '3 - Payment Pending') UNION SELECT tr.name as 'name' ,cl.name AS client ,'Interview' as category , e.name AS assistedBy FROM interview i, trainee tr, client cl, employee e where i.status ='3 - Payment Pending' AND i.trainee_id=tr.id AND cl.id = tr.client_id AND i.assisted_by = e.id union SELECT tr.name as 'name' , cl.name AS client ,'Support' as category , e.name AS assistedBy FROM support s , trainee tr ,client cl,employee e where s.status ='3 - Payment Pending' AND s.trainee_id=tr.id AND cl.id = tr.client_id AND s.supported_by = e.id";;
 
 }

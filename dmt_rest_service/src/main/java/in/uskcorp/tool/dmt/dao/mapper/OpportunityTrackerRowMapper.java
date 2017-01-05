@@ -18,7 +18,7 @@ public class OpportunityTrackerRowMapper implements
 		opportunityTracker.setCategory(resultSet.getString("category"));
 		opportunityTracker.setPaid(resultSet.getString("paid"));
 		opportunityTracker.setOpportunityDate(ResultSetUtil.getDate(resultSet,
-				"opportunity_date"));
+				"date"));
 		opportunityTracker.setProvidedBy(resultSet.getString("provided_by"));
 		opportunityTracker.setProvidedFor(resultSet.getString("provided_for"));
 		return opportunityTracker;

@@ -79,7 +79,7 @@
                             "content@": {
                                 controller: "timesheetController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/timesheet/timesheet.html"
+                                templateUrl: "pages/app.timesheet/app.timesheet.html"
                             }
                         }
                     });
@@ -92,7 +92,7 @@
                             "content@": {
                                 controller: "employeeController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/employee/employee.html"
+                                templateUrl: "pages/app.employee/app.employee.html"
                             }
                         }
                     });
@@ -105,7 +105,7 @@
                             "content@": {
                                 controller: "traineeController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/trainee/trainee.html"
+                                templateUrl: "pages/app.trainee/app.trainee.html"
                             }
                         }
                     });
@@ -118,7 +118,7 @@
                             "content@": {
                                 controller: "batchController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/batch/batch.html"
+                                templateUrl: "pages/app.batch/app.batch.html"
                             }
                         }
                     });
@@ -132,7 +132,7 @@
                             "content@": {
                                 controller: "clientController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/client/client.html"
+                                templateUrl: "pages/app.client/app.client.html"
                             }
                         }
                     });
@@ -145,7 +145,7 @@
                             "content@": {
                                 controller: "salaryController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/salary/salary.html"
+                                templateUrl: "pages/app.salary/app.salary.html"
                             }
                         }
                     });
@@ -158,7 +158,7 @@
                             "content@": {
                                 controller: "oppurtunityTrackerController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/oppurtunityTracker/oppurtunityTracker.html"
+                                templateUrl: "pages/app.oppurtunityTracker/app.oppurtunityTracker.html"
                             }
                         }
                     });

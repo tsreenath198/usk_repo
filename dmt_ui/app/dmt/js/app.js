@@ -118,7 +118,7 @@
                         views: {
 
                             "content@": {
-                                controller: "employeeController",
+                                controller: "EmployeeController",
                                 controllerAs: 'self',
                                 templateUrl: "pages/app.employee/app.employee.html"
                             }
@@ -131,7 +131,7 @@
                         views: {
 
                             "content@": {
-                                controller: "traineeController",
+                                controller: "TraineeController",
                                 controllerAs: 'self',
                                 templateUrl: "pages/app.trainee/app.trainee.html"
                             }
@@ -269,7 +269,7 @@
                                     "content@" : {
                                         controller : "TrainerController",
                                         controllerAs : 'self',
-                                        templateUrl : "pages/app.trainer/trainer.course.html"
+                                        templateUrl : "pages/app.trainer/app.trainer.html"
                                     }
                                 }
                             });

@@ -6,7 +6,7 @@ public class UserDetails {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private long phoneNo;
+	private String phoneNo;
 	private String userName;
 	private String password;
 	private String confirmPassword;
@@ -53,11 +53,11 @@ public class UserDetails {
 		this.email = email;
 	}
 
-	public long getPhoneNo() {
+	public String getPhoneNo() {
 		return phoneNo;
 	}
 
-	public void setPhoneNo(long phoneNo) {
+	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
 

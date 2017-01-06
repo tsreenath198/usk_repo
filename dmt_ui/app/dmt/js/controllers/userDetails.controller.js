@@ -22,17 +22,19 @@
         $scope.headerEnable = {};
         $scope.exportData = [];
 
-       
 
-        $scope.create = {
-            "firstname" : "",
-            "lastname" : "",
-            "email":"",
-            "phoneno":"",
-            "username":"",
+        $scope.record = {
+
+            "userName":"",
+            "firstName":"",
+            "lastName" : "",
+            "email" : "",
+            "phoneNo":"",
+            "password":"",
             "role":"",
             "description":""
         };
+
         UserDetailsService.getAllUsers().then(function(response) {
             $scope.userDetailsData = response.data;
             $scope.userDetailsLength = response.data.length;
@@ -52,30 +54,40 @@
     
         
         $scope.saveRecord = function() {
-             console.log($scope.create);
+             console.log($scope.record);
+             UserDetailsService.create($scope.record).then(function(response) {
+                console.log("resp", response);
+            });
             $mdSidenav('right').close().then(function() {
                 $log.debug("close RIGHT is done");
             });
         }
 
-        $scope.updateRecord = function(row) {
+        $scope.rowData = function(row) {
              console.log(row);
-            $scope.rowData = row;
+            //$scope.rowData = row;
             $scope.updatePage = true;
-            $scope.create = {
-                "id" : row.id,
-                "firstname" : row.firstname,
-                "lastname":row.lastname,
+            $scope.record= {              
+                
+                "userName":row.username,
+                "firstName" : row.firstname,
+                "lastName":row.lastname,
                 "email":row.email,
-                "phoneno":row.phoneno,
-                "username":username,
-                "role":role,
+                "phoneNo":row.phoneno,
+                "password":row.password,
+                "role":row.role,
                 "description" : row.description,
+                "id" : row.id
             };
             // console.log($scope.create.status);
         };
+       
         $scope.updateRecord = function() {
             // console.log($scope.create);
+            console.log($scope.record);
+            UserDetailsService.update($scope.record).then(function(response) {
+                console.log("resp", response);
+            });
             $mdSidenav('right').close().then(function() {
                 $log.debug("close RIGHT is done");
             });

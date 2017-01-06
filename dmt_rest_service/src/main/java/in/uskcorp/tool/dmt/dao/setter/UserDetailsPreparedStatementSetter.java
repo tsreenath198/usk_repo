@@ -25,7 +25,7 @@ public class UserDetailsPreparedStatementSetter implements PreparedStatementSett
 		arg0.setString(2, userCredentials.getFirstName());
 		arg0.setString(3, userCredentials.getLastName());
 		arg0.setString(4, userCredentials.getEmail());
-		arg0.setLong(5, userCredentials.getPhoneNo());
+		arg0.setString(5, userCredentials.getPhoneNo());
 		arg0.setString(6, userCredentials.getPassword());
 		arg0.setString(7, userCredentials.getRole());
 		arg0.setString(8, userCredentials.getDescription());

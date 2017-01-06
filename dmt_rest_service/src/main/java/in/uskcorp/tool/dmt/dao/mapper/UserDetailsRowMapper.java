@@ -15,10 +15,10 @@ public class UserDetailsRowMapper implements RowMapper<UserDetails> {
 		UserDetails userDetails = new UserDetails();
 		userDetails.setId(resultSet.getInt("id"));
 		userDetails.setUserName(resultSet.getString("username"));
-		userDetails.setFirstName(resultSet.getString("firstName"));
-		userDetails.setLastName(resultSet.getString("lastName"));
+		userDetails.setFirstName(resultSet.getString("firstname"));
+		userDetails.setLastName(resultSet.getString("lastname"));
 		userDetails.setEmail(resultSet.getString("email"));
-		userDetails.setPhoneNo(resultSet.getLong("phoneno"));
+		userDetails.setPhoneNo(resultSet.getString("phoneno"));
 		userDetails.setPassword(resultSet.getString("password"));
 		userDetails.setRole(resultSet.getString("role"));
 		userDetails.setDescription(resultSet.getString("description"));

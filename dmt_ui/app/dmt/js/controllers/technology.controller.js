@@ -26,6 +26,7 @@
 
         $scope.create = {
             "name" : "",
+            "createdDate":new Date(),
             "description" : ""
         };
         TechnologyService.getAllTechnologies().then(function(response) {
@@ -48,6 +49,9 @@
         
         $scope.saveRecord = function() {
              console.log($scope.create);
+            TechnologyService.create($scope.create).then(function(response) {
+                console.log("resp", response);
+            });
             $mdSidenav('right').close().then(function() {
                 $log.debug("close RIGHT is done");
             });
@@ -61,13 +65,17 @@
                 "id" : row.id,
                 "name" : row.name,
                 "description" : row.description,
-                "updatedDate" : new Date(),
-                "createdDate" : null
-            };
+                "updatedDate" :""
+                };
             // console.log($scope.create.status);
         };
         $scope.updateData = function() {
             // console.log($scope.create);
+
+            TechnologyService.update($scope.create).then(function(response) {
+                console.log("resp", response);
+            });
+
             $mdSidenav('right').close().then(function() {
                 $log.debug("close RIGHT is done");
             });

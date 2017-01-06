@@ -1,41 +1,41 @@
 <md-content layout-padding>
-<form name="userCreateForm">
+<form name="userrecordForm">
    <md-input-container class="md-block"> <input
-        type="hidden" name="Id" ng-model="create.id"> </md-input-container>
+        type="hidden" name="Id" ng-model="record.id"> </md-input-container>
 
     <md-input-container class="md-block"> <label>Firstname</label>
-    <input required name="Firstname" ng-model="create.firstname"> </md-input-container>
+    <input required name="Firstname" ng-model="record.firstName"> </md-input-container>
 
     <md-input-container class="md-block"> <label>Lastname</label>
-    <input  name="Lastname" ng-model="create.lastname">
+    <input  name="Lastname" ng-model="record.lastName">
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Email</label>
-    <input  name="Email" ng-model="create.email">
+    <input  name="Email" ng-model="record.email">
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Phoneno</label>
-    <input  name="Phoneno" ng-model="create.phoneno">
+    <input  name="Phoneno" ng-model="record.phoneNo">
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Username</label>
-    <input  name="Username" ng-model="create.username">
+    <input  name="Username" ng-model="record.userName">
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Password</label>
-    <input  name="Password" type="password" ng-model="create.password">
+    <input  name="Password" type="password" ng-model="record.password">
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Confirm Password</label>
-    <input  name="ConfirmPassword" type="password" ng-model="create.confirmPassword">
+    <input  name="ConfirmPassword" type="password" ng-model="record.confirmPassword">
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Role</label>
-    <input  name="Role" ng-model="create.role">
+    <input  name="Role" ng-model="record.role">
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Description</label>
-    <input  name="Description" ng-model="create.description">
+    <input  name="Description" ng-model="record.description">
     </md-input-container>
 
     <md-button class="md-raised md-primary" ng-click="saveRecord()"

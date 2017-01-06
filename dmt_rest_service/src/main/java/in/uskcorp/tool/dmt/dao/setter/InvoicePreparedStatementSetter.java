@@ -5,6 +5,7 @@ import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
@@ -19,20 +20,18 @@ public class InvoicePreparedStatementSetter implements PreparedStatementSetter {
 
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
-		arg0.setInt(1, invoice.getInvoiceNo());
-		arg0.setString(2, invoice.getCategory());
-		arg0.setInt(3, invoice.getAmount());
-		arg0.setString(4, invoice.getCurrency());
-		arg0.setString(5, invoice.getStatus());
-		arg0.setDate(6,
-				ResultSetUtil.converttoSQLDate(invoice.getCreatedDate()));
-		arg0.setString(7, invoice.getCustomer());
-		arg0.setString(8, invoice.getDescription());
-		arg0.setDate(9,
+		arg0.setDate(1,
 				ResultSetUtil.converttoSQLDate(invoice.getInvoiceDate()));
-		arg0.setDouble(10, invoice.getPaid());
+		arg0.setString(2, invoice.getInvoiceType());
+		arg0.setFloat(3, invoice.getActualAmount());
+		arg0.setFloat(4, invoice.getReceivedAmount());
+		arg0.setDate(5,
+				ResultSetUtil.converttoSQLDate(invoice.getReceivedDate()));
+		arg0.setDate(6, ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setString(7, invoice.getDescription());
+
 		if (!isInsert) {
-			arg0.setInt(11, invoice.getId());
+			arg0.setInt(8, invoice.getId());
 		}
 
 	}

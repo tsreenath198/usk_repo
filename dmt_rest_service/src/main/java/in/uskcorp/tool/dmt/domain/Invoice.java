@@ -3,34 +3,16 @@ package in.uskcorp.tool.dmt.domain;
 import java.util.Date;
 
 public class Invoice {
+
 	private int id;
-	private int invoiceNo;
-	private String category;
-	private int amount;
-	private String status;
-	private String currency;
+	private Date invoiceDate;
+	private String invoiceType;
+	private float actualAmount;
+	private float receivedAmount;
+	private Date receivedDate;
 	private Date createdDate;
 	private Date updatedDate;
-	private String customer;
 	private String description;
-	private Double paid;
-	private Date invoiceDate;
-
-	public String getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(String customer) {
-		this.customer = customer;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public int getId() {
 		return id;
@@ -40,44 +22,44 @@ public class Invoice {
 		this.id = id;
 	}
 
-	public int getInvoiceNo() {
-		return invoiceNo;
+	public Date getInvoiceDate() {
+		return invoiceDate;
 	}
 
-	public void setInvoiceNo(int invoiceNo) {
-		this.invoiceNo = invoiceNo;
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getInvoiceType() {
+		return invoiceType;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setInvoiceType(String invoiceType) {
+		this.invoiceType = invoiceType;
 	}
 
-	public int getAmount() {
-		return amount;
+	public float getActualAmount() {
+		return actualAmount;
 	}
 
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setActualAmount(float actualAmount) {
+		this.actualAmount = actualAmount;
 	}
 
-	public String getStatus() {
-		return status;
+	public float getReceivedAmount() {
+		return receivedAmount;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setReceivedAmount(float receivedAmount) {
+		this.receivedAmount = receivedAmount;
 	}
 
-	public String getCurrency() {
-		return currency;
+	public Date getReceivedDate() {
+		return receivedDate;
 	}
 
-	public void setCurrency(String currency) {
-		this.currency = currency;
+	public void setReceivedDate(Date receivedDate) {
+		this.receivedDate = receivedDate;
 	}
 
 	public Date getCreatedDate() {
@@ -96,20 +78,12 @@ public class Invoice {
 		this.updatedDate = updatedDate;
 	}
 
-	public Double getPaid() {
-		return paid;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setPaid(Double paid) {
-		this.paid = paid;
-	}
-
-	public Date getInvoiceDate() {
-		return invoiceDate;
-	}
-
-	public void setInvoiceDate(Date invoiceDate) {
-		this.invoiceDate = invoiceDate;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

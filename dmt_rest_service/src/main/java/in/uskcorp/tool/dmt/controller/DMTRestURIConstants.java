@@ -19,13 +19,17 @@ public interface DMTRestURIConstants {
 	String TASKLISTS = "/taskLists";
 	String QUESTIONS = "/questions";
 	String DASHBOARD_SUMMARY = "/dashboardSummary";
-	String INVOICES = "/invoices";
 	String ATTENDANCES = "/attendances";
 	String RESUMES = "/resumes";
-	String PIPELINES ="/pipelines";
-	String USERDETAILS ="/userDetails";
+	String PIPELINES = "/pipelines";
+	String EMPLOYEES_DESIGNATION = "/employeesDesignation";
+	String USER_ROLES = "/userRoles";
+	String REPORTING = "/reporting";
+	String USERDETAILS = "/userDetails";
+	String INVOICES = "/invoices";
+	String BATCH_ATTENDANCES = "/batchAttendances";
 	/**
-	 * OPERATIONS HERE	
+	 * OPERATIONS HERE
 	 */
 	String READ_ALL = "/readAll";
 	String READ = "/read";

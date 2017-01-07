@@ -75,7 +75,7 @@ public class SQLConstants {
 	public static final String EMPLOYEE_ATTENDANCE_DELETE = "UPDATE employee_attendence set active_flag=1 WHERE id = ?";
 	public static final String EMPLOYEE_ATTENDANCE_UPDATE = "UPDATE employee_attendence SET employee_id=?,employee_name=?,date=?,created_date=?,updated_date=?,in_time=?,out_time=? WHERE id=?";
 	public static final String EMPLOYEE_ATTENDANCE_SELECT_BY_ID = "SELECT * FROM employee_attendence where id = ?";
-	
+
 	public static final String RESUME_SELECT = "SELECT r.*,tr.name as traineename,e.name as employee_name,trainee_id as 'trainee_id',prepared_by as 'employee',paid as 'paidStatus',r.`date` as 'createdate',r.`date` as 'updateddate',r.`received_status` as 'receivedStatus' FROM resume r,trainee tr,employee e WHERE r.trainee_id=tr.id AND r.prepared_by=e.id ORDER BY r.id desc";
 	public static final String RESUME_INSERT = "INSERT INTO resume (trainee_id, prepared_by,paid,date,created_date,received_status, description) values(?,?,?,?,?,?,?)";
 	public static final String RESUME_DELETE = "DELETE FROM resume  WHERE id = ?";
@@ -232,4 +232,21 @@ public class SQLConstants {
 	public static final String PAYMENT_SELECT_BY_ID = "SELECT * FROM client where id = ?";
 	public static final String PAYMENT_DASHBOARD = "SELECT tr.name as 'candidatename',cl.name AS clientName ,'Training' as category , tr.name AS assistedBy From trainee tr, batch b ,client cl where cl.id= tr.client_id AND b.id = tr.batch_id AND b.status IN (SELECT status from batch b where b.status = '3 - Payment Pending') UNION SELECT tr.name as 'name' ,cl.name AS client ,'Interview' as category , e.name AS assistedBy FROM interview i, trainee tr, client cl, employee e where i.status ='3 - Payment Pending' AND i.trainee_id=tr.id AND cl.id = tr.client_id AND i.assisted_by = e.id union SELECT tr.name as 'name' , cl.name AS client ,'Support' as category , e.name AS assistedBy FROM support s , trainee tr ,client cl,employee e where s.status ='3 - Payment Pending' AND s.trainee_id=tr.id AND cl.id = tr.client_id AND s.supported_by = e.id";;
 
+	public static final String USER_ROLE_SELECT = "SELECT * FROM user_role where active_flag=0";
+	public static final String USER_ROLE_INSERT = "INSERT INTO user_role (name) values(?)";
+	public static final String USER_ROLE_UPDATE = "UPDATE user_role set name=? WHERE id = ?";
+	public static final String USER_ROLE_DELETE = "UPDATE user_role set active_flag=1 WHERE id = ?";
+	public static final String USER_ROLE_SELECT_BY_ID = "SELECT * FROM user_role where id = ?";
+
+	public static final String EMPLOYEE_DESIGNATION_SELECT = "SELECT * FROM employee_designation where active_flag=0";
+	public static final String EMPLOYEE_DESIGNATION_INSERT = "INSERT INTO employee_designation (designation) values(?)";
+	public static final String EMPLOYEE_DESIGNATION_DELETE = "UPDATE employee_designation set active_flag=1 WHERE id = ?";
+	public static final String EMPLOYEE_DESIGNATION_UPDATE = "UPDATE employee_designation set designation=? WHERE id = ?";
+	public static final String EMPLOYEE_DESIGNATION_SELECT_BY_ID = "SELECT * FROM employee_designation where id = ?";
+
+	public static final String BATCH_ATTENDANCE_SELECT = "SELECT * FROM batch_attendance where active_flag=0 ORDER BY batch_id asc";
+	public static final String BATCH_ATTENDANCE_SELECT_BY_ID = "SELECT * FROM batch_attendance where id = ?";
+	public static final String BATCH_ATTENDANCE_INSERT = "INSERT INTO batch_attendance (batch_id,date,trainee_id,created_date,description) values(?,?,?,?,?)";
+	public static final String BATCH_ATTENDANCE_UPDATE = "UPDATE batch_attendance set batch_id=?,date=?,trainee_id=?,updated_date=?,description=? WHERE id = ?";
+	public static final String BATCH_ATTENDANCE_DELETE = "UPDATE batch_attendance set active_flag=1 WHERE id = ?";
 }

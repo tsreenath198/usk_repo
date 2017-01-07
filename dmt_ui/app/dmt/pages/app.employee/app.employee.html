@@ -25,7 +25,7 @@
 
 			<md-button class="md-fab md-warn md-mini"
 				aria-label="Export All Button" ng-csv="employeesData"
-				csv-header="['Id','Name','Phone','Email','Created Date', 'Updated Date', 'Description']"
+				csv-header="['Id','Name','Phone','Email','Role','Created Date', 'Updated Date', 'Description']"
 				filename="employee-list.csv"> <md-tooltip>
 			Export All</md-tooltip> <i class="material-icons">file_download</i> </md-button>
 
@@ -47,7 +47,8 @@
 				<th md-column><span>Name</span></th>
 				<th md-column><span>Phone</span></th>
 				<th md-column><span>Email</span></th>
-				<th md-column><span>Description</span></th>
+				<th md-column><span>Role</span></th>
+				<th md-column><span>Base Salary</span></th>
 				<th md-column>Actions</th>
 			</tr>
 		</thead>
@@ -61,7 +62,8 @@
 				<td md-cell>{{data.name}}</td>
 				<td md-cell>{{data.phone}}</td>
 				<td md-cell>{{data.email}}</td>
-				<td md-cell>{{data.description}}</td>
+				<td md-cell>{{data.role}}</td>
+				<td md-cell>{{data.baseSalary}}</td>
 				<td md-cell><span> <md-tooltip> Update </md-tooltip> <i
 						class="material-icons" ng-click="setRowData(data);toggleRight()"
 						ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>

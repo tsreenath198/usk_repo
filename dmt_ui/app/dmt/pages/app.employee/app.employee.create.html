@@ -8,21 +8,27 @@
 
 	<md-input-container class="md-block"> <label>Email</label>
 	<input required name="email" ng-model="record.email"> </md-input-container>
-	
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Role</label>
+	<md-select ng-model="record.role"> <md-option>
+	<em>None</em></md-option> <md-option ng-repeat="role in roles"
+		ng-selected="role.value === record.role" ng-value="role.value">
+	{{role.value}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Base Salary</label>
+	<input required name="baseSalary" ng-model="record.baseSalary"> </md-input-container>
+
 	<md-input-container class="md-block"> <input
 		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Description</label>
-	<input  name="Description" ng-model="record.description">
-
-	</md-input-container>
+	<input name="Description" ng-model="record.description"> </md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
 		ng-hide="updatePage"> Save </md-button>
-		
+
 	<md-button class="md-raised md-primary" ng-click="updateData()"
 		ng-show="updatePage"> Update </md-button>
-	<md-button class="md-raised ">
-	Cancel </md-button>
+	<md-button class="md-raised "> Cancel </md-button>
 </form>
 </md-content>

@@ -5,6 +5,7 @@ function EmployeeService($http, __env, $window) {
 
 	var service = {
 		getAllEmployees : getAllEmployees,
+		getAllRoles:getAllRoles,
 		create : create,
 		update : update
 
@@ -12,6 +13,10 @@ function EmployeeService($http, __env, $window) {
 	return service;
 	function getAllEmployees() {
 		return $http.get(url + "/employees/readAll");
+	}
+	
+	function getAllRoles() {
+		return $http.get("./mock/roleConstants.json");
 	}
 
 	function create(jsonData) {

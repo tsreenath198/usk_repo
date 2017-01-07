@@ -29,14 +29,13 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 			"skypeId" : "",
 			"timezone" : "",
 			"batchId" : "",
-			"createdDate" : new Date(),
+			"createdDate" :"",
 			"description" : "",
 			"phone" : "",
 			"traineeFeeStatus" : "",
 			"paidStatus" : "",
 			"receivedStatus" : "",
-			"technologyId" : "",
-			"updatedDate" : new Date()
+			"technologyId" : ""
 		};
 
 		TraineeService.getAllClients().then(function(response) {
@@ -109,7 +108,7 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 				"skypeId" : row.skypeId,
 				"timezone" : row.timezone,
 				"batchId" : row.batchId,
-				"updatedDate" : new Date(),
+				"updatedDate" :"",
 				"description" : row.description,
 				"phone" : row.phone,
 				"traineeFeeStatus" : row.traineeFeeStatus,

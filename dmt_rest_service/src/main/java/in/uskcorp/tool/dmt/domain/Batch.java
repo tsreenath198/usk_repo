@@ -16,18 +16,30 @@ public class Batch {
 	private String description;
 	private int activeFlag;
 	private String batchTime;
-	private Date createDate;
+	private Date createdDate;
+	private Date updatedDate;
 	
 	
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	public String getBatchTime() {
 		return batchTime;
 	}
-	public Date getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+	
 	public void setBatchTime(String batchTime) {
 		this.batchTime = batchTime;
 	}

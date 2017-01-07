@@ -42,10 +42,10 @@ public class TraineePreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(12, trainee.getPaidStatus());
 		arg0.setString(13, trainee.getReceivedStatus());
 		arg0.setInt(14, trainee.getTechnologyId());
-		arg0.setDate(15, ResultSetUtil.converttoSQLDate(new Date()));
+		//arg0.setDate(15, ResultSetUtil.converttoSQLDate(new Date()));
 
 		if (!isInsert) {
-			arg0.setInt(16, trainee.getId());
+			arg0.setInt(15, trainee.getId());
 		}
 
 	}

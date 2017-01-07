@@ -20,14 +20,13 @@
     $scope.selected = [];
     $scope.headerEnable = {};
     $scope.exportData = [];
-
     $scope.record = {
-      "trainerName" : "",
+      "name" : "",
       "referredBy" : "",
       "technologyId" : "",
-      "created_date":new Date(),
       "phone" : "",
       "email" : "",
+      "createdDate":"",
       "description" : ""
     };
     
@@ -58,11 +57,7 @@
   
     
     $scope.saveRecord = function() {
-    	var jsonData = $scope.record;
-		var date = new Date();
-		//var dataForCreate = [ jsonData.name,date,jsonData.description ];
 		TrainerService.create($scope.record).then(function(response) {
-			//$scope.technology = response.data;
 			console.log(response);
 		});
 		$mdSidenav('right').close().then(function() {
@@ -75,27 +70,29 @@
       $scope.rowData = row;
       $scope.updatePage = true;
       $scope.record = {
-        "id" : row.id,
-        "trainer" : row.name,
-        "employee" : row.referredBy,
-        "technology" : row.technologyId,
+        "name" : row.name,
+        "referredBy" : row.referredBy,
+        "technologyId" : row.technologyId,
         "phone" : row.phone,
         "email" : row.email,
-        "updatedDate" : new Date(),
-        "createdDate" : null,
-        "description" : row.description
+        "updatedDate" : "",
+        "description" : row.description,
+        "id" : row.id
       };
-      // console.log($scope.create.status);
     };
     $scope.updateData = function() {
-     console.log($scope.create);
+     
+     TrainerService.update($scope.record).then(function(response) {
+			//$scope.technology = response.data;
+			console.log(response);
+		});
       $mdSidenav('right').close().then(function() {
         $log.debug("close RIGHT is done");
       });
     }
     $scope.emptyForm = function() {
       $scope.updatePage = false;
-      $scope.create = {};
+      $scope.record = {};
     };
 
     $scope.rowSelect = function(row) {

@@ -24,12 +24,16 @@ function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
 			"name" : "",
 			"phone" : "",
 			"email" : "",
-			"role" : "Contractor",
-			"baseSalary" : "20000.00",
+			"role" : "",
+			"baseSalary" : "",
 			"createdDate" : "",
 			"description" : ""
 		};
-
+		
+		EmployeeService.getAllRoles().then(function(response) {
+			$scope.roles = response.data;
+			
+			});
 		EmployeeService.getAllEmployees().then(function(response) {
 			$scope.employeesData = response.data;
 			$scope.employeesLength = response.data.length;

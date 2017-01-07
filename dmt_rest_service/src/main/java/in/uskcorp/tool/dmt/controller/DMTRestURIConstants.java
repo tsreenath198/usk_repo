@@ -24,6 +24,10 @@ public interface DMTRestURIConstants {
 	String RESUMES = "/resumes";
 	String PIPELINES ="/pipelines";
 	String USERDETAILS ="/userDetails";
+	String SUPPORTINTERACTIONS = "/supportInteractions";
+	String EMPLOYEES_DESIGNATION = "/employeesDesignation";
+	String BATCH_ATTENDANCES = "/batchAttendances";
+	String USER_ROLES = "/userRoles";
 	/**
 	 * OPERATIONS HERE	
 	 */

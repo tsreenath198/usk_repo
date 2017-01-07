@@ -5,6 +5,7 @@ import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
@@ -27,7 +28,7 @@ public class TrainerPreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(4, trainer.getPhone());
 		arg0.setString(5, trainer.getEmail());
 		arg0.setDate(6,
-				ResultSetUtil.converttoSQLDate(trainer.getCreatedDate()));
+				ResultSetUtil.converttoSQLDate(new Date()));
 
 		arg0.setString(7, trainer.getDescription());
 

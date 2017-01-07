@@ -1,0 +1,22 @@
+[
+  {
+    "key": "programanalyst",
+    "value": "Program Analyst"
+  },
+  {
+    "key": "juniordeveloper",
+    "value": "Junior Developer"
+  },
+  {
+    "key": "resourcecoordinator",
+    "value": "Resource Coordinator"
+  },
+  {
+    "key": "contractor",
+    "value": "Contractor"
+  },
+  {
+    "key": "director",
+    "value": "Director"
+  }
+]

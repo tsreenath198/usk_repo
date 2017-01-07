@@ -1,9 +1,9 @@
 /*(function() {*/
     'use strict';
     dmtApplication
-        .controller("TrainerController", TrainerController);
+        .controller("supportInteractionController", supportInteractionController);
 
-    function TrainerController($scope, TrainerService, Excel, $state, $mdDialog,
+    function supportInteractionController($scope, supportInteractionService, Excel, $state, $mdDialog,
     $mdToast, $timeout, $mdSidenav, $log) {
       var self = {
     init : init
@@ -15,35 +15,36 @@
     $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
     $scope.customFullscreen = false;
     $scope.updatePage = false;
-    $scope.trainersData = [];
+    $scope.supportInteractionsData = [];
     $scope.collection = [];
     $scope.selected = [];
     $scope.headerEnable = {};
     $scope.exportData = [];
+
     $scope.record = {
-      "name" : "",
+      "trainerName" : "",
       "referredBy" : "",
       "technologyId" : "",
+      "created_date":new Date(),
       "phone" : "",
       "email" : "",
-      "createdDate":"",
       "description" : ""
     };
     
 
-    TrainerService.getAllEmployees().then(function(response) {
+    supportInteractionService.getAllEmployees().then(function(response) {
       $scope.employees = response.data;
     });
-     TrainerService.getAllTechnologies().then(function(response) {
+     supportInteractionService.getAllTechnologies().then(function(response) {
       $scope.technologies = response.data;
     });
 
-    TrainerService.getAllTrainers().then(function(response) {
-      $scope.trainersData = response.data;
-      $scope.trainersLength = response.data.length;
-      console.log($scope.trainersData);
-      $scope.trainersOptions = [ 5, 10, 15 ];
-      $scope.trainerPage = {
+    supportInteractionService.getAllTrainers().then(function(response) {
+      $scope.supportInteractionsData = response.data;
+      $scope.supportInteractionsLength = response.data.length;
+      console.log($scope.supportInteractionsData);
+      $scope.supportInteractionsOptions = [ 5, 10, 15 ];
+      $scope.supportInteractionPage = {
         pageSelect : true
       };
       $scope.query = {
@@ -57,7 +58,11 @@
   
     
     $scope.saveRecord = function() {
-		TrainerService.create($scope.record).then(function(response) {
+    	var jsonData = $scope.record;
+		var date = new Date();
+		//var dataForCreate = [ jsonData.name,date,jsonData.description ];
+		supportInteractionService.create($scope.record).then(function(response) {
+			//$scope.technology = response.data;
 			console.log(response);
 		});
 		$mdSidenav('right').close().then(function() {
@@ -70,45 +75,43 @@
       $scope.rowData = row;
       $scope.updatePage = true;
       $scope.record = {
-        "name" : row.name,
-        "referredBy" : row.referredBy,
-        "technologyId" : row.technologyId,
+        "id" : row.id,
+        "trainer" : row.name,
+        "employee" : row.referredBy,
+        "technology" : row.technologyId,
         "phone" : row.phone,
         "email" : row.email,
-        "updatedDate" : "",
-        "description" : row.description,
-        "id" : row.id
+        "updatedDate" : new Date(),
+        "createdDate" : null,
+        "description" : row.description
       };
+      // console.log($scope.create.status);
     };
     $scope.updateData = function() {
-     
-     TrainerService.update($scope.record).then(function(response) {
-			//$scope.technology = response.data;
-			console.log(response);
-		});
+     console.log($scope.create);
       $mdSidenav('right').close().then(function() {
         $log.debug("close RIGHT is done");
       });
     }
     $scope.emptyForm = function() {
       $scope.updatePage = false;
-      $scope.record = {};
+      $scope.create = {};
     };
 
     $scope.rowSelect = function(row) {
       $scope.selected.push(row.id);
     };
     $scope.selectAll = function() {
-      for ( var i in $scope.trainersData) {
-        $scope.trainersData[i]["checkboxValue"] = 'on';
-        $scope.selected.push($scope.trainersData[i].id);
+      for ( var i in $scope.supportInteractionsData) {
+        $scope.supportInteractionsData[i]["checkboxValue"] = 'on';
+        $scope.selected.push($scope.supportInteractionsData[i].id);
       }
       ;
     };
 
     $scope.deSelectAll = function() {
-      for ( var i in $scope.trainersData) {
-        $scope.trainersData[i]["checkboxValue"] = 'off';
+      for ( var i in $scope.supportInteractionsData) {
+        $scope.supportInteractionsData[i]["checkboxValue"] = 'off';
       }
       ;
       $scope.selected = [];
@@ -126,10 +129,10 @@
                 'Please do it!').cancel('Sounds like a scam');
 
         $mdDialog.show(confirm).then(function() {
-          $scope.trainersData = $scope.trainersData.filter(function(obj) {
+          $scope.supportInteractionsData = $scope.supportInteractionsData.filter(function(obj) {
             return $scope.selected.indexOf(obj.id) === -1;
           });
-          $scope.trainersLength = $scope.trainersData.length;
+          $scope.supportInteractionsLength = $scope.supportInteractionsData.length;
         }, function() {
           $scope.status = 'You decided to keep your Trainer.';
         });
@@ -216,7 +219,7 @@
   
 
 
-dmtApplication.directive('createTrainer', function($state) {
+dmtApplication.directive('createSupportinteraction', function($state) {
   return {
     restrict : 'E',
     replace : true,

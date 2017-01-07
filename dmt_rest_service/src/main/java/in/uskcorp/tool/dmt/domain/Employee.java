@@ -12,6 +12,15 @@ public class Employee {
 	private int activeFlag;
 	private String description;
 	private Date createdDate;
+	private Date updatedDate;
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 
 	public Date getCreatedDate() {
 		return createdDate;

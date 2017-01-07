@@ -2,12 +2,12 @@ package in.uskcorp.tool.dmt.domain;
 
 import java.util.Date;
 
-public class TaskList {
+public class ToDo {
 	private int id;
 	private String category;
 	private Date taskDate;
 	private String status;
-	private int AssignedTo;
+	private int assignedTo;
 	private String estimatedTime;
 	private Date createdDate;
 	private Date updatedDate;
@@ -46,11 +46,11 @@ public class TaskList {
 	}
 
 	public int getAssignedTo() {
-		return AssignedTo;
+		return assignedTo;
 	}
 
 	public void setAssignedTo(int assignedTo) {
-		AssignedTo = assignedTo;
+		this.assignedTo = assignedTo;
 	}
 
 	public String getEstimatedTime() {

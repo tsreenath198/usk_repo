@@ -1,8 +1,8 @@
 package in.uskcorp.tool.dmt.controller;
 
-import in.uskcorp.tool.dmt.domain.TaskList;
+import in.uskcorp.tool.dmt.domain.ToDo;
 import in.uskcorp.tool.dmt.service.APIService;
-import in.uskcorp.tool.dmt.service.TaskListService;
+import in.uskcorp.tool.dmt.service.ToDoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,15 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(DMTRestURIConstants.TASKLISTS)
-public class TaskListController extends APIController<TaskList> {
+@RequestMapping(DMTRestURIConstants.TODOS)
+public class ToDoController extends APIController<ToDo> {
 	@Autowired
-	@Qualifier("taskListServiceImpl")
-	TaskListService taskListService;
+	@Qualifier("toDoServiceImpl")
+	ToDoService toDoService;
 
 	@Override
-	protected APIService<TaskList> getService() {
-		return taskListService;
+	protected APIService<ToDo> getService() {
+		return toDoService;
 	}
 
 }

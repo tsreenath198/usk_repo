@@ -36,7 +36,7 @@ public class SQLConstants {
 	public static final String SUPPORT_GROUP_BY_TRAINEE_ID = "SELECT `trainee_id`,count(`trainee_id`) as totalCount FROM `support` group by `trainee_id`";
 
 	public static final String TECHNOLOGY_SELECT = "SELECT * FROM technology where active_flag=0 ORDER BY name asc";
-	public static final String TECHNOLOGY_INSERT = "INSERT INTO technology (name,created_date,description) values(?, ?,?)";
+	public static final String TECHNOLOGY_INSERT = "INSERT IN technology (name,created_date,description) values(?, ?,?)";
 	public static final String TECHNOLOGY_DELETE = "UPDATE technology set  active_flag=1 WHERE id = ?";
 	public static final String TECHNOLOGY_UPDATE = "UPDATE technology set name = ?,  updated_date =?, description =? WHERE id = ?";
 	public static final String TECHNOLOGY_SELECT_BY_ID = "SELECT * FROM technology where id = ?";
@@ -49,7 +49,7 @@ public class SQLConstants {
 
 	public static final String TRAINER_SELECT = "SELECT t.*, t.`technology_id` as 'technology',t.`referred_by` as 'employee',"
 			+ " te.name as technology_name,e.name as employee_name FROM trainer t, technology te ,employee e WHERE "
-			+ "t.technology_id= te.id AND t.`referred_by` = e.id UNION "
+			+ "t.technology_id= te.id AND t.`referred_by` = e.id UNION "	
 			+ "SELECT t.*, t.`technology_id` as 'technology',t.`referred_by` as 'employee', te.name as technology_name,'' as employee_name"
 			+ " FROM trainer t, technology te WHERE t.technology_id= te.id";
 	public static final String TRAINER_INSERT = "INSERT INTO trainer (name,referred_by, technology_id,phone,email,created_date,description) values(?, ?,?, ?,?,?,?)";
@@ -134,12 +134,12 @@ public class SQLConstants {
 	public static final String BATCH_DASHBOARD_YEAR = "SELECT b.id as 'batchId' , tr.name as 'name', tech.name as 'technologyName',count(tre.id) as 'noofStudent' FROM batch b, technology tech , "
 			+ "trainer tr,trainee tre where b.trainer_id = tr.id AND b.technology_id = tech.id AND tre.batch_id = b.id AND (b.start_date BETWEEN ? AND ?) GROUP BY b.id";
 
-	public static final String TASKSSELECT = "SELECT t.*, e.name as employee_name,t.assigned_to as 'employee',t.estimated_time as 'estimateddays',"
+	public static final String TODOSELECT = "SELECT t.*, e.name as employee_name,t.assigned_to as 'employee',t.estimated_time as 'estimateddays',"
 			+ "t.status as 'feeStatus' FROM todo t, employee e  WHERE t.assigned_to= e.id AND t.active_flag=0 order by t.created_date DESC";
-	public static final String TASK_INSERT = "INSERT INTO todo (category,task_date, status, assigned_to,estimated_time,created_date,description) values(?,?,?,?,?,?,?)";
-	public static final String TASK_DELETE = "UPDATE todo set active_flag=1  WHERE id = ?";
-	public static final String TASK_UPDATE = "UPDATE todo set  category=?,task_date=?,status=?,assigned_to=?,estimated_time=?,updated_date=?,description=? WHERE id = ?";
-	public static final String TASK_SELECT_BY_ID = "SELECT * FROM todo where id = ?";
+	public static final String TODO_INSERT = "INSERT INTO todo (category,task_date, status, assigned_to,estimated_time,created_date,description) values(?,?,?,?,?,?,?)";
+	public static final String TODO_DELETE = "UPDATE todo set active_flag=1  WHERE id = ?";
+	public static final String TODO_UPDATE = "UPDATE todo set  category=?,task_date=?,status=?,assigned_to=?,estimated_time=?,updated_date=?,description=? WHERE id = ?";
+	public static final String TODO_SELECT_BY_ID = "SELECT * FROM todo where id = ?";
 
 	public static final String INTERVIEW_SELECT = "SELECT i.*, c.name as client_name, tr.name as trainee_name,tech.name as technology,e.name as employee_name,trainee_id as 'trainee',assisted_by as 'employee',"
 			+ "status as 'feeStatus',i.`received_status` as 'receivedStatus',i.`paid_status` as 'paidStatus',time as 'timezone',date as'interviewCreate' FROM interview i, client c, "

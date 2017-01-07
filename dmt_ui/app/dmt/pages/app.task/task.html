@@ -32,27 +32,36 @@
         </div>
     </div>
 
-   <h1>Technology</h1>
+   <h1>Task</h1>
 
     <md-content layout="column" flex> <md-table-container>
-    <table md-table id="technologyTable">
+    <table md-table id="taskTable">
         <thead md-head md-order="query.order">
             <tr md-row>
                 <th md-column><span> </span></th>
-                <th md-column ><span>Name</span></th>
-                <th md-column ><span>Description</span></th>
-                <th md-column>Actions</th>
+                <th md-column ><span>Category</span></th>
+                <th md-column ><span>Task Date</span></th>
+                <th md-column>Status</th>
+                <th md-column>AssignedTo</th>
+                <th md-column>Esstimated Time </th>
+                <th md-column>Description</th>
+
             </tr>
         </thead>
         <tbody md-body>
             <tr md-row
-                ng-repeat="data in technologiesData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+                ng-repeat="data in TaskData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
                 <td md-cell><md-checkbox ng-model="data.checkboxValue"
                         ng-click="rowSelect(data)" aria-label="Checkbox 2"
                         ng-true-value="'on'" ng-false-value="'off'"
                         class="md-warn md-align-top-left" flex></td>
-                <td md-cell >{{data.name}}</td>
+                <td md-cell >{{data.category}}</td>
+                <td md-cell >{{data.taskDate}}</td>
+                <td md-cell >{{data.status}}</td>
+                <td md-cell >{{data.assignedTo}}</td>
+                <td md-cell >{{data.estimatedTime}}</td>
                 <td md-cell >{{data.description}}</td>
+                
                 <td md-cell><span> <md-tooltip>Update </md-tooltip> <i
                         class="material-icons" ng-click="updateRow(data);toggleRight()"
                         ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
@@ -61,8 +70,8 @@
         </tbody>
     </table>
     </md-table-container> <md-table-pagination md-limit="query.limit"
-        md-limit-options="technologiesOptions" md-page="query.page"
-        md-total="{{technologiesLength}}" md-page-select="technologyPage.pageSelect"></md-table-pagination>
+        md-limit-options="taskOptions" md-page="query.page"
+        md-total="{{taskLength}}" md-page-select="taskPage.pageSelect"></md-table-pagination>
     </md-content>
 
     <div layout="column" ng-cloak>
@@ -70,8 +79,8 @@
             <md-sidenav class="md-sidenav-right md-whiteframe-4dp"
                 md-component-id="right"> <md-toolbar
                 class="md-theme-light">
-            <h1 class="md-toolbar-tools">Technology Create</h1>
-            </md-toolbar> <create-technology /></md-sidenav>
+            <h1 class="md-toolbar-tools"> Create User</h1>
+            </md-toolbar> <create-task/></md-sidenav>
         </section>
     </div>
 

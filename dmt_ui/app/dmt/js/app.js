@@ -70,6 +70,19 @@
                             }
                         }
                     });
+                    $stateProvider
+                    .state('app.login', {
+                        name: "login",
+                        url: "/login",
+                        views: {
+
+                            "content@": {
+                                controller: "loginController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.login/app.login.html"
+                            }
+                        }
+                    });
 
                       $stateProvider
                     .state('app.userDetails', {
@@ -84,6 +97,7 @@
                             }
                         }
                     });
+                     
                       $stateProvider
                     .state('app.technology', {
                         name: "technology",
@@ -221,6 +235,21 @@
                                                     }
                                                 }
                                             });
+                                     $stateProvider
+                                    .state(
+                                            'app.task',
+                                            {
+                                                name : "task",
+                                                url : "/task",
+                                                views : {
+
+                                                    "content@" : {
+                                                        controller : "taskController",
+                                                        controllerAs : 'self',
+                                                        templateUrl : "pages/app.task/task.html"
+                                                    }
+                                                }
+                                            });
 
                                 $stateProvider
                                     .state(
@@ -273,7 +302,7 @@
                                     }
                                 }
                             });
-                $urlRouterProvider.otherwise("/interview");
+                $urlRouterProvider.otherwise("/login");
 
             }
         ]);

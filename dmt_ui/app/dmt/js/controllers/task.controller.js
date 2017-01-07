@@ -1,9 +1,9 @@
 /*(function() {*/
     'use strict';
     dmtApplication
-        .controller("UserDetailsController", UserDetailsController);
+        .controller("taskController", taskController);
 
-    function UserDetailsController($scope,UserDetailsService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
+    function taskController($scope,TaskService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
           
 
         var self = {
@@ -16,7 +16,7 @@
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
         $scope.updatePage = false;
-        $scope.userDetails1Data = [];
+        $scope.TaskData = [];
         $scope.collection = [];
         $scope.selected = [];
         $scope.headerEnable = {};
@@ -25,24 +25,21 @@
 
         $scope.record = {
 
-            "userName" : "",
-            "firstName":"",
-            "lastName":"",
-            "email":"",
-            "phoneNo":"",
-            "password":"",
-            "confirmPassword": null,
-            "role":"",
-            "description":""
-     
+            "category" : "",
+            "taskDate":"",
+            "status":"",
+            "assignedTo":"",
+            "estimatedTime":"",
+            "description": ""
+   
         };
 
-        UserDetailsService.getAllUserDetails().then(function(response) {
-            $scope.userDetailsData = response.data;
-            $scope.userDetailsLength = response.data.length;
-            console.log($scope.userDetailsData);
-            $scope.userDetailsOptions = [ 5, 10, 15 ];
-            $scope.userDetailsPage = {
+        TaskService.getAllTask().then(function(response) {
+            $scope.TaskData = response.data;
+            $scope.TaskLength = response.data.length;
+            console.log($scope.TaskData);
+            $scope.TaskOptions = [ 5, 10, 15 ];
+            $scope.TaskPage = {
                 pageSelect : true
             };
 
@@ -58,7 +55,7 @@
         
         $scope.saveRecord = function() {
              console.log($scope.record);
-            UserDetailsService.create($scope.record).then(function(response) {
+          TaskService.create($scope.record).then(function(response) {
                 console.log("resp", response);
             });
             $mdSidenav('right').close().then(function() {
@@ -70,24 +67,22 @@
              console.log(row);
             $scope.rowData = row;
             $scope.updatePage = true;
-            $scope.record = {             
-                "userName" :row.username,
-            "firstName":row.firtname,
-            "lastName":row.lastname,
-            "email":row.email,
-            "phoneNo":row.phoneno,
-            "password":row.password,
-            "confirmPassword": null,
-            "role":row.role,
+            $scope.record = { 
+
+            "category" :row.category,
+            "taskDate":row.taskDate,
+            "status":row.status,
+            "assignedTo":row.assignedTo,
+            "estimatedTime":row.estimatedTime,
             "description":row.description,
              "id" : row.id
-                };
+            };
             // console.log($scope.create.status);
         };
         $scope.updateRecord = function() {
             // console.log($scope.create);
 
-            UserDetailsService.update($scope.record).then(function(response) {
+          TaskService.update($scope.record).then(function(response) {
                 console.log("resp", response);
             });
 
@@ -104,16 +99,16 @@
             $scope.selected.push(row.id);
         };
         $scope.selectAll = function() {
-            for ( var i in $scope.userDetailsData) {
-                $scope.userDetailsData[i]["checkboxValue"] = 'on';
-                $scope.selected.push($scope.userDetailsData[i].id);
+            for ( var i in $scope.taskData) {
+                $scope.taskData[i]["checkboxValue"] = 'on';
+                $scope.selected.push($scope.taskData[i].id);
             }
             ;
         };
 
         $scope.deSelectAll = function() {
-            for ( var i in $scope.userDetailsData) {
-                $scope.userDetailsData[i]["checkboxValue"] = 'off';
+            for ( var i in $scope.taskData) {
+                $scope.taskData[i]["checkboxValue"] = 'off';
             }
             ;
             $scope.selected = [];
@@ -131,10 +126,10 @@
                                 'Please do it!').cancel('Sounds like a scam');
 
                 $mdDialog.show(confirm).then(function() {
-                    $scope.userDetailsData = $scope.userDetailsData.filter(function(obj) {
+                    $scope.taskData = $scope.taskData.filter(function(obj) {
                         return $scope.selected.indexOf(obj.id) === -1;
                     });
-                       $scope.userDetailsLength = $scope.userDetailsData.length;
+                       $scope.taskLength = $scope.taskData.length;
                 }, function() {
                     $scope.status = 'You decided to keep your Task.';
                 });
@@ -224,13 +219,13 @@
   
 
 
-dmtApplication.directive('createUser', function($state) {
+dmtApplication.directive('createTask', function($state) {
     return {
         restrict : 'E',
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/userdetails/user.details.create.html';
+            return '../dmt/pages/app.task/task.create.html';
         }
     };
 });

@@ -16,7 +16,7 @@ public interface DMTRestURIConstants {
 	String SUPPORTS = "/supports";
 	String INTERVIEWS = "/interviews";
 	String COURSES = "/courses";
-	String TASKLISTS = "/taskLists";
+	String TODOS = "/toDos";
 	String QUESTIONS = "/questions";
 	String DASHBOARD_SUMMARY = "/dashboardSummary";
 	String INVOICES = "/invoices";

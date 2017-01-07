@@ -70,6 +70,12 @@ public class SQLConstants {
 	public static final String EMPLOYEE_UPDATE = "UPDATE employee set name=?,phone=?,email=?,role=?,base_salary=?,updated_date=?,description=? WHERE id = ?";
 	public static final String EMPLOYEE_SELECT_BY_ID = "SELECT * FROM employee where id = ?";
 
+	public static final String EMPLOYEE_ATTENDANCE_SELECT = "SELECT * FROM employee_attendence";
+	public static final String EMPLOYEE_ATTENDANCE_INSERT = "INSERT INTO employee_attendence(employee_id, employee_name, date, created_date, updated_date, in_time, out_time) VALUES (?,?,?,?,?,?,?)";
+	public static final String EMPLOYEE_ATTENDANCE_DELETE = "UPDATE employee_attendence set active_flag=1 WHERE id = ?";
+	public static final String EMPLOYEE_ATTENDANCE_UPDATE = "UPDATE employee_attendence SET employee_id=?,employee_name=?,date=?,created_date=?,updated_date=?,in_time=?,out_time=? WHERE id=?";
+	public static final String EMPLOYEE_ATTENDANCE_SELECT_BY_ID = "SELECT * FROM employee_attendence where id = ?";
+	
 	public static final String RESUME_SELECT = "SELECT r.*,tr.name as traineename,e.name as employee_name,trainee_id as 'trainee_id',prepared_by as 'employee',paid as 'paidStatus',r.`date` as 'createdate',r.`date` as 'updateddate',r.`received_status` as 'receivedStatus' FROM resume r,trainee tr,employee e WHERE r.trainee_id=tr.id AND r.prepared_by=e.id ORDER BY r.id desc";
 	public static final String RESUME_INSERT = "INSERT INTO resume (trainee_id, prepared_by,paid,date,created_date,received_status, description) values(?,?,?,?,?,?,?)";
 	public static final String RESUME_DELETE = "DELETE FROM resume  WHERE id = ?";

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(DMTRestURIConstants.EMPLOYEEATTENDANCE)
+@RequestMapping(DMTRestURIConstants.EMPLOYEE_ATTENDANCE)
 public class EmployeeAttendanceController extends APIController<EmployeeAttendance> {
 	@Autowired
 	@Qualifier("employeeAttendenceServiceImpl")

@@ -1,0 +1,32 @@
+<md-content layout-padding>
+<form name="questionCreateForm">
+    <md-input-container class="md-block"> <label>End Client</label>
+    <input required name="end_client" ng-model="create.end_client"> </md-input-container>
+
+    <md-input-container class="md-block"> <input
+        type="hidden" name="Id" ng-model="create.id"> </md-input-container>
+
+    <md-input-container class="md-block"> <label>Question</label>
+    <input  name="Question" ng-model="create.question">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Answer</label>
+    <input  name="answer" ng-model="create.answer">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Date</label>
+    <input  name="Date" type="date" ng-model="create.date">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Description</label>
+    <input  name="Description" ng-model="create.description">
+    </md-input-container>
+
+    <md-button class="md-raised md-primary" ng-click="saveRecord()"
+        ng-hide="updatePage"> Save </md-button>
+    <md-button class="md-raised md-primary" ng-click="updateData()"
+        ng-show="updatePage"> Update </md-button>
+    <md-button class="md-raised " ng-click="saveRecord()">
+    Cancel </md-button>
+</form>
+</md-content>

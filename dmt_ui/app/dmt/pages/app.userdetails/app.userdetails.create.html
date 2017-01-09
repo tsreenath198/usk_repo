@@ -1,0 +1,51 @@
+<md-content layout-padding>
+<form name="userrecordForm">
+   <md-input-container class="md-block"> <input
+        type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+
+    <md-input-container class="md-block"> <label>Firstname</label>
+    <input required name="Firstname" ng-model="record.firstName"> </md-input-container>
+
+    <md-input-container class="md-block"> <label>Lastname</label>
+    <input  name="Lastname" ng-model="record.lastName">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Email</label>
+    <input  name="Email" ng-model="record.email">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Phoneno</label>
+    <input  name="Phoneno" ng-model="record.phoneNo">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Username</label>
+    <input  name="Username" ng-model="record.userName">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Password</label>
+    <input  name="Password" type="password" ng-model="record.password">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Confirm Password</label>
+    <input  name="ConfirmPassword" type="password" ng-model="record.confirmPassword">
+    </md-input-container>
+
+    <md-input-container class="md-block" flex-gt-sm> <label>Role</label>
+    <md-select ng-model="record.role"> <md-option>
+    <em>None</em></md-option> <md-option ng-repeat="role in roles"
+        ng-selected="role.value === record.role" ng-value="role.value">
+    {{role.value}} </md-option> </md-select> </md-input-container>
+
+    
+    <md-input-container class="md-block"> <label>Description</label>
+    <input  name="Description" ng-model="record.description">
+    </md-input-container>
+
+    <md-button class="md-raised md-primary" ng-click="saveRecord()"
+        ng-hide="updatePage"> Save </md-button>
+    <md-button class="md-raised md-primary" ng-click="updateRecord()"
+        ng-show="updatePage"> Update </md-button>
+    <md-button class="md-raised " ng-click="saveRecord()">
+    Cancel </md-button>
+</form>
+</md-content>

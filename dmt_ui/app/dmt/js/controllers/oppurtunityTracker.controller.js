@@ -43,20 +43,21 @@ function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, 
 		});
 		 	
 		 };
-
+		 $scope.progressBar = true;
 		oppurtunityTrackerService.getAllOpportunity().then(function(response) {
 			$scope.oppurtunityTrackersData = response.data;
 			$scope.oppurtunityTrackersLength = response.data.length;
 			// console.log($scope.tasksData);
-			$scope.oppurtunityTrackersOptions = [ 5, 10, 15 ];
+			$scope.oppurtunityTrackersOptions = [ 200 , 300 ];
 			$scope.oppurtunityTrackerPage = {
 				pageSelect : true
 			};
 			$scope.query = {
 				order : 'name',
-				limit : 5,
+				limit : 100,
 				page : 1
 			};
+			$scope.progressBar = false;
 		}, function(error) {
 
 		});
@@ -232,7 +233,7 @@ dmtApplication.directive('createOppurtunity', function($state) {
 		replace : true,
 		templateUrl : function() {
 			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + '.create.html';
+			return '../dmt/pages/' + current + '/' + current + '.record.html';
 		}
 	};
 });

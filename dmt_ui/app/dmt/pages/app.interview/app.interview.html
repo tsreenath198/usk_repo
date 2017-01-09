@@ -38,17 +38,20 @@
 		More Tasks <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
 		</md-select>
 	</div>
-
+<div ng-show="progressBar" layout="row" layout-sm="column" layout-align="space-around">
+     
+        <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+    </div> 
 	<md-content layout="column" flex> <md-table-container>
 	<table md-table id="interviewTable">
 		<thead md-head md-order="query.order">
 			<tr md-row>
 				<th md-column><span> </span></th>
-				<th md-column><span>Employee</span></th>
+				<th md-column ng-show="employeeName"><span>Employee</span></th>
 				<th md-column><span>Trainee</span></th>
 				<th md-column><span>Technology</span></th>
-				<th md-column><span>Client</span></th>
-				<th md-column><span>End Client</span></th>
+				<th md-column ng-show="clientName"><span>Client</span></th>
+				<th md-column ng-show="interviewer"><span>End Client</span></th>
 				<th md-column><span>Date</span></th>
 				<th md-column><span>Time</span></th>
 				<th md-column><span>Status</span></th>
@@ -66,11 +69,11 @@
 						ng-click="rowSelect(data)" aria-label="Checkbox 2"
 						ng-true-value="'on'" ng-false-value="'off'"
 						class="md-warn md-align-top-left" flex></td>
-				<td md-cell>{{data.employeeName}}</td>
+				<td md-cell ng-show="employeeName">{{data.employeeName}}</td>
 				<td md-cell>{{data.traineeName}}</td>
 				<td md-cell>{{data.technology}}</td>
-				<td md-cell>{{data.clientName}}</td>
-				<td md-cell>{{data.interviewer}}</td>
+				<td md-cell ng-show="clientName">{{data.clientName}}</td>
+				<td md-cell ng-show="interviewer">{{data.interviewer}}</td>
 				<td md-cell>{{data.date}}</td>
 				<td md-cell>{{data.time}}</td>
 				<td md-cell>{{data.status}}</td>

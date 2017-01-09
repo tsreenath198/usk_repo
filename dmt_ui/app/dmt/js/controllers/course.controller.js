@@ -31,20 +31,21 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 		courseService.getAllTechnologies().then(function(response) {
 			$scope.technologies = response.data;
 		});
-
+		$scope.progressBar = true;
 		courseService.getAllCourses().then(function(response) {
 			$scope.coursesData = response.data;
 			$scope.coursesLength = response.data.length;
 			// console.log($scope.tasksData);
-			$scope.coursesOptions = [ 5, 10, 15 ];
+			$scope.coursesOptions = [ 200 , 300 ];
 			$scope.coursePage = {
 				pageSelect : true
 			};
 			$scope.query = {
 				order : 'name',
-				limit : 5,
+				limit : 100,
 				page : 1
 			};
+			$scope.progressBar = false;
 		}, function(error) {
 
 		});
@@ -219,7 +220,7 @@ dmtApplication.directive('createCourse', function($state) {
 		replace : true,
 		templateUrl : function() {
 			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + '.create.html';
+			return '../dmt/pages/' + current + '/' + current + '.record.html';
 		}
 	};
 });

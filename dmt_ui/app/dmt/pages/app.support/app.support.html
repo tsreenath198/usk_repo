@@ -38,8 +38,13 @@
 		</md-select>
 	</div>
 
+ <div ng-show="progressBar" layout="row" layout-sm="column" layout-align="space-around">
+     
+        <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+    </div> 
 
-	<md-content layout="column" flex> <md-table-container>
+    
+
 	<table md-table id="supportTable">
 		<thead md-head md-order="query.order">
 			<tr md-row>
@@ -61,6 +66,8 @@
 			</tr>
 		</thead>
 		<tbody md-body>
+		<md-content layout="column" flex> <md-table-container>
+	 
 			<tr md-row
 				ng-repeat="data in supportsData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
 				<td md-cell><md-checkbox ng-model="data.checkboxValue"
@@ -96,7 +103,7 @@
 			<md-sidenav class="md-sidenav-right md-whiteframe-4dp"
 				md-component-id="right"> <md-toolbar
 				class="md-theme-light">
-			<h1 class="md-toolbar-tools">Task Create</h1>
+			<h1 class="md-toolbar-tools">Support Create</h1>
 			</md-toolbar> <create-support /> </md-sidenav>
 		</section>
 	</div>

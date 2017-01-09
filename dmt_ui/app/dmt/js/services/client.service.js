@@ -2,18 +2,41 @@
 dmtApplication.factory("clientService", clientService);
 function clientService($http, $window, __env) {
 	var service = {
-		getAllTasks : getAllTasks,
-		getAllStatus : getAllStatus,
-		getAllEmployees : getAllEmployees
-	}, url = __env.baseUrl + __env.context;
+		getAllClients : getAllClients,
+		getAllTechnologies : getAllTechnologies,
+		create : create,
+		update : update
+	}, url = __env.baseUrl + __env.context
 	return service;
-	function getAllTasks() {
-		return $http.get(url + "/taskLists/readAll");
+	
+	function getAllClients() {
+		return $http.get(url + "/clients/readAll");
 	}
-	function getAllStatus() {
-		return $http.get("./mock/status.json");
+	function getAllTechnologies() {
+		return $http.get(url + "/technologies/readAll");
 	}
-	function getAllEmployees() {
-		return $http.get(url + "/employees/readAll");
+
+	function create(jsonData) {
+		return $http({
+			url : url + '/clients/create',
+			method : "POST",
+			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
 	}
+	function update(jsonData) {
+		return $http({
+			url : url + '/clients/update',
+			method : "POST",
+			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+
 }

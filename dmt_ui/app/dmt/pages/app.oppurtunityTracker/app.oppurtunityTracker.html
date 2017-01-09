@@ -32,6 +32,10 @@
 	</div>
 <h1>Oppurtunity Tracker</h1>
 	<md-content layout="column" flex> <md-table-container>
+	<div ng-show="progressBar" layout="row" layout-sm="column" layout-align="space-around">
+     
+        <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
+    </div> 
 	<table md-table id="oppurtunityTrackerTable">
 		<thead md-head md-order="query.order">
 		<tr md-row>

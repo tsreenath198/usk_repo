@@ -1,3 +1,7 @@
+.moreHeaders{
+    position: absolute;
+    z-index: 10;
+}
 .toolbardemoScrollShrink .face {
     width: 48px;
     margin: 16px;

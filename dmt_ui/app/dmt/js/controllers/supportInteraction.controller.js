@@ -43,13 +43,13 @@
       $scope.supportInteractionsData = response.data;
       $scope.supportInteractionsLength = response.data.length;
       console.log($scope.supportInteractionsData);
-      $scope.supportInteractionsOptions = [ 5, 10, 15 ];
+      $scope.supportInteractionsOptions = [ 200 , 300];
       $scope.supportInteractionPage = {
         pageSelect : true
       };
       $scope.query = {
         order : 'name',
-        limit : 5,
+        limit : 100,
         page : 1
       };
     }, function(error) {
@@ -225,37 +225,7 @@ dmtApplication.directive('createSupportinteraction', function($state) {
     replace : true,
     templateUrl : function() {
       var current = $state.current.name;
-      return '../dmt/pages/' + current + '/' + current + '.create.html';
+      return '../dmt/pages/' + current + '/' + current + '.record.html';
     }
   };
 });
-dmtApplication.filter('capitalize', function() {
-  return function(input) {
-    return (!!input) ? input.charAt(0).toUpperCase()
-        + input.substr(1).toLowerCase() : '';
-  }
-});
-
-dmtApplication
-    .factory(
-        'Excel',
-        function($window) {
-          var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
-              s) {
-            return $window.btoa(unescape(encodeURIComponent(s)));
-          }, format = function(s, c) {
-            return s.replace(/{(\w+)}/g, function(m, p) {
-              return c[p];
-            })
-          };
-          return {
-            tableToExcel : function(tableId, worksheetName) {
-              var table = $(tableId), ctx = {
-                worksheet : worksheetName,
-                table : table.html()
-              }, href = uri + base64(format(template, ctx));
-              return href;
-            }
-          };
-        });
-        

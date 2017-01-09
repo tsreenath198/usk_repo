@@ -18,12 +18,12 @@ public class SupportInteractionRowMapper implements
 		SupportInteraction supIntr = new SupportInteraction();
 		supIntr.setCount(rs.getInt("count"));
 		supIntr.setDate(ResultSetUtil.getDate(rs, "date"));
-		//supIntr.setLead(rs.getString("lead"));
+		supIntr.setLead(rs.getString("lead"));
 		supIntr.setLeadId(rs.getInt("lead_id"));
 		supIntr.setTraineeId(rs.getInt("trainee_id"));
 		supIntr.setTrainerId(rs.getInt("trainer_id"));
-		supIntr.setTraineeName(rs.getString("trainee_name"));
-		supIntr.setTrainerName(rs.getString("trainer_name"));
+		//supIntr.setTraineeName(rs.getString("trainee_name"));
+	//	supIntr.setTrainerName(rs.getString("trainer_name"));
 		supIntr.setCreatedDate(ResultSetUtil.getDate(rs, "created_date"));
 		supIntr.setUpdatedDate(ResultSetUtil.getDate(rs, "updated_date"));
 		supIntr.setDescription(rs.getString("description"));

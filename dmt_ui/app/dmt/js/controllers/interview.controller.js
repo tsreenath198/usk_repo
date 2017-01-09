@@ -20,12 +20,14 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 		$scope.headerEnable = {};
 		$scope.exportData = [];
 
-		$scope.headers = [ "category", "status" ];
+		$scope.headers = [ "interviewer", "clientName","employeeName" ];
 
 		$scope.headerEnable = {
-			"category" : false
+			"clientName" : false
 		}, {
-			"status" : false
+			"clientName" : false
+		},{
+			"employeeName":false
 		};
 
 		$scope.record = {
@@ -64,20 +66,21 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 			$scope.statuses = response.data;
 		});
 
-
+		$scope.progressBar = true;
 		interviewService.getAllInterviews().then(function(response) {
 			$scope.interviewsData = response.data;
 			$scope.interviewsLength = response.data.length;
 			//console.log($scope.tasksData);
-			$scope.interviewsOptions = [ 5, 10, 15 ];
+			$scope.interviewsOptions = [200,300 ];
 			$scope.interviewPage = {
 				pageSelect : true
 			};
 			$scope.query = {
 				order : 'name',
-				limit : 5,
+				limit : 100,
 				page : 1
 			};
+			$scope.progressBar = false;
 		}, function(error) {
 
 		});
@@ -195,17 +198,21 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 			console.log(header);
 			if (header.length > 0) {
 				for ( var i in header) {
-					if (header[i] == 'category') {
-						$scope.headerEnable.category = true;
-					} else if (header[i] == 'status') {
-						$scope.headerEnable.status = true;
+					if (header[i] == 'interviewer') {
+						$scope.headerEnable.interviewer = true;
+					} else if (header[i] == 'clientName') {
+						$scope.headerEnable.clientName = true;
+					} else if (header[i] == 'employeeName') {
+						$scope.headerEnable.clientName = true;
 					}
 				}
 			} else {
 				$scope.headerEnable = {
-					"category" : false
+					"interviewer" : false
 				}, {
-					"status" : false
+					"clientName" : false
+				},{
+					"employeeName":false
 				};
 			}
 		}
@@ -291,7 +298,7 @@ dmtApplication.directive('createInterview', function($state) {
 		replace : true,
 		templateUrl : function() {
 			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + '.create.html';
+			return '../dmt/pages/' + current + '/' + current + '.record.html';
 		}
 	};
 });

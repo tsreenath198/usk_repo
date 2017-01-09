@@ -6,6 +6,7 @@ public class Client {
 	private int id;
 	private String name;
 	private String address;
+	private String contacts;
 	private Date updatedDate;
 	private Date createdDate;
 	private int activeFlag;
@@ -65,6 +66,14 @@ public class Client {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(String contacts) {
+		this.contacts = contacts;
 	}
 
 }

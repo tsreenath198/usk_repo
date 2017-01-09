@@ -47,11 +47,15 @@
                         abstract: true,
                         views: {
                             'header': {
-                                templateUrl: 'pages/header.html'
+                                templateUrl: 'pages/header.html',
+                                controller: "leftNavController",
+                                controllerAs: 'self'
 
                             },
                             'navbar': {
-                                templateUrl: 'pages/navigation.html'
+                                templateUrl: 'pages/navigation.html',
+                                controller: "leftNavController",
+                                controllerAs: 'self'
 
                             }
                         }

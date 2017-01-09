@@ -14,101 +14,91 @@ function clientController($scope, clientService, Excel, $state, $mdDialog,
 		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
 		$scope.customFullscreen = false;
 		$scope.updatePage = false;
-		$scope.tasksData = [];
+		$scope.clientsData = [];
 		$scope.collection = [];
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
 
-		$scope.headers = [ "category", "status" ];
-
-		$scope.headerEnable = {
-			"category" : false
-		}, {
-			"status" : false
+		$scope.record = {
+			
+			
 		};
-
-		$scope.create = {
-			"category" : "",
-			"estimatedDays" : "",
-			"description" : "",
-			"employee" : [],
-			"status" : "",
-		};
-		clientService.getAllStatus().then(function(response) {
-			$scope.statuses = response.data;
+		clientService.getAllTechnologies().then(function(response) {
+			$scope.technologies = response.data;
 		});
-		clientService.getAllEmployees().then(function(response) {
-			$scope.employees = response.data;
-		});
-
-		clientService.getAllTasks().then(function(response) {
-			$scope.tasksData = response.data;
-			$scope.tasksLength = response.data.length;
-			//console.log($scope.tasksData);
-			$scope.tasksOptions = [ 5, 10, 15 ];
-			$scope.taskPage = {
+		$scope.progressBar = true;
+		clientService.getAllClients().then(function(response) {
+			$scope.clientsData = response.data;
+			$scope.clientsLength = response.data.length;
+			// console.log($scope.tasksData);
+			$scope.clientsOptions = [ 200 , 300];
+			$scope.clientPage = {
 				pageSelect : true
 			};
 			$scope.query = {
 				order : 'name',
-				limit : 5,
+				limit : 100,
 				page : 1
 			};
+			$scope.progressBar = false;
 		}, function(error) {
 
 		});
-	
-		
+
 		$scope.saveRecord = function() {
-			// console.log($scope.create);
+			console.log($scope.record);		
+				
+			clientService.create($scope.record).then(function(response) {
+				console.log("resp", response);
+			});
 			$mdSidenav('right').close().then(function() {
 				$log.debug("close RIGHT is done");
 			});
 		}
 
-		$scope.updateRow = function(row) {
-			/// console.log(row);
+		$scope.setRowData = function(row) {
+			
 			$scope.rowData = row;
 			$scope.updatePage = true;
-			$scope.create = {
-				"id" : row.id,
-				"category" : row.category,
-				"estimatedDays" : row.estimatedTime,
-				"description" : row.description,
-				"assignedTo" : row.assignedTo,
-				"updatedDate" : new Date(),
-				"taskDate" : row.taskDate,
-				"createdDate" : null,
-				"status" : row.status
+			$scope.record = {				
+				"technologyId" : row.technologyId,
+				"name" : row.name,
+				"estHrs" : row.estHrs,
+				"updatedDate":"",
+				"description" : row.description,				
+				"id" : row.id
 			};
 			// console.log($scope.create.status);
 		};
-		$scope.updateData = function() {
-			// console.log($scope.create);
+		$scope.updateRecord = function() {
+			console.log($scope.record);
+			courseService.update($scope.record).then(function(response) {
+				console.log("resp", response);
+			});
 			$mdSidenav('right').close().then(function() {
 				$log.debug("close RIGHT is done");
 			});
 		}
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
-			$scope.create = {};
+			
 		};
 
 		$scope.rowSelect = function(row) {
 			$scope.selected.push(row.id);
 		};
 		$scope.selectAll = function() {
-			for ( var i in $scope.tasksData) {
-				$scope.tasksData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.tasksData[i].id);
+			for ( var i in $scope.clientsData) {
+				$scope.clientsData[i]["checkboxValue"] = 'on';
+				$scope.selected.push($scope.clientsData[i].id);
 			}
 			;
 		};
 
 		$scope.deSelectAll = function() {
-			for ( var i in $scope.tasksData) {
-				$scope.tasksData[i]["checkboxValue"] = 'off';
+			for ( var i in $scope.clientsData) {
+				$scope.clientsData[i]["checkboxValue"] = 'off';
 			}
 			;
 			$scope.selected = [];
@@ -125,58 +115,27 @@ function clientController($scope, clientService, Excel, $state, $mdDialog,
 						.ariaLabel('Lucky day').targetEvent(ev).ok(
 								'Please do it!').cancel('Sounds like a scam');
 
-				$mdDialog.show(confirm).then(function() {
-					$scope.tasksData = $scope.tasksData.filter(function(obj) {
-						return $scope.selected.indexOf(obj.id) === -1;
-					});
-					$scope.tasksLength = $scope.tasksData.length;
-				}, function() {
-					$scope.status = 'You decided to keep your Task.';
-				});
+				$mdDialog
+						.show(confirm)
+						.then(
+								function() {
+									$scope.clientsData = $scope.clientsData
+											.filter(function(obj) {
+												return $scope.selected
+														.indexOf(obj.id) === -1;
+											});
+									$scope.clientsLength = $scope.clientsData.length;
+								},
+								function() {
+									$scope.status = 'You decided to keep your Task.';
+								});
 			} else {
 				alert("please select any one");
 			}
 
 		};
 
-		$scope.moreColumns = function(ev) {
-
-			$mdDialog.show({
-				controller : taskController,
-				templateUrl : 'pages/app.task/app.tasks.moreHeaders.html',
-				parent : angular.element(document.body),
-				targetEvent : ev,
-				clickOutsideToClose : true,
-				fullscreen : $scope.customFullscreen
-			}).then(
-					function(answer) {
-						$scope.status = 'You said the information was "'
-								+ answer + '".';
-					}, function() {
-						$scope.status = 'You cancelled the dialog.';
-					});
-		};
-
-		$scope.openMoreOptions = function(header) {
-			console.log(header);
-			if (header.length > 0) {
-				for ( var i in header) {
-					if (header[i] == 'category') {
-						$scope.headerEnable.category = true;
-					} else if (header[i] == 'status') {
-						$scope.headerEnable.status = true;
-					}
-				}
-			} else {
-				$scope.headerEnable = {
-					"category" : false
-				}, {
-					"status" : false
-				};
-			}
-		}
-
-		$scope.export = function(tableId) {
+		$scope.exportData = function(tableId) {
 			// $scope.tasksOptions = [ $scope.tasksData.length ];
 			var exportHref = Excel.tableToExcel(tableId, 'sheet name');
 			$timeout(function() {
@@ -251,42 +210,13 @@ function clientController($scope, clientService, Excel, $state, $mdDialog,
 	return self;
 };
 
-dmtApplication.directive('createMenu', function($state) {
+dmtApplication.directive('createClient', function($state) {
 	return {
 		restrict : 'E',
 		replace : true,
 		templateUrl : function() {
 			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + 's.create.html';
+			return '../dmt/pages/' + current + '/' + current + '.record.html';
 		}
 	};
 });
-dmtApplication.filter('capitalize', function() {
-	return function(input) {
-		return (!!input) ? input.charAt(0).toUpperCase()
-				+ input.substr(1).toLowerCase() : '';
-	}
-});
-
-dmtApplication
-		.factory(
-				'Excel',
-				function($window) {
-					var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
-							s) {
-						return $window.btoa(unescape(encodeURIComponent(s)));
-					}, format = function(s, c) {
-						return s.replace(/{(\w+)}/g, function(m, p) {
-							return c[p];
-						})
-					};
-					return {
-						tableToExcel : function(tableId, worksheetName) {
-							var table = $(tableId), ctx = {
-								worksheet : worksheetName,
-								table : table.html()
-							}, href = uri + base64(format(template, ctx));
-							return href;
-						}
-					};
-				});

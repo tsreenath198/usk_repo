@@ -70,20 +70,22 @@ function supportController($scope, supportService, Excel, $state, $mdDialog,
 		supportService.getAllpaidConstants().then(function(response) {
 			$scope.paidConstants = response.data;
 		});
-
+$scope.progressBar = true;
 		supportService.getAllSupports().then(function(response) {
+
 			$scope.supportsData = response.data;
 			//console.log($scope.supportsData);
 			$scope.supportsLength = response.data.length;
-			$scope.supportsOptions = [ 5, 10, 15 ];
+			$scope.supportsOptions = [ 200 , 300];
 			$scope.supportPage = {
 				pageSelect : true
 			};
 			$scope.query = {
 				order : 'name',
-				limit : 5,
+				limit : 100,
 				page : 1
 			};
+			$scope.progressBar = false;
 		}, function(error) {
 
 		});

@@ -14,6 +14,7 @@ public class ClientRowMapper implements RowMapper<Client> {
 		client.setId(resultSet.getInt("id"));
 		client.setName(resultSet.getString("name"));
 		client.setAddress(resultSet.getString("address"));
+		client.setContacts(resultSet.getString("contacts"));
 		client.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));
 		client.setUpdatedDate(ResultSetUtil.getDate(resultSet, "updated_date"));
 		client.setDescription(resultSet.getString("description"));

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(DMTRestURIConstants.TIME_SHEETS)
+@RequestMapping(DMTRestURIConstants.TIME_SHEETS) 
 public class TimeSheetController extends APIController<TimeSheet> {
 	@Autowired
 	@Qualifier("timeSheetServiceImpl")

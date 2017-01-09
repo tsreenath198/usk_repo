@@ -23,6 +23,7 @@ public class InvoiceRowMapper implements RowMapper<Invoice> {
 		invoice.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));
 		invoice.setUpdatedDate(ResultSetUtil.getDate(resultSet, "updated_date"));
 		invoice.setDescription(resultSet.getString("description"));
+		invoice.setActiveFlag(resultSet.getInt("active_flag"));
 		return invoice;
 	}
 }

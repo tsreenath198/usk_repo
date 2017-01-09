@@ -13,6 +13,7 @@ public class Invoice {
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
+	private int activeFlag;
 
 	public int getId() {
 		return id;
@@ -84,6 +85,14 @@ public class Invoice {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getActiveFlag() {
+		return activeFlag;
+	}
+
+	public void setActiveFlag(int activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
 }

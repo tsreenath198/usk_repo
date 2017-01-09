@@ -49,7 +49,7 @@ public class SQLConstants {
 
 	public static final String TRAINER_SELECT = "SELECT t.*, t.`technology_id` as 'technology',t.`referred_by` as 'employee',"
 			+ " te.name as technology_name,e.name as employee_name FROM trainer t, technology te ,employee e WHERE "
-			+ "t.technology_id= te.id AND t.`referred_by` = e.id UNION "	
+			+ "t.technology_id= te.id AND t.`referred_by` = e.id UNION "
 			+ "SELECT t.*, t.`technology_id` as 'technology',t.`referred_by` as 'employee', te.name as technology_name,'' as employee_name"
 			+ " FROM trainer t, technology te WHERE t.technology_id= te.id";
 	public static final String TRAINER_INSERT = "INSERT INTO trainer (name,referred_by, technology_id,phone,email,created_date,description) values(?, ?,?, ?,?,?,?)";
@@ -58,10 +58,10 @@ public class SQLConstants {
 	public static final String TRAINER_SELECT_BY_ID = "SELECT * FROM trainer where id = ?";
 	public static final String TRAINER_SELECT_BY_TECHNOLOGYID = "SELECT t.*,te.name as technology_name  FROM  trainer t, technology te WHERE t.technology_id= te.id AND t.technology_id = ? order by t.name asc";
 
-	public static final String INVOICE_SELECT = "SELECT * FROM invoice ORDER BY invoice_no asc";
-	public static final String INVOICE_INSERT = "INSERT INTO invoice (invoice_no,category,amount,currency,status,created_date,customer,description,invoice_date,paid) values(?,?,?,?,?,?,?,?,?,?)";
+	public static final String INVOICE_SELECT = "SELECT * FROM invoice ORDER BY invoice_date asc";
+	public static final String INVOICE_INSERT = "INSERT INTO invoice (invoice_date,invoice_type,actual_amount,received_amount,created_date,description) values(?,?,?,?,?,?)";
 	public static final String INVOICE_DELETE = "UPDATE invoice set active_flag=1 WHERE id = ?";
-	public static final String INVOICE_UPDATE = "UPDATE invoice set invoice_no=?,category=?,amount=?,currency=?,status=?,updated_date=?,customer=?,description=?,invoice_date=?,paid=? WHERE id = ?";
+	public static final String INVOICE_UPDATE = "UPDATE invoice set invoice_date=?,invoice_type=?,actual_amount=?,received_amount=?,updated_date=?,description=? WHERE id = ?";
 	public static final String INVOICE_SELECT_BY_ID = "SELECT * FROM invoice where id = ?";
 
 	public static final String EMPLOYEE_SELECT = "SELECT * FROM employee where active_flag=0 ORDER BY name asc";
@@ -233,15 +233,15 @@ public class SQLConstants {
 	public static final String PAYMENT_DASHBOARD = "SELECT tr.name as 'candidatename',cl.name AS clientName ,'Training' as category , tr.name AS assistedBy From trainee tr, batch b ,client cl where cl.id= tr.client_id AND b.id = tr.batch_id AND b.status IN (SELECT status from batch b where b.status = '3 - Payment Pending') UNION SELECT tr.name as 'name' ,cl.name AS client ,'Interview' as category , e.name AS assistedBy FROM interview i, trainee tr, client cl, employee e where i.status ='3 - Payment Pending' AND i.trainee_id=tr.id AND cl.id = tr.client_id AND i.assisted_by = e.id union SELECT tr.name as 'name' , cl.name AS client ,'Support' as category , e.name AS assistedBy FROM support s , trainee tr ,client cl,employee e where s.status ='3 - Payment Pending' AND s.trainee_id=tr.id AND cl.id = tr.client_id AND s.supported_by = e.id";;
 
 	public static final String USER_ROLE_SELECT = "SELECT * FROM user_role where active_flag=0";
-	public static final String USER_ROLE_INSERT = "INSERT INTO user_role (name) values(?)";
-	public static final String USER_ROLE_UPDATE = "UPDATE user_role set name=? WHERE id = ?";
+	public static final String USER_ROLE_INSERT = "INSERT INTO user_role (name,created_date,description) values(?,?,?)";
+	public static final String USER_ROLE_UPDATE = "UPDATE user_role set name=?,updated_date=?,description=? WHERE id = ?";
 	public static final String USER_ROLE_DELETE = "UPDATE user_role set active_flag=1 WHERE id = ?";
 	public static final String USER_ROLE_SELECT_BY_ID = "SELECT * FROM user_role where id = ?";
 
 	public static final String EMPLOYEE_DESIGNATION_SELECT = "SELECT * FROM employee_designation where active_flag=0";
-	public static final String EMPLOYEE_DESIGNATION_INSERT = "INSERT INTO employee_designation (designation) values(?)";
+	public static final String EMPLOYEE_DESIGNATION_INSERT = "INSERT INTO employee_designation (designation,created_date,description) values(?,?,?)";
 	public static final String EMPLOYEE_DESIGNATION_DELETE = "UPDATE employee_designation set active_flag=1 WHERE id = ?";
-	public static final String EMPLOYEE_DESIGNATION_UPDATE = "UPDATE employee_designation set designation=? WHERE id = ?";
+	public static final String EMPLOYEE_DESIGNATION_UPDATE = "UPDATE employee_designation set designation=?,updated_date=?,description=? WHERE id = ?";
 	public static final String EMPLOYEE_DESIGNATION_SELECT_BY_ID = "SELECT * FROM employee_designation where id = ?";
 
 	public static final String BATCH_ATTENDANCE_SELECT = "SELECT * FROM batch_attendance where active_flag=0 ORDER BY batch_id asc";
@@ -249,4 +249,10 @@ public class SQLConstants {
 	public static final String BATCH_ATTENDANCE_INSERT = "INSERT INTO batch_attendance (batch_id,date,trainee_id,created_date,description) values(?,?,?,?,?)";
 	public static final String BATCH_ATTENDANCE_UPDATE = "UPDATE batch_attendance set batch_id=?,date=?,trainee_id=?,updated_date=?,description=? WHERE id = ?";
 	public static final String BATCH_ATTENDANCE_DELETE = "UPDATE batch_attendance set active_flag=1 WHERE id = ?";
+
+	public static final String TIME_SHEET_SELECT = "SELECT * FROM time_sheet where active_flag=0 ORDER BY date asc";
+	public static final String TIME_SHEET_SELECT_BY_ID = "SELECT * FROM time_sheet where id = ?";
+	public static final String TIME_SHEET_INSERT = "INSERT INTO time_sheet (date,emploee_id,category,category_ref_no,duration_in_hours,created_date,description) values(?,?,?,?,?,?,?)";
+	public static final String TIME_SHEET_UPDATE = "UPDATE time_sheet set date=?,emploee_id=?,category=?,category_ref_no=?,duration_in_hours=?,updated_date=?,description=? WHERE id = ?";
+	public static final String TIME_SHEET_DELETE = "UPDATE time_sheet set active_flag=1 WHERE id = ?";
 }

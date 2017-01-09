@@ -22,14 +22,16 @@ public interface DMTRestURIConstants {
 	String INVOICES = "/invoices";
 	String ATTENDANCES = "/attendances";
 	String RESUMES = "/resumes";
-	String PIPELINES ="/pipelines";
-	String USERDETAILS ="/userDetails";
+	String PIPELINES = "/pipelines";
+	String USERDETAILS = "/userDetails";
 	String SUPPORTINTERACTIONS = "/supportInteractions";
 	String EMPLOYEES_DESIGNATION = "/employeesDesignation";
 	String BATCH_ATTENDANCES = "/batchAttendances";
 	String USER_ROLES = "/userRoles";
+	String TIME_SHEETS = "/timeSheets";
+	String EMPLOYEE_ATTENDANCE = "/employeeAttendances";
 	/**
-	 * OPERATIONS HERE	
+	 * OPERATIONS HERE
 	 */
 	String READ_ALL = "/readAll";
 	String READ = "/read";

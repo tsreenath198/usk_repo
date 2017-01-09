@@ -1,0 +1,40 @@
+<md-content layout-padding>
+<form name="userrecordForm">
+   <md-input-container class="md-block"> <input
+        type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+
+    <md-input-container class="md-block"> <label>Category</label>
+    <input required name="Category" ng-model="record.category"> </md-input-container>
+
+    <md-input-container class="md-block"> <label>Task Date</label>
+    <input  name="Task Date" type="date" ng-model="record.task_date">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Status</label>
+    <input  name="Status" ng-model="record.status">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Assigned To</label>
+    <input  name="AssignedTo" ng-model="record.assigned_to">
+    </md-input-container>
+
+    <md-input-container class="md-block"> <label>Estimated Time</label>
+    <input  name="EstimatedTime"  ng-model="record.estimated_time">
+    </md-input-container>
+
+    <!-- <md-input-container class="md-block"> <label>Created Date</label>
+    <input  name="CreatedDate" type="date" ng-model="record.created_date">
+    </md-input-container> -->
+
+    <md-input-container class="md-block"> <label>Description</label>
+    <input  name="Descirption"  ng-model="record.description">
+    </md-input-container>
+
+    <md-button class="md-raised md-primary" ng-click="saveRecord()"
+        ng-hide="updatePage"> Save </md-button>
+    <md-button class="md-raised md-primary" ng-click="updateRecord()"
+        ng-show="updatePage"> Update </md-button>
+    <md-button class="md-raised " ng-click="saveRecord()">
+    Cancel </md-button>
+</form>
+</md-content>

@@ -1,22 +1,22 @@
 /*(function () {*/
     'use strict';
     
-    dmtApplication.factory("UserDetailsService", UserDetailsService);
-    function UserDetailsService($http,__env,$window) {
+    dmtApplication.factory("TaskService", TaskService);
+    function TaskService($http,__env,$window) {
            var service = {
-           getAllUserDetails: getAllUserDetails, 
+           getAllTask: getAllTask, 
            create:create,
            update:update
                    
           }, url = __env.baseUrl + __env.context
        return service;
-       function getAllUserDetails() {
-                return $http.get(url + "/userDetails/readAll");  
+       function getAllTask() {
+                return $http.get(url + "/toDos/readAll");  
               }
 
     function create(jsonData) {
     return $http({
-      url : url + '/userDetails/create',
+      url : url + '/toDos/create',
       method : "POST",
       data : jsonData
     }).then(function(response) {
@@ -28,7 +28,7 @@
   
   function update(jsonData) {
     return $http({
-      url : url + '/userDetails/update',
+      url : url + '/toDos/update',
       method : "POST",
       data : jsonData
     }).then(function(response) {

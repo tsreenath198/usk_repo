@@ -1,1 +1,83 @@
-[{"key":"client","value":"Client","route":"app.client"},{"key":"course","value":"Course","route":"app.client"}]
+[
+  {
+    "key": "client",
+    "value": "Client",
+    "route": "app.client"
+  },
+  {
+    "key": "userDetails",
+    "value": "User Details",
+    "route": "app.userDetails"
+  },
+  {
+    "key": "course",
+    "value": "Course",
+    "route": "app.client"
+  },
+  {
+    "key": "dashboard",
+    "value": "Dashboard",
+    "route": "app.dashboard"
+  }
+  ,
+  {
+    "key": "task",
+    "value": "task",
+    "route": "app.task"
+  },
+  {
+    "key": "technology",
+    "value": "technology",
+    "route": "app.technology"
+  },
+  {
+    "key": "support",
+    "value": "Support",
+    "route": "app.support"
+  },
+  {
+    "key": "trainer",
+    "value": "Trainer",
+    "route": "app.Trainer"
+  },
+  {
+    "key": "trainee",
+    "value": "Trainee",
+    "route": "app.trainee"
+  },
+  {
+    "key": "timesheet",
+    "value": "Timesheet",
+    "route": "app.timesheet"
+  },
+  {
+    "key": "employee",
+    "value": "Employee",
+    "route": "app.employee"
+  },
+  {
+    "key": "batch",
+    "value": "Batch",
+    "route": "app.batch"
+  },
+  {
+    "key": "interview",
+    "value": "Interview",
+    "route": "app.interview"
+  },
+  {
+    "key": "salary",
+    "value": "Salary",
+    "route": "app.salary"
+  },
+  {
+    "key": "oppurtunityTracker",
+    "value": "Oppurtunity Tracker",
+    "route": "app.oppurtunityTracker"
+  },
+  {
+    "key": "employeeAttendance",
+    "value": "Employee Attendance",
+    "route": "app.employeeAttendance"
+  }
+]

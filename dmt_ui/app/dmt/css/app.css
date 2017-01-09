@@ -125,3 +125,156 @@ md-checkbox{
     top: 40px;
     left: 23px;
 }
+.toolbardemoScrollShrink .face {
+    width: 48px;
+    margin: 16px;
+    border-radius: 48px;
+    border: 1px solid #ddd;
+}
+md-list {
+    height: 60%;
+    overflow-y: scroll;
+}
+.md-list-item-height {
+    height: 10% !important;
+    min-height: 10% !important;
+}
+.md-icon-custom {
+    position: relative;
+    top: 200px;
+    /*left: 100%;*/
+    z-index: 100 !important;
+}
+.mB20 {
+    margin-bottom: 20px;
+}
+.mL20 {
+    margin-left: 20px;
+}
+.mT2 {
+    margin-top: 2% !important;
+}
+.md-scrollx-none {
+    overflow-x: hidden !important;
+}
+.md-scrolly-none {
+    overflow-y: hidden !important;
+}
+.material-icons.md-red {
+    color: rgb(255, 0, 0);
+}
+.material-icons.md-green {
+    color: rgb(0, 128, 0);
+}
+.material-icons.md-white {
+    color: rgb(255, 255, 255);
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.error{
+   color: rgb(255, 0, 0); 
+}
+#add_icon{
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+#add_icon:focus,#delete_icon:focus{
+ outline: none !important;
+ border:0 !important;
+}
+.md-bg-red{
+        top: -5px;
+    background: red !important;
+    height:20px !important;
+    width:40px !important;
+}
+.md-bg-red:focus,.md-bg-red:hover{
+    background: #ff6666 !important;
+}
+/*md-toast.md-top {
+    left: 50%;
+    margin-left: -150px;
+}*/
+
+
+.tooltipdemoBasicUsage md-toolbar .md-toolbar-tools .md-button,
+.tooltipdemoBasicUsage md-toolbar .md-toolbar-tools .md-button:hover {
+  box-shadow: none;
+  border: none;
+  transform: none;
+  -webkit-transform: none; }
+
+md-input-container.md-input-invalid label#addNewApplicationLabel{
+    color:rgba(0,0,0,0.54);
+}
+
+#application,#application:focus{
+    border-color:rgba(0,0,0,0.54);;
+}
+
+/*.content-height{
+    height:75% !important;
+}*/
+.md-matchers-top{
+    position: relative;
+    top:-80px;
+}
+.md-matchers-table{
+        border: 1px rgba(0,0,0,.12) solid;
+}
+
+.md-matchers-table th,.md-matchers-table td{
+        border-right: 1px rgba(0,0,0,.12) solid;
+}
+
+.md-padding-left{
+    padding-left:10px !important;
+}
+
+md-checkbox{
+    margin-right:25px !important;
+}
+
+.showAndHide{
+    /*position: absolute;
+    top: 30%;
+    left: 3%;*/
+
+        position: relative;
+    top: 40px;
+    left: 23px;
+}
+.toggleNavRight{
+    position: absolute;
+    top: 16px;
+    right: 0px;
+}
+
+.md-menu-bar-cust{
+    position: absolute;
+    top: 5px;
+    right: 0px;
+}
+.md-menu-bar-hamburger{
+    position: absolute;
+    top: 9px;
+    right: 0px;
+    left: 96%;
+}
+.toggleNavLeft{
+    position: absolute;
+    top: 12px;
+   left: 0px;
+}
+.margin-left-1{
+     margin-left: 1%;
+}
+
+md-menu-bar.md-default-theme md-menu.md-open > button, md-menu-bar md-menu.md-open > button, md-menu-bar.md-default-theme md-menu > button:focus, md-menu-bar md-menu > button:focus {
+    outline: none;
+     background: transparent; 
+}

@@ -7,24 +7,22 @@
         <i class="material-icons toggleNavRight" data-ng-click="toggleNavigationLeft()" align="right">keyboard_arrow_left</i>
       </md-toolbar> 
 
-     <!-- <md-content class="md-padding">
-        <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" layout-align="space-between start">
-            <md-nav-item md-nav-sref="app.client" name="aboutus" data-ng-click="toggleNavigationLeft()">About Us</md-nav-item>
-            <md-nav-item md-nav-sref="app.client" name="aboutus">About Us</md-nav-item>
-        
-            
-        </md-nav-bar>
-    </md-content> -->
-    <md-content class="md-padding">
+     <ul>
+<li ng-repeat="tab in leftTabs">
+<a ui-sref="{{tab.route}}">{{tab.value}}</a>
+</li>
+     </ul>
+
+   <!--  <md-content class="md-padding">
       <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
         <md-nav-item ng-repeat="tab in leftTabs" md-nav-sref="{{tab.route}}" name="{{tab.value}}">{{tab.value}}</md-nav-item>
       </md-nav-bar>
       <span>{{currentNavItem}}</span>
-    </md-content>
+    </md-content> -->
     </md-sidenav>
 </section>
 
-<div layout="row" layout-align="space-between start" layout-wrap >
+<!-- <div layout="row" layout-align="space-between start" layout-wrap >
     <md-content class="md-padding">
         <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" layout-align="space-between start">
             <md-nav-item md-nav-sref="app.dashboard" name="dashboard">Dash Board</md-nav-item>
@@ -45,4 +43,4 @@
                      <md-nav-item md-nav-sref="app.oppurtunityTracker" name="oppurtunityTracker">Oppurtunity Tracker</md-nav-item>
         </md-nav-bar>
     </md-content>
-</div> 
+</div>  -->

@@ -30,6 +30,8 @@ public interface DMTRestURIConstants {
 	String USER_ROLES = "/userRoles";
 	String TIME_SHEETS = "/timeSheets";
 	String EMPLOYEE_ATTENDANCE = "/employeeAttendances";
+	String SALARY= "/salary";
+			
 	/**
 	 * OPERATIONS HERE
 	 */

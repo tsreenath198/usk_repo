@@ -1,13 +1,12 @@
 <section class="loginform cf">
-<form name="login" action="index_submit" method="get" accept-charset="utf-8">
+<form name="login" action="index_submit" method="POST" accept-charset="utf-8">
 <div class="demo-md-panel-animation md-padding">
 	<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
 		<div flex="40">
-			<md-input-container class="md-block"> <label> Username</label> <input required name="filter"
+			<md-input-container class="md-block"> <label> Username</label> <input required name="username"
 				ng-model="userName"> </md-input-container>
-				<md-input-container class="md-block"> <label> Password</label> <input required name="filter"
-				ng-model="password"> </md-input-container>
-				<button ng-click="validate()">Login</button>
+				<md-input-container class="md-block"> <label> Password</label> <input required type="password" name="password" ng-model="password"> </md-input-container>
+				<button ng-click="validate()" disabled="disabled">Login</button>
 		</div>
 		
 	</div>

@@ -30,16 +30,18 @@
 
 		</div>
 	</div>
-<h1>Course</h1>
+<h1>Support Interaction</h1>
 
 	<md-content layout="column" flex> <md-table-container>
 	<table md-table id="courseTable">
 		<thead md-head md-order="query.order">
 			<tr md-row>
 				<th md-column><span> </span></th>
-				<th md-column ><span>Technology </span></th>
-				<th md-column ><span>Name</span></th>
-				<th md-column><span>Estimated Hours</span></th>
+				<th md-column ><span>Count </span></th>
+				<th md-column ><span>Employee</span></th>
+				<th md-column><span>Lead</span></th>
+				<th md-column><span>Trainee</span></th>
+				<th md-column><span>Date</span></th>
 				<th md-column>Actions</th>
 			</tr>
 		</thead>
@@ -50,9 +52,11 @@
 						ng-click="rowSelect(data)" aria-label="Checkbox 2"
 						ng-true-value="'on'" ng-false-value="'off'"
 						class="md-warn md-align-top-left" flex></td>
-				<td md-cell >{{data.technologyId}}</td>
-				<td md-cell >{{data.name}}</td>
-				<td md-cell>{{data.estHrs}}</td>
+				<td md-cell >{{data.count}}</td>
+				<td md-cell >{{data.employeeName}}</td>
+				<td md-cell>{{data.lead}}</td>
+				<td md-cell>{{data.traineeName}}</td>
+				<td md-cell>{{data.date}}</td>
 				<td md-cell><span> <md-tooltip> Update </md-tooltip> <i
 						class="material-icons" ng-click="setRowData(data);toggleRight()"
 						ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>

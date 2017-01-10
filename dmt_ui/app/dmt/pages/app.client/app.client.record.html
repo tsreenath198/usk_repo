@@ -1,23 +1,36 @@
 <md-content layout-padding>
-<form name="courseCreateForm">
+<form name="clientCreateForm">
 
-	<md-input-container class="md-block" flex-gt-sm> <label>Technology</label>
-	<md-select ng-model="record.technologyId"> <md-option>
-	<em>None</em> </md-option> <md-option ng-repeat="tech in technologies"
-		ng-selected="tech.id === record.technologyId" ng-value="{{tech.id}}">
-	{{tech.name}} </md-option> </md-select> </md-input-container>
+	<md-input-container class="md-block" flex-gt-sm> <label>Name</label>
+	<input required name="name" ng-model="record.name"> </md-input-container>
 
-	<md-input-container class="md-block"> <label>Name</label>
-	<input required name="Name" ng-model="record.name"> </md-input-container>
-
-	<md-input-container class="md-block"> <label>Estimated
-		Hours</label> <input required name="Estimated Hours"
-		ng-model="record.estHrs"> </md-input-container>
-
+	<md-input-container class="md-block"> <label>Address</label>
+	<input required name="address" ng-model="record.address"> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Description
-	</label> <input required name="Description" ng-model="record.description">
-	</md-input-container>
+		</label> <input required name="description"
+		ng-model="record.description"> </md-input-container>	
+
+		<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
+
+	
+            <div flex="20" class="green box"><input
+		type="text" name="Id" ng-model="record.id"> </div>
+            <div flex="20" class="blue box"> <input
+		type="text" name="Id" ng-model="record.id"> </div>
+		<div flex="20" class="green box"><input
+		type="text" name="Id" ng-model="record.id"> </div>
+            <div flex="20" class="blue box"> <input
+		type="text" name="Id" ng-model="record.id"> </div>
+		<div><button><i class="material-icons">description</i></button></div>
+        
+		<!--<md-input-container class="md-block"><label>Designation</label> <input
+		type="hidden" name="Id" ng-model="contact.designation"> </md-input-container>
+		<md-input-container class="md-block"><label>Phone</label> <input
+		type="hidden" name="Id" ng-model="contact.phone"> </md-input-container>
+		<span><i class="material-icons">description</i></span> -->
+
+		</div>
 
 	<md-input-container class="md-block"> <input
 		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
@@ -26,7 +39,7 @@
 		ng-hide="updatePage"> Save </md-button>
 	<md-button class="md-raised md-primary" ng-click="updateRecord()"
 		ng-show="updatePage"> Update </md-button>
-	<md-button class="md-raised " ng-click="saveRecord()">
+	<md-button class="md-raised">
 	Cancel </md-button>
 </form>
 

@@ -38,7 +38,7 @@
   {
     "key": "trainer",
     "value": "Trainer",
-    "route": "app.Trainer"
+    "route": "app.trainer"
   },
   {
     "key": "trainee",
@@ -79,5 +79,10 @@
     "key": "employeeAttendance",
     "value": "Employee Attendance",
     "route": "app.employeeAttendance"
+  },
+  {
+    "key": "supportInteraction",
+    "value": "Support Interaction",
+    "route": "app.supportInteraction"
   }
 ]

@@ -9,9 +9,9 @@ public class SupportInteraction {
 	private String lead;
 	private int leadId;
 	private int traineeId;
-	private int trainerId;
+	private int employeeId;
 	private String traineeName;
-	private String trainerName;
+	private String employeeName;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
@@ -64,12 +64,12 @@ public class SupportInteraction {
 		this.traineeId = traineeId;
 	}
 
-	public int getTrainerId() {
-		return trainerId;
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setTrainerId(int trainerId) {
-		this.trainerId = trainerId;
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
 	}
 
 	public String getTraineeName() {
@@ -80,12 +80,12 @@ public class SupportInteraction {
 		this.traineeName = traineeName;
 	}
 
-	public String getTrainerName() {
-		return trainerName;
+	public String getEmployeeName() {
+		return employeeName;
 	}
 
-	public void setTrainerName(String trainerName) {
-		this.trainerName = trainerName;
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
 	}
 
 	public String getDescription() {

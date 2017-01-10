@@ -9,11 +9,11 @@
             saveApplication:saveApplication,
             deleteApplication:deleteApplication,
 
-          };
+          }, url = __env.baseUrl + __env.context
     	 return service;
        function getAllApplications() {
         		    //return $http.get(__env.baseUrl+__env.context+__env.api+"/app");
-                return $http.get("http://localhost:8011/dmt_rest_service/dashboardSummary/readAll");
+                return $http.get(url+"/dashboardSummary/readAll");
 		   }
 
        function getApplicationByName(data) {

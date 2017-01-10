@@ -115,6 +115,19 @@
                                 }
                         }
                     });
+                    $stateProvider
+                    .state('app.supportInteraction', {
+                        name: "supportInteraction",
+                        url: "/supportInteraction",
+                        views: {
+
+                            "content@": {
+                                controller: "supportInteractionController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.supportInteraction/app.supportInteraction.html"
+                                }
+                        }
+                    });
 
                     $stateProvider
                     .state('app.timesheet', {

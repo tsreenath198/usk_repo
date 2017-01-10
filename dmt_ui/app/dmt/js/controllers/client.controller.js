@@ -21,8 +21,10 @@ function clientController($scope, clientService, Excel, $state, $mdDialog,
 		$scope.exportData = [];
 
 		$scope.record = {
-			
-			
+			"name":"",
+			"address":"",
+			"createdDate":"",
+			"description":""			
 		};
 		clientService.getAllTechnologies().then(function(response) {
 			$scope.technologies = response.data;

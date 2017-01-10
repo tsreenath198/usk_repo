@@ -5,27 +5,27 @@ dmtApplication.factory("supportInteractionService", supportInteractionService);
 function supportInteractionService($http, __env, $window) {
 
 	var service = {
-		getAllTrainers : getAllTrainers,
+		getAllSupportInteractions : getAllSupportInteractions,
 		getAllEmployees : getAllEmployees,
-		getAllTechnologies : getAllTechnologies,
+		getAllTrainees : getAllTrainees,
 		create : create,
 		update: update
 
 	},url = __env.baseUrl + __env.context
 	return service;
-	function getAllTrainers() {
-		return $http.get(url + "/supportTrackers/readAll");
+	function getAllSupportInteractions() {
+		return $http.get(url + "/supportInteractions/readAll");
 	}
 
 	function getAllEmployees() {
 		return $http.get(url + "/employees/readAll");
 	}
-	function getAllTechnologies() {
-		return $http.get(url + "/supportTrackers/readAll");
+	function getAllTrainees() {
+		return $http.get(url + "/trainees/readAll");
 	}
 	function create(jsonData) {
 		return $http({
-			url : url + '/trainers/create',
+			url : url + '/supportInteractions/create',
 			method : "POST",
 			data : jsonData
 		}).then(function(response) {
@@ -36,7 +36,7 @@ function supportInteractionService($http, __env, $window) {
 	}
 	function update(jsonData) {
 		return $http({
-			url : url + '/trainers/update',
+			url : url + '/supportInteractions/update',
 			method : "POST",
 			data : jsonData
 		}).then(function(response) {

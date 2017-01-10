@@ -43,7 +43,7 @@
 				<th md-column><span> </span></th>
 				<th md-column ><span>Name</span></th>
 				<th md-column><span>Address</span></th>
-				<th md-column><span>Client</span></th>
+				<th md-column><span>Contact</span></th>
 				<th md-column>Actions</th>
 			</tr>
 		</thead>
@@ -59,7 +59,8 @@
 				<td md-cell >{{data.contacts}}</td>
 				<td md-cell><span> <md-tooltip> Update </md-tooltip> <i
 						class="material-icons" ng-click="setRowData(data);toggleRight()"
-						ng-hide="isOpenRight()">border_color</i></span></td>
+						ng-hide="isOpenRight()">border_color</i></span><span><md-tooltip>
+						{{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
 			</tr>
 		</tbody>
 	</table>
@@ -70,7 +71,7 @@
 
 	<div layout="column" ng-cloak>
 		<section layout="row" flex>
-			<md-sidenav class="md-sidenav-right md-whiteframe-4dp"
+			<md-sidenav class="md-sidenav-right md-sidenav-client md-whiteframe-4dp"
 				md-component-id="right"> <md-toolbar
 				class="md-theme-light">
 			<h1 class="md-toolbar-tools">Client Create</h1>

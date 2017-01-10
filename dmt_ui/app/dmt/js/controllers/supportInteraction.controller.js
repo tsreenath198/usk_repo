@@ -20,26 +20,25 @@
     $scope.selected = [];
     $scope.headerEnable = {};
     $scope.exportData = [];
-
     $scope.record = {
-      "trainerName" : "",
-      "referredBy" : "",
-      "technologyId" : "",
-      "created_date":new Date(),
-      "phone" : "",
-      "email" : "",
-      "description" : ""
-    };
-    
+      "count": "",
+      "leadId": "",
+      "traineeId": "",
+      "employeeId": "",
+      "lead": "Sreenath Thatikonda",
+      "date": "",
+      "createdDate": "",
+      "description": ""
+    };   
 
     supportInteractionService.getAllEmployees().then(function(response) {
       $scope.employees = response.data;
     });
-     supportInteractionService.getAllTechnologies().then(function(response) {
-      $scope.technologies = response.data;
+     supportInteractionService.getAllTrainees().then(function(response) {
+      $scope.trainees = response.data;
     });
 
-    supportInteractionService.getAllTrainers().then(function(response) {
+    supportInteractionService.getAllSupportInteractions().then(function(response) {
       $scope.supportInteractionsData = response.data;
       $scope.supportInteractionsLength = response.data.length;
       console.log($scope.supportInteractionsData);
@@ -57,13 +56,9 @@
     });
   
     
-    $scope.saveRecord = function() {
-    	var jsonData = $scope.record;
-		var date = new Date();
-		//var dataForCreate = [ jsonData.name,date,jsonData.description ];
+    $scope.saveRecord = function() {   			
 		supportInteractionService.create($scope.record).then(function(response) {
-			//$scope.technology = response.data;
-			console.log(response);
+			
 		});
 		$mdSidenav('right').close().then(function() {
 			$log.debug("close RIGHT is done");
@@ -75,20 +70,22 @@
       $scope.rowData = row;
       $scope.updatePage = true;
       $scope.record = {
-        "id" : row.id,
-        "trainer" : row.name,
-        "employee" : row.referredBy,
-        "technology" : row.technologyId,
-        "phone" : row.phone,
-        "email" : row.email,
-        "updatedDate" : new Date(),
-        "createdDate" : null,
-        "description" : row.description
+        "count": row.count,
+      "leadId": row.leadId,
+      "traineeId": row.traineeId,
+      "employeeId": row.employeeId,
+      "lead": "Sreenath Thatikonda",
+      "date": row.date,
+      "updatedDate": "",
+      "description": row.description,
+      "id":row.id
       };
       // console.log($scope.create.status);
     };
-    $scope.updateData = function() {
-     console.log($scope.create);
+    $scope.updateRecord = function() {
+     supportInteractionService.update($scope.record).then(function(response) {
+      
+    });
       $mdSidenav('right').close().then(function() {
         $log.debug("close RIGHT is done");
       });

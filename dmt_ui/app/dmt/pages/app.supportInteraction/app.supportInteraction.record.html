@@ -1,20 +1,39 @@
 <md-content layout-padding>
 <form name="supportInteractionCreateForm">
 
-	<md-input-container class="md-block" flex-gt-sm> <label>Technology</label>
-	<md-select ng-model="record.technologyId"> <md-option>
-	<em>None</em> </md-option> <md-option ng-repeat="tech in technologies"
-		ng-selected="tech.id === record.technologyId" ng-value="{{tech.id}}">
-	{{tech.name}} </md-option> </md-select> </md-input-container>
+<md-input-container class="md-block"> <label>Count</label>
+	<input required name="count" type="number" ng-model="record.count"> </md-input-container>
 
-	<md-input-container class="md-block"> <label>Name</label>
-	<input required name="Name" ng-model="record.name"> </md-input-container>
+<md-input-container class="md-block"> <label>Date</label>
+	<input required name="count" type="date" ng-model="record.date"> </md-input-container>
 
-	<md-input-container class="md-block"> <label>Estimated
-		Hours</label> <input required name="Estimated Hours"
-		ng-model="record.estHrs"> </md-input-container>
+	<md-input-container class="md-block" flex-gt-sm> <label>Employee</label>
+	<md-select ng-model="record.employeeId"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
+		ng-selected="employee.id === record.employeeId" ng-value="{{employee.id}}">
+	{{employee.name}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Lead </label>
+	<md-select ng-model="record.leadId"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
+		ng-selected="employee.id === record.leadId" ng-value="{{employee.id}}">
+	{{employee.name}} </md-option> </md-select> </md-input-container>
+
+	<!-- <md-input-container class="md-block" flex-gt-sm> <label>Lead </label>
+	<md-select ng-model="record.leadId"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
+		ng-selected="employee.id === record.leadId" ng-value="{{tech.name}}">
+	{{employee.name}} </md-option> </md-select>
+	 </md-input-container> -->
 
 
+	<md-input-container class="md-block" flex-gt-sm> <label>Trainee </label>
+	<md-select ng-model="record.traineeId"> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="trainee in trainees"
+		ng-selected="trainee.id === record.traineeId" ng-value="{{trainee.id}}">
+	{{trainee.name}} </md-option> </md-select> </md-input-container>
+
+	
 	<md-input-container class="md-block"> <label>Description
 	</label> <input required name="Description" ng-model="record.description">
 	</md-input-container>

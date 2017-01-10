@@ -3,6 +3,14 @@ package in.uskcorp.tool.dmt.domain;
 import java.util.Date;
 
 public class Batch {
+	@Override
+	public String toString() {
+		return "Batch [id=" + id + ", technologyId=" + technologyId + ", trainerId=" + trainerId + ", duration="
+				+ duration + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status
+				+ ", paidStatus=" + paidStatus + ", receivedStatus=" + receivedStatus + ", trainerName=" + trainerName
+				+ ", technologyName=" + technologyName + ", description=" + description + ", activeFlag=" + activeFlag
+				+ ", batchTime=" + batchTime + ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + "]";
+	}
 	private int id;
 	private int technologyId;
 	private int trainerId;
@@ -11,6 +19,7 @@ public class Batch {
 	private Date endDate;
 	private String status;
 	private String paidStatus;
+	private String receivedStatus;
 	private String trainerName;
 	private String technologyName;
 	private String description;
@@ -20,6 +29,14 @@ public class Batch {
 	private Date updatedDate;
 	
 	
+	
+	public String getReceivedStatus() {
+		return receivedStatus;
+	}
+
+	public void setReceivedStatus(String receivedStatus) {
+		this.receivedStatus = receivedStatus;
+	} 
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -115,6 +132,8 @@ public class Batch {
 	public void setActiveFlag(int activeFlag) {
 		this.activeFlag = activeFlag;
 	}
+
+	
 	
 
 }

@@ -297,3 +297,12 @@ md-menu-bar.md-default-theme md-menu.md-open > button, md-menu-bar md-menu.md-op
     outline: none;
      background: transparent; 
 }
+#busy {
+	position: fixed;
+	left: 50%;
+	top: 35%;
+	display: none;
+	z-index: 1000;
+	height: 31px;
+	width: 31px;
+}

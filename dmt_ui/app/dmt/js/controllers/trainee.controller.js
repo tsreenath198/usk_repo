@@ -20,6 +20,20 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
+		$scope.headers = [ "Batch", "Status", "Client","Skype Id","Altenate Phone","Time Zone"];
+		$scope.headerEnable = {
+				"Batch" : false
+			}, {
+				"Status" : false
+			},{
+				"Client" : false
+			},{
+				"Skype Id" : false
+			},{
+				"Altenate Phone" : false
+			},{
+				"Time Zone" : false
+			};
 
 		$scope.record = {
 			"name" : "",
@@ -70,13 +84,13 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 			$scope.traineesData = response.data;
 			$scope.traineesLength = response.data.length;
 			console.log($scope.traineesData);
-			$scope.traineesOptions = [ 5, 10, 15 ];
+			$scope.traineesOptions = [ 200,300 ];
 			$scope.traineePage = {
 				pageSelect : true
 			};
 			$scope.query = {
 				order : 'name',
-				limit : 5,
+				limit : 100,
 				page : 1
 			};
 		}, function(error) {
@@ -181,6 +195,61 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 			}
 
 		};
+		
+		$scope.moreColumns = function(ev) {
+			$mdDialog.show({
+				controller : supportController,
+				templateUrl : 'pages/app.trainee/app.trainee.moreHeaders.html',
+				parent : angular.element(document.body),
+				targetEvent : ev,
+				clickOutsideToClose : true,
+				fullscreen : $scope.customFullscreen
+			}).then(
+					function(answer) {
+						$scope.status = 'You said the information was "'
+								+ answer + '".';
+					}, function() {
+						$scope.status = 'You cancelled the dialog.';
+					});
+		};
+
+		$scope.openMoreOptions = function(header) {
+			if (header.length > 0) {
+				for ( var i in header) {
+					if (header[i] == 'Batch') {
+						$scope.headerEnable.batchId = true;
+					} else if (header[i] == 'Status') {
+						$scope.headerEnable.traineeFeeStatus = true;
+					} else if (header[i] == 'Client') {
+						$scope.headerEnable.clientId = true;
+					}
+					else if (header[i] == 'Skype Id') {
+						$scope.headerEnable.skypeId = true;
+					}
+					else if (header[i] == 'Time Zone') {
+						$scope.headerEnable.timezone = true;
+					}
+					else if (header[i] == 'Alternate Phone') {
+						$scope.headerEnable.alternatePhone = true;
+					}
+					
+				}
+			} else {
+				$scope.headerEnable = {
+						"Batch" : false
+				}, {
+					"Status" : false
+				},{
+					"Client" : false
+				},{
+					"Skype Id" : false
+				},{
+					"Altenate Phone" : false
+				},{
+					"Time Zone" : false
+				};
+			}
+		}
 
 		$scope.export = function(tableId) {
 			// $scope.tasksOptions = [ $scope.tasksData.length ];

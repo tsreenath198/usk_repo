@@ -11,7 +11,7 @@
 
      <ul>
 <li ng-repeat="tab in leftTabs">
-<a ui-sref="{{tab.route}}">{{tab.value}}</a>
+<a ui-sref="{{tab.route}}"  data-ng-click="toggleNavigationLeft()">{{tab.value}}</a>
 </li>
      </ul>
 

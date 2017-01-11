@@ -20,6 +20,16 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
+		$scope.headers = [ "Technology", "Duration","Status", "Time"];
+		$scope.headerEnable = {
+				"Technology" : false
+			}, {
+				"Duration" : false
+			},{
+				"Status" : false
+			},{
+				"Time" : false
+			};
 		$scope.record = {
 			"technologyId" : "",
 			"trainerId" : "",
@@ -35,6 +45,7 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 		};
 		
 		
+		$scope.dataLoading = true;
 		batchService.getAllTimeConstants().then(function(response) {
 			$scope.batchtime = response.data;
 		});
@@ -56,12 +67,12 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 		batchService.getAllTechnologies().then(function(response) {
 			$scope.technologies = response.data;
 		});
-
+		
 		batchService.getAllBatches().then(function(response) {
 			$scope.batchesData = response.data;
 			$scope.batchesLength = response.data.length;
 			console.log($scope.batchesData);
-			$scope.batchesOptions = [ 100, 200, 300,500,1000 ];
+			$scope.batchesOptions = [ 200, 300];
 			$scope.batchPage = {
 				pageSelect : true
 			};
@@ -70,8 +81,9 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 				limit : 100,
 				page : 1
 			};
+			$scope.dataLoading = false;
 		}, function(error) {
-
+			$scope.dataLoading = false;
 		});
 		
 		$scope.setDate = function(date) {
@@ -97,8 +109,8 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 			$scope.record = {
 				"technologyId" : row.technologyId,
 				"trainerId" : row.trainerId,
-				"startDate" : new Date(),
-				"endDate" : new Date(),
+				"startDate" : new Date(row.startDate),
+				"endDate" :new Date(row.endDate),
 				"duration" : row.duration,
 				"status" : row.status,
 				"paidStatus" : row.paidStatus,
@@ -172,6 +184,54 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 			}
 
 		};
+		
+		
+		$scope.moreColumns = function(ev) {
+			$mdDialog.show({
+				controller : supportController,
+				templateUrl : 'pages/app.batch/app.batch.moreHeaders.html',
+				parent : angular.element(document.body),
+				targetEvent : ev,
+				clickOutsideToClose : true,
+				fullscreen : $scope.customFullscreen
+			}).then(
+					function(answer) {
+						$scope.status = 'You said the information was "'
+								+ answer + '".';
+					}, function() {
+						$scope.status = 'You cancelled the dialog.';
+					});
+		};
+
+		$scope.openMoreOptions = function(header) {
+			if (header.length > 0) {
+				for ( var i in header) {
+					if (header[i] == 'Technology') {
+						$scope.headerEnable.technologyId = true;
+					} else if (header[i] == 'Duration') {
+						$scope.headerEnable.duration = true;
+					} else if (header[i] == 'Status') {
+						$scope.headerEnable.status = true;
+					}
+					else if (header[i] == 'Time') {
+						$scope.headerEnable.batchTime = true;
+					}
+					
+				}
+			} else {
+				$scope.headerEnable = {
+						"Technology" : false
+				}, {
+					"Duration" : false
+				},{
+					"Status" : false
+				},{
+					"Time" : false
+				};
+			}
+		}
+
+
 
 		$scope.export = function(tableId) {
 			// $scope.tasksOptions = [ $scope.tasksData.length ];

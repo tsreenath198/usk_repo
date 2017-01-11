@@ -60,6 +60,16 @@
     "value": "Batch",
     "route": "app.batch"
   },
+    {
+    "key": "batchAttendance",
+    "value": "BatchAttendance",
+    "route": "app.batchAttendance"
+  },
+  {
+    "key": "invoice",
+    "value": "Invoice",
+    "route": "app.invoice"
+  },
   {
     "key": "interview",
     "value": "Interview",

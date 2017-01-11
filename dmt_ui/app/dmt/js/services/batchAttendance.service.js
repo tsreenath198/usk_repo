@@ -1,7 +1,7 @@
 'use strict';
 
-dmtApplication.factory("BatchAttendanceService", BatchAttendanceService);
-function BatchAttendanceService($http, __env, $window) {
+dmtApplication.factory("batchAttendanceService", batchAttendanceService);
+function batchAttendanceService($http, __env, $window) {
 
 	var service = {
 		getAllBatchAttendances : getAllBatchAttendances,

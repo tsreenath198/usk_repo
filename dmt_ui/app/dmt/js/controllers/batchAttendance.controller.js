@@ -1,9 +1,9 @@
 /*(function() {*/
 'use strict';
-dmtApplication.controller("BatchAttendanceController",
-		BatchAttendanceController);
+dmtApplication.controller("batchAttendanceController",
+		batchAttendanceController);
 
-function BatchAttendanceController($scope, BatchAttendanceService, Excel,
+function batchAttendanceController($scope, batchAttendanceService, Excel,
 		$state, $mdDialog, $mdToast, $timeout, $mdSidenav, $log) {
 	var self = {
 		init : init
@@ -36,7 +36,7 @@ function BatchAttendanceController($scope, BatchAttendanceService, Excel,
 		 * $scope.technologies = response.data; });
 		 */
 
-		BatchAttendanceService.getAllBatchAttendances().then(
+		batchAttendanceService.getAllBatchAttendances().then(
 				function(response) {
 					$scope.batches = response.data;
 					console.log("batches", $scope.batches);
@@ -54,7 +54,7 @@ function BatchAttendanceController($scope, BatchAttendanceService, Excel,
 		$scope.traineesList = [];
 		$scope.showTrainees = function(record) {
 			if (record.batchId && record.batchId != '') {
-				BatchAttendanceService.traineesList(record.batchId).success(
+				batchAttendanceService.traineesList(record.batchId).success(
 						function(response) {
 							if ($scope.traineesList.length > 0) {
 								$scope.traineesList[index] = response;
@@ -75,7 +75,7 @@ function BatchAttendanceController($scope, BatchAttendanceService, Excel,
 			var jsonData = $scope.record;
 			var date = new Date();
 			// var dataForCreate = [ jsonData.name,date,jsonData.description ];
-			BatchAttendanceService.create($scope.record).then(
+			batchAttendanceService.create($scope.record).then(
 					function(response) {
 						// $scope.technology = response.data;
 						console.log(response);
@@ -101,7 +101,7 @@ function BatchAttendanceController($scope, BatchAttendanceService, Excel,
 		$scope.updateData = function() {
 			console.log($scope.create);
 
-			BatchAttendanceService.update($scope.record).then(
+			batchAttendanceService.update($scope.record).then(
 					function(response) {
 						// $scope.technology = response.data;
 						console.log(response);

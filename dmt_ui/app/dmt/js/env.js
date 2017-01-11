@@ -2,7 +2,7 @@
   window.__env = window.__env || {};
  
   // Base url
-  window.__env.baseUrl = 'http://localhost:9090';
+  window.__env.baseUrl = 'http://localhost:8008';
  
   // context will be prepended to policy2-admin relative paths
   window.__env.context = '/dmt_rest_service';

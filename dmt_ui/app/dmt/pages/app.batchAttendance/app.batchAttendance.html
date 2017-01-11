@@ -2,7 +2,7 @@
 	<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
 		<div flex="40">
 			<md-input-container class="md-block"> <label>{{currentRoute
-				| capitalize}} Search</label> <input required name="filter"
+				| capitalize}} Search</label> <input  name="filter"
 				ng-model="filter"> </md-input-container>
 		</div>
 		<div flex="40">
@@ -33,9 +33,9 @@
 	</div>
 
 	<div class="moreHeaders">
-		<md-select placeholder="BatchAttendances" ng-model="moreOptions"
+		<md-select placeholder="Batch Attendances" ng-model="moreOptions"
 			ng-change="openMoreOptions(moreOptions)" multiple> <md-optgroup>
-		More BatchAttendances <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
+		More Batch Attendances <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
 		</md-select>
 	</div>
 
@@ -44,7 +44,7 @@
 		<thead md-head md-order="query.order">
 			<tr md-row>
 				<th md-column><span> </span></th>
-				<th md-column><span>Batch ID</span></th>
+				<th md-column><span>Batch Id</span></th>
 				<th md-column><span>Trainer Name</span></th>
 				<th md-column><span>Date</span></th>
 				<th md-column><span>Trainees Attended</span></th>

@@ -59,9 +59,9 @@ public class SQLConstants {
 	public static final String TRAINER_SELECT_BY_TECHNOLOGYID = "SELECT t.*,te.name as technology_name  FROM  trainer t, technology te WHERE t.technology_id= te.id AND t.technology_id = ? order by t.name asc";
 
 	public static final String INVOICE_SELECT = "SELECT * FROM invoice ORDER BY invoice_date asc";
-	public static final String INVOICE_INSERT = "INSERT INTO invoice (invoice_date,invoice_type,actual_amount,received_amount,created_date,description) values(?,?,?,?,?,?)";
+	public static final String INVOICE_INSERT = "INSERT INTO invoice (invoice_date,invoice_type,actual_amount,received_amount,received_date,created_date,description) values(?,?,?,?,?,?,?)";
 	public static final String INVOICE_DELETE = "UPDATE invoice set active_flag=1 WHERE id = ?";
-	public static final String INVOICE_UPDATE = "UPDATE invoice set invoice_date=?,invoice_type=?,actual_amount=?,received_amount=?,updated_date=?,description=? WHERE id = ?";
+	public static final String INVOICE_UPDATE = "UPDATE invoice set invoice_date=?,invoice_type=?,actual_amount=?,received_amount=?,received_date=?,updated_date=?,description=? WHERE id = ?";
 	public static final String INVOICE_SELECT_BY_ID = "SELECT * FROM invoice where id = ?";
 
 	public static final String EMPLOYEE_SELECT = "SELECT * FROM employee where active_flag=0 ORDER BY name asc";

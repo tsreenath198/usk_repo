@@ -74,6 +74,20 @@
                             }
                         }
                     });
+                
+                $stateProvider
+                .state('app.batchAttendance', {
+                    name: "batchAttendance",
+                    url: "/batchAttendance",
+                    views: {
+
+                        "content@": {
+                            controller: "batchAttendanceController",
+                            controllerAs: 'self',
+                            templateUrl: "pages/app.batchAttendance/app.batchAttendance.html"
+                        }
+                    }
+                });
                     $stateProvider
                     .state('app.login', {
                         name: "login",
@@ -319,6 +333,21 @@
                                     }
                                 }
                             });
+                $stateProvider
+                .state(
+                        'app.invoice',
+                        {
+                            name : "invoice",
+                            url : "/invoice",
+                            views : {
+
+                                "content@" : {
+                                    controller : "invoiceController",
+                                    controllerAs : 'self',
+                                    templateUrl : "pages/app.invoice/app.invoice.html"
+                                }
+                            }
+                        });
                 $urlRouterProvider.otherwise("/login");
 
             }

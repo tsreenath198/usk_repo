@@ -12,6 +12,7 @@ public class Salary {
 	private Date updatedDate;
 	private String description;
 	private int activeFlag;
+	private String employeeName;
 
 	public int getId() {
 		return id;
@@ -84,4 +85,13 @@ public class Salary {
 	public void setActiveFlag(int activeFlag) {
 		this.activeFlag = activeFlag;
 	}
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+	
 }

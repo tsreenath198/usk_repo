@@ -22,6 +22,7 @@ public class SalaryRowMapper implements RowMapper<Salary> {
 				.getDate(resultSet, "updated_date"));
 		salary.setDescription(resultSet.getString("description"));
 		salary.setActiveFlag(resultSet.getInt("active_flag"));
+		salary.setEmployeeName(resultSet.getString("employee_name"));
 		return salary;
 	}
 }

@@ -22,7 +22,7 @@
 	client.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
 
 	<md-input-container class="md-block"> <label>End Client</label>
-	<input required name="interviewer" ng-model="record.interviewer"> </md-input-container>
+	<input  name="interviewer" ng-model="record.interviewer"> </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Time</label> <md-select ng-model="record.time"> <md-optgroup
 		label="time"> <md-option
@@ -48,16 +48,10 @@
 		ng-selected="status.value === record.status">{{
 	status.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
 	
-	
-	<md-input-container class="md-block"> <input
-		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
-
-
-
-	<md-input-container class="md-block"> <label>Interview Date</label> <input required type="date" name="Estimated Days"
+	<md-input-container class="md-block"> <label>Interview Date</label> <input  type="date" name="Estimated Days"
 		ng-model="create.estimatedDays"> </md-input-container>
 	<md-input-container class="md-block"> <label>Description</label>
-	<input required name="Description" ng-model="record.description">
+	<input  name="Description" ng-model="record.description">
 
 	</md-input-container>
 

@@ -22,12 +22,12 @@
   ,
   {
     "key": "task",
-    "value": "task",
+    "value": "Task",
     "route": "app.task"
   },
   {
     "key": "technology",
-    "value": "technology",
+    "value": "Technology",
     "route": "app.technology"
   },
   {

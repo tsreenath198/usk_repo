@@ -2,27 +2,26 @@
 <form name="clientCreateForm">
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Name</label>
-	<input required name="name" ng-model="record.name"> </md-input-container>
+	<input  name="name" ng-model="record.name"> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Address</label>
-	<input required name="address" ng-model="record.address"> </md-input-container>
+	<input  name="address" ng-model="record.address"> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Description
-		</label> <input required name="description"
+		</label> <input  name="description"
 		ng-model="record.description"> </md-input-container>	
 
-		<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
-
+		<div layout="row" layout-xs="column" ng-repeat="contact in record.contactList" layout-sm="column" layout-margin>
 	
-            <div flex="20" class="green box"><input
-		type="text" name="Id" ng-model="record.id"> </div>
-            <div flex="20" class="blue box"> <input
-		type="text" name="Id" ng-model="record.id"> </div>
-		<div flex="20" class="green box"><input
-		type="text" name="Id" ng-model="record.id"> </div>
-            <div flex="20" class="blue box"> <input
-		type="text" name="Id" ng-model="record.id"> </div>
-		<div><button><i class="material-icons">description</i></button></div>
+            <div flex="20" class="green box"><md-input-container class="md-block" flex-gt-sm><label>POC</label><input
+		type="text" name="Id" ng-model="contact.poc"> </md-input-container></div>
+            <div flex="20" class="blue box"><md-input-container class="md-block" flex-gt-sm><label>Email</label> <input
+		type="text" name="Id" ng-model="contact.email"> </md-input-container></div>
+		<div flex="20" class="green box"><md-input-container class="md-block" flex-gt-sm><label>Phone</label><input
+		type="text" name="Id" ng-model="contact.phone"> </md-input-container></div>
+            <div flex="20" class="blue box"> <md-input-container class="md-block" flex-gt-sm><label>Designation</label><input
+		type="text" name="Id" ng-model="contact.designation"></md-input-container> </div>
+		<div><button ng-click="addMoreContacts()"><i class="material-icons">add</i></button></div>
         
 		<!--<md-input-container class="md-block"><label>Designation</label> <input
 		type="hidden" name="Id" ng-model="contact.designation"> </md-input-container>

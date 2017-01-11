@@ -30,52 +30,54 @@
 
 		</div>
 	</div>
-<h1>Client</h1>
+<h1>Salary</h1>
 
 	<md-content layout="column" flex> <md-table-container>
 	<div ng-show="progressBar" layout="row" layout-sm="column" layout-align="space-around">
      
         <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
     </div> 
-	<table md-table id="courseTable">
+	<table md-table id="salaryTable">
 		<thead md-head md-order="query.order">
 			<tr md-row>
 				<th md-column><span> </span></th>
-				<th md-column ><span>Name</span></th>
-				<th md-column><span>Address</span></th>
-				<th md-column><span>Contact</span></th>
+				<th md-column ><span>Employee </span></th>
+				<th md-column ><span>Month</span></th>
+				<th md-column><span>Year</span></th>
+					<th md-column><span>Salary</span></th>
 				<th md-column>Actions</th>
 			</tr>
 		</thead>
 		<tbody md-body>
 			<tr md-row
-				ng-repeat="data in clientsData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+				ng-repeat="data in salariesData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
 				<td md-cell><md-checkbox ng-model="data.checkboxValue"
 						ng-click="rowSelect(data)" aria-label="Checkbox 2"
 						ng-true-value="'on'" ng-false-value="'off'"
 						class="md-warn md-align-top-left" flex></td>
-				<td md-cell >{{data.name}}</td>
-				<td md-cell >{{data.address}}</td>
-				<td md-cell >{{data.contacts}}</td>
+				<td md-cell >{{data.employeeName}}</td>
+				<td md-cell >{{data.month}}</td>
+				<td md-cell>{{data.year}}</td>
+				<td md-cell>{{data.salary}}</td>
 				<td md-cell><span> <md-tooltip> Update </md-tooltip> <i
 						class="material-icons" ng-click="setRowData(data);toggleRight()"
-						ng-hide="isOpenRight()">border_color</i></span><span><md-tooltip>
-						{{data.description}} </md-tooltip> <i class="material-icons md-18">description</i></span></td>
+						ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
+						{{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
 			</tr>
 		</tbody>
 	</table>
 	</md-table-container> <md-table-pagination md-limit="query.limit"
-		md-limit-options="clientsOptions" md-page="query.page"
-		md-total="{{clientsLength}}" md-page-select="clientPage.pageSelect"></md-table-pagination>
+		md-limit-options="salariesOptions" md-page="query.page"
+		md-total="{{salariesLength}}" md-page-select="salaryPage.pageSelect"></md-table-pagination>
 	</md-content>
 
 	<div layout="column" ng-cloak>
 		<section layout="row" flex>
-			<md-sidenav class="md-sidenav-right md-sidenav-client md-whiteframe-4dp"
+			<md-sidenav class="md-sidenav-right md-whiteframe-4dp"
 				md-component-id="right"> <md-toolbar
 				class="md-theme-light">
-			<h1 class="md-toolbar-tools">Client Create</h1>
-			</md-toolbar> <create-client /> </md-sidenav>
+			<h1 class="md-toolbar-tools">Course Create</h1>
+			</md-toolbar> <create-course /> </md-sidenav>
 		</section>
 	</div>
 

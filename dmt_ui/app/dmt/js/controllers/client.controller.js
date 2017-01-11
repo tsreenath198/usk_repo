@@ -19,12 +19,21 @@ function clientController($scope, clientService, Excel, $state, $mdDialog,
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
+		//$scope.contactList = [{"poc":"","designation":"","email":"","phone":""}];
+
+$scope.addMoreContacts = function(){
+	$scope.record.contactList.push({"poc":"","designation":"","email":"","phone":""});
+};
+
+		
+
 
 		$scope.record = {
 			"name":"",
 			"address":"",
 			"createdDate":"",
-			"description":""			
+			"description":"",
+			"contactList":[{"poc":"","designation":"","email":"","phone":""}]			
 		};
 		clientService.getAllTechnologies().then(function(response) {
 			$scope.technologies = response.data;
@@ -51,9 +60,9 @@ function clientController($scope, clientService, Excel, $state, $mdDialog,
 		$scope.saveRecord = function() {
 			console.log($scope.record);		
 				
-			clientService.create($scope.record).then(function(response) {
+			/*clientService.create($scope.record).then(function(response) {
 				console.log("resp", response);
-			});
+			});*/
 			$mdSidenav('right').close().then(function() {
 				$log.debug("close RIGHT is done");
 			});

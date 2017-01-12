@@ -55,10 +55,11 @@
                         class="md-warn md-align-top-left" flex></td>
                 <td md-cell >{{data.endClient}}</td>
                 <td md-cell >{{data.question}}</td>
-                <td md-cell >{{data.answers}}</td>
+                <td md-cell >{{data.answers}}</td>
+
                 <td md-cell >{{data.description}}</td>
                 <td md-cell><span> <md-tooltip>Update </md-tooltip> <i
-                        class="material-icons" ng-click="updateRow(data);toggleRight()"
+                        class="material-icons" ng-click="setRowData(data);toggleRight()"
                         ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
                         {{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
             </tr>

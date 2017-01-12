@@ -1,9 +1,9 @@
 /*(function() {*/
     'use strict';
     dmtApplication
-        .controller("TechnologyController", TechnologyController);
+        .controller("technologyController", technologyController);
 
-    function TechnologyController($scope,TechnologyService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
+    function technologyController($scope,technologyService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
           
 
         var self = {
@@ -22,14 +22,14 @@
         $scope.headerEnable = {};
         $scope.exportData = [];
 
-       
+      
 
         $scope.create = {
             "name" : "",
-            "createdDate":new Date(),
+            "createdDate":"",
             "description" : ""
         };
-        TechnologyService.getAllTechnologies().then(function(response) {
+        technologyService.getAllTechnologies().then(function(response) {
             $scope.technologiesData = response.data;
             $scope.technologiesLength = response.data.length;
             console.log($scope.technologiesData);
@@ -49,7 +49,7 @@
         
         $scope.saveRecord = function() {
              console.log($scope.create);
-            TechnologyService.create($scope.create).then(function(response) {
+            technologyService.create($scope.create).then(function(response) {
                 console.log("resp", response);
             });
             $mdSidenav('right').close().then(function() {
@@ -72,7 +72,7 @@
         $scope.updateData = function() {
             // console.log($scope.create);
 
-            TechnologyService.update($scope.create).then(function(response) {
+            technologyService.update($scope.create).then(function(response) {
                 console.log("resp", response);
             });
 
@@ -214,7 +214,7 @@ dmtApplication.directive('createTechnology', function($state) {
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/app.technology/technology.create.html';
+            return '../dmt/pages/app.technology/app.technology.create.html';
         }
     };
 });

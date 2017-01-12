@@ -123,9 +123,22 @@
                         views: {
 
                             "content@": {
-                                controller: "TechnologyController",
+                                controller: "technologyController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/app.technology/technology.html"
+                                templateUrl: "pages/app.technology/app.technology.html"
+                                }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.question', {
+                        name: "question",
+                        url: "/question",
+                        views: {
+
+                            "content@": {
+                                controller: "questionController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.question/app.question.html"
                                 }
                         }
                     });
@@ -277,7 +290,7 @@
                                                     "content@" : {
                                                         controller : "taskController",
                                                         controllerAs : 'self',
-                                                        templateUrl : "pages/app.task/task.html"
+                                                        templateUrl : "pages/app.task/app.task.html"
                                                     }
                                                 }
                                             });

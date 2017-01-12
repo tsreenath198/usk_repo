@@ -36,7 +36,7 @@ public class SQLConstants {
 	public static final String SUPPORT_GROUP_BY_TRAINEE_ID = "SELECT `trainee_id`,count(`trainee_id`) as totalCount FROM `support` group by `trainee_id`";
 
 	public static final String TECHNOLOGY_SELECT = "SELECT * FROM technology where active_flag=0 ORDER BY name asc";
-	public static final String TECHNOLOGY_INSERT = "INSERT IN technology (name,created_date,description) values(?, ?,?)";
+	public static final String TECHNOLOGY_INSERT = "INSERT INTO technology (name,created_date,description) values(?,?,?)";
 	public static final String TECHNOLOGY_DELETE = "UPDATE technology set  active_flag=1 WHERE id = ?";
 	public static final String TECHNOLOGY_UPDATE = "UPDATE technology set name = ?,  updated_date =?, description =? WHERE id = ?";
 	public static final String TECHNOLOGY_SELECT_BY_ID = "SELECT * FROM technology where id = ?";

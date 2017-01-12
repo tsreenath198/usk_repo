@@ -15,6 +15,11 @@
     "route": "app.client"
   },
   {
+    "key": "question",
+    "value": "Question",
+    "route": "app.question"
+  },
+  {
     "key": "dashboard",
     "value": "Dashboard",
     "route": "app.dashboard"

@@ -4,27 +4,34 @@
         type="hidden" name="Id" ng-model="record.id"> </md-input-container>
 
     <md-input-container class="md-block"> <label>Category</label>
-    <input required name="Category" ng-model="record.category"> </md-input-container>
+    <input name="Category" ng-model="record.category"> </md-input-container>
 
-    <md-input-container class="md-block"> <label>Task Date</label>
-    <input  name="Task Date" type="date" ng-model="record.task_date">
+    <md-input-container class="md-block"> <label>Date</label>
+    <input  name="Task Date" type="date" ng-model="record.taskDate">
     </md-input-container>
 
-   <md-input-container class="md-block" flex-gt-sm> <label>Status</label> <md-select ng-model="record.status"> <md-optgroup
+   <md-input-container class="md-block" flex-gt-sm> <label>Status</label> 
+   <md-select ng-model="record.status"> 
+   <md-optgroup
         label="status"> <md-option
         ng-repeat="status in statuses" ng-value="status.value"
         ng-selected="status.value === record.status">{{
     status.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
     
 
-    <md-input-container class="md-block"> <label>Assigned To</label>
-    <input  name="AssignedTo" ng-model="record.assigned_to">
+    <md-input-container class="md-block"> <label>Employee</label>
+   <md-select ng-model="record.assignedTo"> 
+   <md-optgroup
+        label="status"> <md-option
+        ng-repeat="employee in employees" ng-value="employee.id"
+        ng-selected="employee.id === record.assignedTo">{{
+    employee.name }}</md-option> </md-optgroup> </md-select> 
     </md-input-container>
 
-    <md-input-container class="md-block" flex-gt-sm> <label>Time</label> <md-select ng-model="record.time"> <md-optgroup
+    <md-input-container class="md-block" flex-gt-sm> <label>Time</label> <md-select ng-model="record.estimatedTime"> <md-optgroup
         label="time"> <md-option
         ng-repeat="time in times" ng-value="time.value"
-        ng-selected="time.key === record.time">{{
+        ng-selected="time.key === record.estimatedTime">{{
     time.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
 
 
@@ -40,7 +47,7 @@
         ng-hide="updatePage"> Save </md-button>
     <md-button class="md-raised md-primary" ng-click="updateRecord()"
         ng-show="updatePage"> Update </md-button>
-    <md-button class="md-raised " ng-click="saveRecord()">
+    <md-button class="md-raised">
     Cancel </md-button>
 </form>
 </md-content>

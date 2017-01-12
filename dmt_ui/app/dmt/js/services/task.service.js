@@ -5,6 +5,9 @@
     function TaskService($http,__env,$window) {
            var service = {
            getAllTask: getAllTask, 
+           getAllEmployees:getAllEmployees,
+           getAllStatuses:getAllStatuses,
+           getAllTimes:getAllTimes,
            create:create,
            update:update
                    
@@ -12,6 +15,15 @@
        return service;
        function getAllTask() {
                 return $http.get(url + "/toDos/readAll");  
+              }
+              function getAllEmployees() {
+                return $http.get(url + "/employees/readAll");  
+              }
+              function getAllStatuses() {
+                return $http.get("./mock/taskStatus.json");  
+              }
+              function getAllTimes() {
+                return $http.get("./mock/timeConstants.json");  
               }
 
     function create(jsonData) {

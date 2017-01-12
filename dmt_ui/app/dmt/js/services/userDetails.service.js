@@ -5,6 +5,7 @@
     function UserDetailsService($http,__env,$window) {
            var service = {
            getAllUserDetails: getAllUserDetails, 
+           getAllRoles:getAllRoles,
            create:create,
            update:update
                    
@@ -13,7 +14,9 @@
        function getAllUserDetails() {
                 return $http.get(url + "/userDetails/readAll");  
               }
-
+function getAllRoles() {
+    return $http.get("./mock/roleConstants.json");
+  }
     function create(jsonData) {
     return $http({
       url : url + '/userDetails/create',

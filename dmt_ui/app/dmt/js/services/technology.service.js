@@ -1,8 +1,8 @@
 /*(function () {*/
     'use strict';
     
-    dmtApplication.factory("TechnologyService", TechnologyService);
-    function TechnologyService($http,__env,$window) {
+    dmtApplication.factory("technologyService", technologyService);
+    function technologyService($http,__env,$window) {
            var service = {
            getAllTechnologies: getAllTechnologies, 
            create:create,

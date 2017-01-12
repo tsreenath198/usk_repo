@@ -30,10 +30,12 @@
     <input  name="ConfirmPassword" type="password" ng-model="record.confirmPassword">
     </md-input-container>
 
-    <md-input-container class="md-block"> <label>Role</label>
-    <input  name="Role" ng-model="record.role">
-    </md-input-container>
-
+    <md-input-container class="md-block" flex-gt-sm> <label>Role</label>
+    <md-select ng-model="record.role"> <md-option>
+    <em>None</em></md-option> <md-option ng-repeat="role in roles"
+        ng-selected="role.value === record.role" ng-value="role.value">
+    {{role.value}} </md-option> </md-select> </md-input-container>
+    
     <md-input-container class="md-block"> <label>Description</label>
     <input  name="Description" ng-model="record.description">
     </md-input-container>

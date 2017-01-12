@@ -5,6 +5,7 @@ import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
@@ -26,7 +27,7 @@ public class QuestionPreparedStatementSetter implements PreparedStatementSetter 
 		arg0.setString(2, question.getQuestion());
 		arg0.setString(3, question.getAnswers());
 		arg0.setDate(4,
-				ResultSetUtil.converttoSQLDate(question.getCreatedDate()));
+				ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(5, question.getDescription());
 
 		if (!isInsert) {

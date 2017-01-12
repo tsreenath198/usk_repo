@@ -3,8 +3,7 @@
     dmtApplication
         .controller("taskController", taskController);
 
-    function taskController($scope,TaskService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
-          
+    function taskController($scope,TaskService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {         
 
         var self = {
         init : init
@@ -23,17 +22,25 @@
         $scope.exportData = [];
 
 
-        $scope.record = {
-
-            "category" : "",
-            "taskDate":"",
-            "status":"",
-            "assignedTo":"",
-            "estimatedTime":"",
+        $scope.record = {           
+            "category": "",
+            "taskDate": "",
+            "status": "",
+            "assignedTo":"" ,
+            "estimatedTime": "",
+            "createdDate": "",
             "description": ""
-   
         };
+        TaskService.getAllEmployees().then(function(response) {
+                $scope.employees = response.data;
+            });
+        TaskService.getAllStatuses().then(function(response) {
+                  $scope.statuses = response.data;
+            });
 
+        TaskService.getAllTimes().then(function(response) {
+                  $scope.times = response.data;
+            });
         TaskService.getAllTask().then(function(response) {
             $scope.TaskData = response.data;
             $scope.TaskLength = response.data.length;
@@ -70,10 +77,11 @@
             $scope.record = { 
 
             "category" :row.category,
-            "taskDate":row.taskDate,
+            "taskDate":new Date(row.taskDate),
             "status":row.status,
             "assignedTo":row.assignedTo,
             "estimatedTime":row.estimatedTime,
+            "updatedDate": "",
             "description":row.description,
              "id" : row.id
             };
@@ -225,37 +233,7 @@ dmtApplication.directive('createTask', function($state) {
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/app.task/task.create.html';
+            return '../dmt/pages/app.task/app.task.record.html';
         }
     };
 });
-dmtApplication.filter('capitalize', function() {
-    return function(input) {
-        return (!!input) ? input.charAt(0).toUpperCase()
-                + input.substr(1).toLowerCase() : '';
-    }
-});
-
-dmtApplication
-        .factory(
-                'Excel',
-                function($window) {
-                    var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
-                            s) {
-                        return $window.btoa(unescape(encodeURIComponent(s)));
-                    }, format = function(s, c) {
-                        return s.replace(/{(\w+)}/g, function(m, p) {
-                            return c[p];
-                        })
-                    };
-                    return {
-                        tableToExcel : function(tableId, worksheetName) {
-                            var table = $(tableId), ctx = {
-                                worksheet : worksheetName,
-                                table : table.html()
-                            }, href = uri + base64(format(template, ctx));
-                            return href;
-                        }
-                    };
-                });
-        

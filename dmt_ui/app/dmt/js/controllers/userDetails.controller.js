@@ -37,6 +37,10 @@
      
         };
 
+        UserDetailsService.getAllRoles().then(function(response) {
+            $scope.roles = response.data;
+            
+            });
         UserDetailsService.getAllUserDetails().then(function(response) {
             $scope.userDetailsData = response.data;
             $scope.userDetailsLength = response.data.length;

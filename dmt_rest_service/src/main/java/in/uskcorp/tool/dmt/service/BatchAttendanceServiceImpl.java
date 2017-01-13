@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service("batchAttendanceServiceImpl")
 public class BatchAttendanceServiceImpl extends BatchAttendanceService {
 	@Autowired
-	@Qualifier("batchAttendanceDaoImpl")
+	@Qualifier("batchAttendanceDAOImpl")
 	BatchAttendanceDAO batchAttendanceDAO;
 
 	@Override

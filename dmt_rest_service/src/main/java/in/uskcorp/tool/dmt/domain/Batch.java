@@ -24,6 +24,7 @@ public class Batch {
 	private String technologyName;
 	private String description;
 	private int activeFlag;
+	private String invoice;
 	private String batchTime;
 	private Date createdDate;
 	private Date updatedDate;
@@ -131,6 +132,14 @@ public class Batch {
 	}
 	public void setActiveFlag(int activeFlag) {
 		this.activeFlag = activeFlag;
+	}
+
+	public String getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(String invoice) {
+		this.invoice = invoice;
 	}
 
 	

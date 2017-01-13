@@ -105,7 +105,7 @@ public class SQLConstants {
 			+ "batch_id=?,updated_date=?,description=?,phone=?,trainee_fee_status=?,paid_status=?,received_status=?,technology_id=? WHERE id = ?";
 	public static final String TRAINEE_SELECT_BY_ID = "SELECT * FROM trainee where id = ?";
 	public static final String TRAINEE_SELECT_BY_BATCHID = "SELECT tr.*,tr.name AS 'name',"
-			+ "cl.name AS 'client_name' FROM trainee tr,client cl  where tr.client_id = cl.id AND tr.active_flag=0 AND  tr.batch_id = ?";
+			+ "cl.name AS 'client_name','' as 'technology_name' FROM trainee tr,client cl  where tr.client_id = cl.id AND tr.active_flag=0 AND  tr.batch_id = ?";
 
 	public static final String CLIENT_SELECT = "select c.*,group_concat(co.id) AS poc_ids ,group_concat(co.poc) AS poc, "
 			+ "group_concat(CONCAT(co.poc,'('),CONCAT(co.designation,')'),CONCAT(co.phone,'\n')) AS contacts, "
@@ -131,9 +131,9 @@ public class SQLConstants {
 	public static final String BATCH_SELECT = "SELECT b.*,t.name as technology_name, tr.name as trainer_name FROM batch b,"
 			+ " technology t, trainer tr WHERE b.active_flag=0 AND b.technology_id = t.id and b.trainer_id = tr.id"
 			+ " order by b.created_date DESC";
-	public static final String BATCH_INSERT = "INSERT INTO batch (technology_id,trainer_id,start_date,end_date,duration,status,paid_status,received_status,created_date,description,time) values( ?,?,?,?,?,?,?,?,?,?,?)";
+	public static final String BATCH_INSERT = "INSERT INTO batch (technology_id,trainer_id,start_date,end_date,duration,status,paid_status,received_status,created_date,description,time,invoice) values(?, ?,?,?,?,?,?,?,?,?,?,?)";
 	public static final String BATCH_DELETE = "UPDATE batch set active_flag=1 WHERE id = ?";
-	public static final String BATCH_UPDATE = "UPDATE batch set  technology_id=?,trainer_id=?,start_date=?,end_date=?,duration=?,status=?,paid_status=?,received_status=?,updated_date=?,description=?,time=? WHERE id = ?";
+	public static final String BATCH_UPDATE = "UPDATE batch set  technology_id=?,trainer_id=?,start_date=?,end_date=?,duration=?,status=?,paid_status=?,received_status=?,updated_date=?,description=?,time=?,invoice=? WHERE id = ?";
 	public static final String BATCH_SELECT_BY_ID = "SELECT * FROM batch where id = ?";
 	public static final String BATCH_DASHBOARD = "SELECT b.id as 'batchId' , tr.name as 'trainername', tech.name as 'technology',count(tre.id) as 'numberOfStudents' FROM batch b, technology tech , trainer tr,trainee tre where b.trainer_id = tr.id AND b.technology_id = tech.id"
 			+ " AND tre.batch_id = b.id AND YEAR(b.start_date) = YEAR(CURRENT_DATE - INTERVAL 0 MONTH) AND MONTH(b.start_date) = MONTH(CURRENT_DATE - INTERVAL 0 MONTH) GROUP BY b.id";
@@ -244,7 +244,8 @@ public class SQLConstants {
 	public static final String EMPLOYEE_DESIGNATION_SELECT_BY_ID = "SELECT * FROM employee_designation where id = ?";
 
 	public static final String BATCH_ATTENDANCE_SELECT = "SELECT * FROM batch_attendance where active_flag=0 ORDER BY batch_id asc";
-	public static final String BATCH_ATTENDANCE_SELECT_BY_ID = "SELECT * FROM batch_attendance where id = ?";
+	
+	public static final String BATCH_ATTENDANCE_SELECT_BY_BATCH_ID = "SELECT id,name FROM `trainee` WHERE  batch_id = ?";
 	public static final String BATCH_ATTENDANCE_INSERT = "INSERT INTO batch_attendance (batch_id,date,trainee_id,created_date,description) values(?,?,?,?,?)";
 	public static final String BATCH_ATTENDANCE_UPDATE = "UPDATE batch_attendance set batch_id=?,date=?,trainee_id=?,updated_date=?,description=? WHERE id = ?";
 	public static final String BATCH_ATTENDANCE_DELETE = "UPDATE batch_attendance set active_flag=1 WHERE id = ?";

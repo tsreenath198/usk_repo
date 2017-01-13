@@ -56,4 +56,11 @@ public class TraineeDaoImpl extends TraineeDAO {
 		return getJdbcTemplate().query(SQLConstants.TRAINING_SUMMARY,
 				new TrainingSummaryRowMapper());
 	}
+	
+	public List<Trainee> readAllById(Integer id) {
+		return getJdbcTemplate().query(SQLConstants.TRAINEE_SELECT_BY_BATCHID, new Object[] { id },
+				new TraineeRowMapper());
+	}
+
+	
 }

@@ -33,6 +33,7 @@
             "createdDate":"",
             "description" : ""
         };
+        $scope.loading=true;
         invoiceService.getAllInVoices().then(function(response) {
             $scope.invoicesData = response.data;
             $scope.invoicesLength = response.data.length;
@@ -46,6 +47,7 @@
                 limit : 100,
                 page : 1
             };
+            $scope.loading=false;
         }, function(error) {
 
         });
@@ -218,7 +220,7 @@ dmtApplication.directive('createInVoice', function($state) {
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/' + current + '/' + current + '.create.html';
+            return '../dmt/pages/' + current + '/' + current + '.record.html';
         }
     };
 });

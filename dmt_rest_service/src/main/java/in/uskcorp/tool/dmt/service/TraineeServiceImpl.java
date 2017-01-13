@@ -4,6 +4,8 @@ import in.uskcorp.tool.dmt.dao.APIDAO;
 import in.uskcorp.tool.dmt.dao.TraineeDAO;
 import in.uskcorp.tool.dmt.domain.Trainee;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class TraineeServiceImpl extends TraineeService {
 	@Override
 	protected APIDAO<Trainee> getDao() {
 		return traineeDAO;
+	}
+	@Override
+	public List<Trainee> readAllById(Integer id) {
+		return traineeDAO.readAllById(id);
 	}
 
 }

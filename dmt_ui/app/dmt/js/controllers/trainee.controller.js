@@ -51,7 +51,7 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 			"receivedStatus" : "",
 			"technologyId" : ""
 		};
-
+		$scope.loading=true;
 		TraineeService.getAllClients().then(function(response) {
 			$scope.clients = response.data;
 		});
@@ -93,6 +93,7 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 				limit : 100,
 				page : 1
 			};
+			$scope.loading=false;
 		}, function(error) {
 
 		});
@@ -332,7 +333,7 @@ dmtApplication.directive('createTrainee', function($state) {
 		replace : true,
 		templateUrl : function() {
 			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + '.create.html';
+			return '../dmt/pages/' + current + '/' + current + '.record.html';
 		}
 	};
 });

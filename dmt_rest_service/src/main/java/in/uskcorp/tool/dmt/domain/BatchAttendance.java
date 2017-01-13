@@ -10,7 +10,8 @@ public class BatchAttendance {
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
-	private int activeFlag;
+	//private int activeFlag;
+	private String name;
 
 	public int getId() {
 		return id;
@@ -18,6 +19,14 @@ public class BatchAttendance {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getBatchId() {
@@ -68,11 +77,11 @@ public class BatchAttendance {
 		this.description = description;
 	}
 
-	public int getActiveFlag() {
+	/*public int getActiveFlag() {
 		return activeFlag;
 	}
 
 	public void setActiveFlag(int activeFlag) {
 		this.activeFlag = activeFlag;
-	}
+	}*/
 }

@@ -3,13 +3,12 @@
 dmtApplication.controller("batchController", batchController);
 
 function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
-		$state, $mdSidenav, $log) {
+		$state, $mdSidenav, $log,usSpinnerService) {
 
 	var self = {
 		init : init
 	};
 	function init() {
-		// console.log($state.current.name);
 		var current = $state.current.name;
 		$scope.currentState = current.split(/[\s.]+/);
 		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
@@ -20,16 +19,33 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
-		$scope.headers = [ "Technology", "Duration","Status", "Time"];
+		$scope.headers = [ "Technology", "Duration", "Status", "Time" ];
 		$scope.headerEnable = {
-				"Technology" : false
-			}, {
-				"Duration" : false
-			},{
-				"Status" : false
-			},{
-				"Time" : false
-			};
+			"Technology" : false
+		}, {
+			"Duration" : false
+		}, {
+			"Status" : false
+		}, {
+			"Time" : false
+		};
+		$scope.getDate = function(start, end) {
+			if (start != null && end == null) {
+				var date2 = new Date(start);
+				var date1 = new Date();
+				var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+				$scope.record.duration = Math.ceil(timeDiff
+						/ (1000 * 3600 * 24));
+			} else if (start != null && end != null) {
+				var date2 = new Date(start);
+				var date1 = new Date(end);
+				var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+				$scope.record.duration = Math.ceil(timeDiff
+						/ (1000 * 3600 * 24));
+			}
+
+		}
+
 		$scope.record = {
 			"technologyId" : "",
 			"trainerId" : "",
@@ -37,15 +53,15 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 			"endDate" : "",
 			"duration" : "",
 			"status" : "",
-			"paidStatus": "",
-			"receivedStatus": "",
-			"createDate" :"",
+			"paidStatus" : "",
+			"receivedStatus" : "",
+			"createDate" : "",
 			"description" : "",
-			"batchTime" : ""
+			"batchTime" : "",
+			"invoice" : ""
 		};
-		
-		
-		$scope.dataLoading = true;
+
+		$scope.loading = true;
 		batchService.getAllTimeConstants().then(function(response) {
 			$scope.batchtime = response.data;
 		});
@@ -68,24 +84,46 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 			$scope.technologies = response.data;
 		});
 		
-		batchService.getAllBatches().then(function(response) {
-			$scope.batchesData = response.data;
-			$scope.batchesLength = response.data.length;
-			console.log($scope.batchesData);
-			$scope.batchesOptions = [ 200, 300];
-			$scope.batchPage = {
-				pageSelect : true
-			};
-			$scope.query = {
-				order : 'name',
-				limit : 100,
-				page : 1
-			};
-			$scope.dataLoading = false;
-		}, function(error) {
-			$scope.dataLoading = false;
-		});
-		
+		batchService.getAllBatches().then(
+				function(response) {
+					$scope.batchesData = response.data;
+					for (var i in $scope.batchesData) {
+						var start = $scope.batchesData[i].startDate;
+						var end = $scope.batchesData[i].endDate;
+						if (start != null && end == null) {
+							var date2 = new Date(start);
+							var date1 = new Date();
+							var timeDiff = Math.abs(date2.getTime()
+									- date1.getTime());
+							$scope.batchesData[i]['newDuration'] = Math.ceil(timeDiff
+									/ (1000 * 3600 * 24));
+						} else if (start != null && end != null) {
+							var date2 = new Date(start);
+							var date1 = new Date(end);
+							var timeDiff = Math.abs(date2.getTime()
+									- date1.getTime());
+							$scope.batchesData[i]['newDuration'] = Math.ceil(timeDiff
+									/ (1000 * 3600 * 24));
+						}
+
+					}
+
+					$scope.batchesLength = response.data.length;
+					console.log($scope.batchesData);
+					$scope.batchesOptions = [ 200, 300 ];
+					$scope.batchPage = {
+						pageSelect : true
+					};
+					$scope.query = {
+						order : 'name',
+						limit : 100,
+						page : 1
+					};
+					$scope.loading = false;
+				}, function(error) {
+					
+				});
+
 		$scope.setDate = function(date) {
 			$scope.minDate = date;
 			$scope.minStartedDate = new Date($scope.minDate.getFullYear(),
@@ -110,17 +148,18 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 				"technologyId" : row.technologyId,
 				"trainerId" : row.trainerId,
 				"startDate" : new Date(row.startDate),
-				"endDate" :new Date(row.endDate),
+				"endDate" : new Date(row.endDate),
 				"duration" : row.duration,
 				"status" : row.status,
 				"paidStatus" : row.paidStatus,
 				"receivedStatus" : row.receivedStatus,
-				"updatedDate" :"",
+				"updatedDate" : "",
 				"description" : row.description,
 				"batchTime" : row.batchTime,
+				"invoice" : row.invoice,
 				"id" : row.id
 			};
-			
+
 		};
 		$scope.updateData = function() {
 			batchService.update($scope.record).then(function(response) {
@@ -132,9 +171,17 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 		}
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
-			$scope.record={};
+			$scope.record = {};
 		};
 
+		$scope.populateBatchDetails = function(data) {
+			var jsonData = data;
+			console.log("jsonData", jsonData);
+			batchService.getAllBatches(jsonData).success(function(response) {
+				console.log("response", response);
+
+			});
+		};
 		$scope.rowSelect = function(row) {
 			$scope.selected.push(row.id);
 		};
@@ -155,7 +202,6 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 		};
 
 		$scope.deleteSelected = function(ev) {
-			// Appending dialog to document.body to cover sidenav in docs app
 			if ($scope.selected.length > 0) {
 				var confirm = $mdDialog
 						.confirm()
@@ -184,8 +230,7 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 			}
 
 		};
-		
-		
+
 		$scope.moreColumns = function(ev) {
 			$mdDialog.show({
 				controller : supportController,
@@ -212,37 +257,32 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 						$scope.headerEnable.duration = true;
 					} else if (header[i] == 'Status') {
 						$scope.headerEnable.status = true;
-					}
-					else if (header[i] == 'Time') {
+					} else if (header[i] == 'Time') {
 						$scope.headerEnable.batchTime = true;
 					}
-					
+
 				}
 			} else {
 				$scope.headerEnable = {
-						"Technology" : false
+					"Technology" : false
 				}, {
 					"Duration" : false
-				},{
+				}, {
 					"Status" : false
-				},{
+				}, {
 					"Time" : false
 				};
 			}
 		}
 
-
-
 		$scope.export = function(tableId) {
-			// $scope.tasksOptions = [ $scope.tasksData.length ];
 			var exportHref = Excel.tableToExcel(tableId, 'sheet name');
 			$timeout(function() {
 				location.href = exportHref;
 			}, 100); // trigger download
 		}
-		
-		$scope.minStartDate = new Date();
 
+		$scope.minStartDate = new Date();
 
 		/* Tooltip Starrts */
 
@@ -286,8 +326,6 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 
 		function buildDelayedToggler(navID) {
 			return debounce(function() {
-				// Component lookup should always be available since we are not
-				// using `ng-if`
 				$mdSidenav(navID).toggle().then(function() {
 					$log.debug("toggle " + navID + " is done");
 				});
@@ -310,16 +348,4 @@ function batchController($scope, batchService, $mdDialog, $mdToast, $timeout,
 
 	return self;
 };
-
-/*dmtApplication.directive('createBatchForm', function($state) {
-	return {
-		restrict : 'EA',
-		replace:true,
-		templateUrl : function() {
-			var current = $state.current.name;
-			return '../dmt/pages/app.batch/app.batch.create.html';
-		}
-	};
-});*/
-
 

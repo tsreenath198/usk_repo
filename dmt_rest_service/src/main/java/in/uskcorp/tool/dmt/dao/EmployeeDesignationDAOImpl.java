@@ -46,4 +46,6 @@ public class EmployeeDesignationDAOImpl extends EmployeeDesignationDAO {
 			EmployeeDesignation a, boolean isInsert) {
 		return new EmployeeDesignationPreparedStatementSetter(a, isInsert);
 	}
+
+	
 }

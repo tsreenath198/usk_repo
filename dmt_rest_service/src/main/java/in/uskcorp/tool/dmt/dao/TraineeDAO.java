@@ -7,4 +7,5 @@ import in.uskcorp.tool.dmt.domain.TrainingSummary;
 
 public abstract class TraineeDAO extends APIDAO<Trainee> {
 	public abstract List<TrainingSummary> getSummary();
+	public abstract List<Trainee> readAllById(Integer id);
 }

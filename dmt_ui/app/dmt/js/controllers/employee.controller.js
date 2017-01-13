@@ -29,7 +29,7 @@ function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
 			"createdDate" : "",
 			"description" : ""
 		};
-		
+		$scope.loading=true;
 		EmployeeService.getAllRoles().then(function(response) {
 			$scope.roles = response.data;
 			
@@ -38,15 +38,16 @@ function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
 			$scope.employeesData = response.data;
 			$scope.employeesLength = response.data.length;
 			console.log($scope.employeesData);
-			$scope.employeesOptions = [ 5, 10, 15 ];
+			$scope.employeesOptions = [ 200,300 ];
 			$scope.employeePage = {
 				pageSelect : true
 			};
 			$scope.query = {
 				order : 'name',
-				limit : 5,
+				limit : 100,
 				page : 1
 			};
+			$scope.loading=false;
 		}, function(error) {
 		});
 		$scope.saveRecord = function() {
@@ -217,7 +218,7 @@ dmtApplication.directive('createEmployee', function($state) {
 		replace : true,
 		templateUrl : function() {
 			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + '.create.html';
+			return '../dmt/pages/' + current + '/' + current + '.record.html';
 		}
 	};
 });

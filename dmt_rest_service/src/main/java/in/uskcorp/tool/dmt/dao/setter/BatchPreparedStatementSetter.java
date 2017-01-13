@@ -30,8 +30,9 @@ public class BatchPreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setDate(9, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(10, batch.getDescription());
 		arg0.setString(11, batch.getBatchTime());
+		arg0.setString(12, batch.getInvoice());
 		if (!isInsert) {
-			arg0.setInt(12, batch.getId());
+			arg0.setInt(13, batch.getId());
 		}
 	}
 }

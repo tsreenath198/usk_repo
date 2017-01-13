@@ -30,7 +30,7 @@
       "description" : ""
     };
     
-
+    $scope.loading = true;
     TrainerService.getAllEmployees().then(function(response) {
       $scope.employees = response.data;
     });
@@ -42,15 +42,16 @@
       $scope.trainersData = response.data;
       $scope.trainersLength = response.data.length;
       console.log($scope.trainersData);
-      $scope.trainersOptions = [ 5, 10, 15 ];
+      $scope.trainersOptions = [ 200,300];
       $scope.trainerPage = {
         pageSelect : true
       };
       $scope.query = {
         order : 'name',
-        limit : 5,
+        limit : 100,
         page : 1
       };
+      $scope.loading = false;
     }, function(error) {
 
     });
@@ -222,7 +223,7 @@ dmtApplication.directive('createTrainer', function($state) {
     replace : true,
     templateUrl : function() {
       var current = $state.current.name;
-      return '../dmt/pages/' + current + '/' + current + '.create.html';
+      return '../dmt/pages/' + current + '/' + current + '.record.html';
     }
   };
 });

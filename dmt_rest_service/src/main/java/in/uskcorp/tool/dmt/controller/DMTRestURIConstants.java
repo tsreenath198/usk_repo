@@ -41,6 +41,7 @@ public interface DMTRestURIConstants {
 	String UPDATE = "/update";
 	String DELETE = "/delete";
 	String READ_BY_VALUES = "/readByValues";
+	String READ_ALL_BY_Id = "/readAllById";
 	String SUPPORT_DASHBOARD = "/supportDashboard";
 	String INTERVIEW_DASHBOARD = "/interviewDashboard";
 	String BATCH_DASHBOARD = "/batchDashboard";

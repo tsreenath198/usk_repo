@@ -5,9 +5,9 @@ function batchAttendanceService($http, __env, $window) {
 
 	var service = {
 		getAllBatchAttendances : getAllBatchAttendances,
-		traineesList:traineesList,
-		/*create : create,
-		update: update*/
+		trainees:trainees,
+		create : create,
+		update: update
 
 	},url = __env.baseUrl + __env.context
 	return service;
@@ -15,11 +15,11 @@ function batchAttendanceService($http, __env, $window) {
 		return $http.get(url + "/batches/readAll");
 	}
 	
-	function traineesList(jsonData) {
-		return $http.getById(url + "/trainees/readAll");
+	function trainees(batch_id) {
+		return $http.get(url + "/trainees/readAllById?id="+batch_id);
 	}
 
-	/*function create(jsonData) {
+	function create(jsonData) {
 		return $http({
 			url : url + '/batchAttendances/create',
 			method : "POST",
@@ -40,5 +40,5 @@ function batchAttendanceService($http, __env, $window) {
 		}, function(response) { // optional
 			// failed
 		});
-	}*/	
+	}
 }

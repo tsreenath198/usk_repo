@@ -15,7 +15,7 @@
        env.api = "/api";
     }
 
-    var dmtApplication = angular.module('DmtApplication', ['ngMaterial', 'ui.router','ngIdle','md.data.table','ngResource'])
+    var dmtApplication = angular.module('DmtApplication', ['ngMaterial', 'ui.router','ngIdle','md.data.table','ngResource','angularSpinner'])
         .constant('__env', env)
         .config(function(IdleProvider, KeepaliveProvider) {
               // configure Idle settings
@@ -395,5 +395,3 @@ dmtApplication
                         }
                     };
                 });
-
-/*}());*/

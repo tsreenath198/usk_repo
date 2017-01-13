@@ -46,4 +46,6 @@ public class TrainerDaoImpl extends TrainerDAO {
 			boolean isInsert) {
 		return new TrainerPreparedStatementSetter(a, isInsert);
 	}
+
+	
 }

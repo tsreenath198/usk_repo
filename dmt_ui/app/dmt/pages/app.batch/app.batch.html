@@ -2,7 +2,7 @@
 	<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
 		<div flex="40">
 			<md-input-container class="md-block"> <label>{{currentRoute
-				| capitalize}} Search</label> <input required name="filter"
+				| capitalize}} Search</label> <input  name="filter"
 				ng-model="filter"> </md-input-container>
 		</div>
 		<div flex="40">
@@ -32,15 +32,17 @@
 		</div>
 	</div>
 
+	<div class="overlay loadingImg" ng-show="loading">
+		<h1 style="text-align: center; margin-top: 20%">loading....</h1>
+	</div>
+
 	<div class="moreHeaders">
-		<md-select placeholder="Batches" ng-model="moreOptions"
+		<md-select placeholder="Batch" ng-model="moreOptions"
 			ng-change="openMoreOptions(moreOptions)" multiple> <md-optgroup>
-		More Batches <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
+		Batch <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
 		</md-select>
 	</div>
-<h1>Batch</h1>	
 
-	
 	<md-content layout="column" flex> <md-table-container>
 	<table md-table id="batchTable">
 		<thead md-head md-order="query.order">
@@ -51,9 +53,10 @@
 				<th md-column><span>Trainer Name</span></th>
 				<th md-column><span>Start Date</span></th>
 				<th md-column><span>End Date</span></th>
-				<th md-column ng-show="headerEnable.duration"><span>Duration</span></th>
+				<th md-column><span>Duration</span></th>
 				<th md-column><span>Paid Status</span></th>
 				<th md-column><span>Received Status</span></th>
+				<th md-column><span>Invoice</span></th>
 				<th md-column ng-show="headerEnable.status"><span>Status</span></th>
 				<th md-column ng-show="headerEnable.batchTime"><span>Time</span></th>
 				<th md-column>Actions</th>
@@ -66,14 +69,16 @@
 						ng-click="rowSelect(data)" aria-label="Checkbox 2"
 						ng-true-value="'on'" ng-false-value="'off'"
 						class="md-warn md-align-top-left" flex></td>
-				<td md-cell>{{data.id}}</td>
+				<td md-cell><div class="pointer center" data-toggle="modal"
+						data-target="#modal1" ng-click="populateBatchDetails(data)">{{data.id}}</div></td>
 				<td md-cell ng-show="headerEnable.technologyId">{{data.technologyName}}</td>
-				<td md-cell >{{data.trainerName}}</td>
+				<td md-cell>{{data.trainerName}}</td>
 				<td md-cell>{{data.startDate}}</td>
 				<td md-cell>{{data.endDate}}</td>
-				<td md-cell ng-show="headerEnable.duration">{{data.duration}}</td>
+				<td md-cell>{{data.newDuration}}</td>
 				<td md-cell>{{data.paidStatus}}</td>
 				<td md-cell>{{data.receivedStatus}}</td>
+				<td md-cell>{{data.invoice}}</td>
 				<td md-cell ng-show="headerEnable.status">{{data.status}}</td>
 				<td md-cell ng-show="headerEnable.batchTime">{{data.batchTime}}</td>
 				<td md-cell><span> <md-tooltip> Update </md-tooltip> <i
@@ -94,7 +99,8 @@
 				md-component-id="right"> <md-toolbar
 				class="md-theme-light">
 			<h1 class="md-toolbar-tools">Batch Create</h1>
-			</md-toolbar> <ng-include src="'pages/app.batch/app.batch.create.html'"></ng-include> </md-sidenav>
+			</md-toolbar> <ng-include src="'pages/app.batch/app.batch.record.html'"></ng-include>
+			</md-sidenav>
 		</section>
 	</div>
 </div>

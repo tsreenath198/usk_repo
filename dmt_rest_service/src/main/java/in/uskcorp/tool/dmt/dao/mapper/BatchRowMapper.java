@@ -34,7 +34,7 @@ public class BatchRowMapper implements RowMapper<Batch> {
 		batch.setTechnologyName(resultSet.getString("technology_name"));
 		batch.setTrainerName(resultSet.getString("trainer_name"));
 		batch.setActiveFlag(resultSet.getInt("active_flag"));
-		
+		batch.setInvoice(resultSet.getString("invoice"));
 		return batch;
 	}
 }

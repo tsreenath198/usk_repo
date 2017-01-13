@@ -48,4 +48,6 @@ public class InvoiceDAOImpl extends InvoiceDAO {
 		return new InvoicePreparedStatementSetter(a, isInsert);
 	}
 
+	
+
 }

@@ -2,7 +2,7 @@
 	<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
 		<div flex="40">
 			<md-input-container class="md-block"> <label>{{currentRoute
-				| capitalize}} Search</label> <input required name="filter"
+				| capitalize}} Search</label> <input  name="filter"
 				ng-model="filter"> </md-input-container>
 		</div>
 		<div flex="40">
@@ -33,12 +33,17 @@
 	</div>
 
 	<div class="moreHeaders">
-		<md-select placeholder="Trainees" ng-model="moreOptions"
+		<md-select placeholder="Trainee" ng-model="moreOptions"
 			ng-change="openMoreOptions(moreOptions)" multiple> <md-optgroup>
-		More Trainees <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
+		Trainee<md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
 		</md-select>
 	</div>
-<h1>Trainee</h1>
+	
+	
+	<div class="overlay loadingImg" ng-show="loading">
+		<h1 style="text-align: center; margin-top: 20%">loading....</h1>
+	</div>
+	
 	<md-content layout="column" flex> <md-table-container>
 	<table md-table id="traineeTable">
 		<thead md-head md-order="query.order">
@@ -100,6 +105,4 @@
 			</md-toolbar> <create-trainee /> </md-sidenav>
 		</section>
 	</div>
-
-
 </div>

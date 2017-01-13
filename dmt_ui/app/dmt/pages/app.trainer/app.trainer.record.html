@@ -1,7 +1,7 @@
 <md-content layout-padding>
 <form name="trainerCreateForm">
 	<md-input-container class="md-block"> <label>Trainer</label>
-	<input required name="name" ng-model="record.name"> </md-input-container>
+	<input  name="name" ng-model="record.name"> </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Referred By</label>
 	<md-select ng-model="record.referredBy"> <md-option>
@@ -19,14 +19,14 @@
 
 
 	<md-input-container class="md-block"> <label>Phone</label>
-	<input required name="phone" ng-model="record.phone"> </md-input-container>
+	<input  name="phone" ng-model="record.phone"> </md-input-container>
 	<md-input-container class="md-block"> <input
 		type="hidden" name="Id" ng-model="record.id"></md-input-container>
 	<md-input-container class="md-block"> <label>Email
-		</label> <input required name="Email"
+		</label> <input  name="Email"
 		ng-model="record.email"> </md-input-container>
 	<md-input-container class="md-block"> <label>Description</label>
-	<input required name="Description" ng-model="record.description">
+	<input  name="Description" ng-model="record.description">
 	</md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"

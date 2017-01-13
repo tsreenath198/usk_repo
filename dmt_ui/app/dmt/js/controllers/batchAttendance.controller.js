@@ -4,7 +4,7 @@ dmtApplication.controller("batchAttendanceController",
 		batchAttendanceController);
 
 function batchAttendanceController($scope, batchAttendanceService, Excel,
-		$state, $mdDialog, $mdToast, $timeout, $mdSidenav, $log) {
+		$state, $mdDialog, $mdToast, $timeout, $mdSidenav, $log, $filter) {
 	var self = {
 		init : init
 	};
@@ -26,7 +26,8 @@ function batchAttendanceController($scope, batchAttendanceService, Excel,
 			"date" : "",
 			"traineeId" : "",
 			"createdDate" : "",
-			"description" : ""
+			"description" : "",
+			"name":"java"
 		};
 
 		/*
@@ -35,18 +36,18 @@ function batchAttendanceController($scope, batchAttendanceService, Excel,
 		 * BatchAttendanceService.getAllTechnologies().then(function(response) {
 		 * $scope.technologies = response.data; });
 		 */
-
+          $scope.loading=true;
 		batchAttendanceService.getAllBatchAttendances().then(
 				function(response) {
 					$scope.batches = response.data;
 					console.log("batches", $scope.batches);
-					/*
-					 * $scope.batchAttendancesLength = response.data.length;
-					 * console.log($scope.batchAttendancesData);
-					 * $scope.batchAttendancesOptions = [ 5, 10, 15 ];
-					 * $scope.batchAttendancePage = { pageSelect : true };
-					 * $scope.query = { order : 'name', limit : 5, page : 1 };
-					 */
+					
+					 $scope.batchAttendancesLength = response.data.length;
+					  console.log($scope.batchAttendancesData);
+					  $scope.batchAttendancesOptions = [ 200,300 ];
+					  $scope.batchAttendancePage = { pageSelect : true };
+					  $scope.query = { order : 'name', limit : 100, page : 1 };
+					  $scope.loading=false;
 				}, function(error) {
 
 				});
@@ -54,30 +55,23 @@ function batchAttendanceController($scope, batchAttendanceService, Excel,
 		$scope.traineesList = [];
 		$scope.showTrainees = function(record) {
 			if (record.batchId && record.batchId != '') {
-				batchAttendanceService.traineesList(record.batchId).success(
+				batchAttendanceService.trainees(record.batchId).success(
 						function(response) {
-							if ($scope.traineesList.length > 0) {
-								$scope.traineesList[index] = response;
-								console.log("traineeslist",$scope.traineesList[index]);
-								
-							} else {
-								$scope.traineesList.push(response)
-							}
-
-							$scope.dataLoading = false;
+							
+							$scope.traineesList = response;
+							console.log($scope.traineesList);
+							$scope.traineesList.push(response);
+							
+                            console.log($scope.traineesList);
 						});
 			} else {
-				$scope.dataLoading = false;
+
 			}
 		}
 
 		$scope.saveRecord = function() {
-			var jsonData = $scope.record;
-			var date = new Date();
-			// var dataForCreate = [ jsonData.name,date,jsonData.description ];
 			batchAttendanceService.create($scope.record).then(
 					function(response) {
-						// $scope.technology = response.data;
 						console.log(response);
 					});
 			$mdSidenav('right').close().then(function() {
@@ -92,7 +86,7 @@ function batchAttendanceController($scope, batchAttendanceService, Excel,
 			$scope.record = {
 				"id" : row.id,
 				"batchId" : row.batchId,
-				"date" : row.date,
+				"date" : new Date(row.date),
 				"traineeId" : row.traineeId,
 				"updatedDate" : "",
 				"description" : row.description
@@ -248,7 +242,7 @@ dmtApplication.directive('createBatchAttendance', function($state) {
 		replace : true,
 		templateUrl : function() {
 			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + '.create.html';
+			return '../dmt/pages/' + current + '/' + current + '.record.html';
 		}
 	};
 });

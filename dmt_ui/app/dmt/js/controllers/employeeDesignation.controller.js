@@ -29,19 +29,21 @@
             "createdDate":"",
             "description" : ""
         };
+        $scope.loading=true;
         employeeDesignationService.getAllEmployeeDesignations().then(function(response) {
             $scope.employeeDesignationsData = response.data;
             $scope.employeeDesignationsLength = response.data.length;
             console.log($scope.employeeDesignationsData);
-            $scope.employeeDesignationsOptions = [ 100, 200, 300 ];
+            $scope.employeeDesignationsOptions = [  200, 300 ];
             $scope.employeeDesignationPage = {
                 pageSelect : true
             };
             $scope.query = {
                 order : 'name',
-                limit : 5,
+                limit : 100,
                 page : 1
             };
+            $scope.loading=false;
         }, function(error) {
 
         });
@@ -214,7 +216,7 @@ dmtApplication.directive('createEmployeeDesignation', function($state) {
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/' + current + '/' + current + '.create.html';
+            return '../dmt/pages/' + current + '/' + current + '.record.html';
         }
     };
 });

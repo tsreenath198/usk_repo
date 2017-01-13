@@ -29,19 +29,21 @@
             "createdDate":"",
             "description" : ""
         };
+        $scope.loading=true;
         userRoleService.getAllUserRoles().then(function(response) {
             $scope.userRolesData = response.data;
             $scope.userRolesLength = response.data.length;
             console.log($scope.userRolesData);
-            $scope.userRolesOptions = [ 100, 200, 300 ];
+            $scope.userRolesOptions = [ 200, 300 ];
             $scope.userRolePage = {
                 pageSelect : true
             };
             $scope.query = {
                 order : 'name',
-                limit : 5,
+                limit : 100,
                 page : 1
             };
+            $scope.loading=false;
         }, function(error) {
 
         });

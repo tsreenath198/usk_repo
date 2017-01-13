@@ -2,7 +2,7 @@
 <md-content layout-padding>
 <form name="batchCreateForm">
 	<md-input-container class="md-block" flex-gt-sm> <label>Technology
-		Name</label> <md-select ng-model="record.technologyId">  <md-option
+		Name</label> <md-select ng-model="record.technologyId"> <md-option
 		ng-repeat="technology in technologies" ng-value="technology.id"
 		ng-selected="technology.id === record.technology">{{
 	technology.name }}</md-option> </md-select> </md-input-container>
@@ -13,16 +13,19 @@
 		ng-selected="trainer.id === record.trainer">{{
 	trainer.name }}</md-option> </md-select> </md-input-container>
 
-	<md-input-container class="md-block" > <label>Start
-		Date</label> <input required type="date" name="startDate"
+	<md-input-container class="md-block"> <label>Start
+		Date</label> <input  type="date" name="startDate"
 		ng-model="record.startDate"> </md-input-container>
 
-	<md-input-container class="md-block" > <label>End
-		Date</label> <input required type="date" name="endDate"
+	<md-input-container class="md-block"> <label>End
+		Date</label> <input  type="date" name="endDate"
 		ng-model="record.endDate"> </md-input-container>
 
-	<md-input-container class="md-block" > <label>Duration</label>
-	<input required name="duration" ng-model="record.duration"> </md-input-container>
+	<md-input-container class="md-block"> <label>Duration</label>
+	<input  name="duration" ng-model="record.duration"> </md-input-container>
+	
+	<md-input-container class="md-block"> <label>Invoice</label>
+	<input  name="invoice" ng-model="record.invoice"> </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Paid
 		Status</label> <md-select ng-model="record.paidStatus"> <md-option>
@@ -52,9 +55,9 @@
 
 	<md-input-container class="md-block" flex-gt-sm> <input
 		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
-		
+
 	<md-input-container class="md-block" flex-gt-sm> <label>Description</label>
-	<input required name="description" ng-model="record.description">
+	<input  name="description" ng-model="record.description">
 	</md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
@@ -65,4 +68,4 @@
 	Cancel </md-button>
 </form>
 
-</md-content> 
+</md-content>

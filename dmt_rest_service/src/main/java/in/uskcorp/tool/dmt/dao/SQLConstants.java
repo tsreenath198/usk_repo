@@ -249,6 +249,7 @@ public class SQLConstants {
 	public static final String BATCH_ATTENDANCE_INSERT = "INSERT INTO batch_attendance (batch_id,date,trainee_id,created_date,description) values(?,?,?,?,?)";
 	public static final String BATCH_ATTENDANCE_UPDATE = "UPDATE batch_attendance set batch_id=?,date=?,trainee_id=?,updated_date=?,description=? WHERE id = ?";
 	public static final String BATCH_ATTENDANCE_DELETE = "UPDATE batch_attendance set active_flag=1 WHERE id = ?";
+	public static final String BATCH_ATTENDANCE_SELECT_BY_ID = "SELECT * FROM batch where id = ?";
 
 	public static final String TIME_SHEET_SELECT = "SELECT * FROM time_sheet where active_flag=0 ORDER BY date asc";
 	public static final String TIME_SHEET_SELECT_BY_ID = "SELECT * FROM time_sheet where id = ?";

@@ -9,7 +9,8 @@ function supportInteractionService($http, __env, $window) {
 		getAllEmployees : getAllEmployees,
 		getAllTrainees : getAllTrainees,
 		create : create,
-		update: update
+		update: update,
+		deleteRow:deleteRow
 
 	},url = __env.baseUrl + __env.context
 	return service;
@@ -28,6 +29,16 @@ function supportInteractionService($http, __env, $window) {
 			url : url + '/supportInteractions/create',
 			method : "POST",
 			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+	function deleteRow(id) {
+		return $http({
+			url : url + '/supportInteractions/delete?id='+id,
+			method : "POST"
 		}).then(function(response) {
 			// success
 		}, function(response) { // optional

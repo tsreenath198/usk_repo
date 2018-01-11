@@ -1,226 +1,283 @@
 /*(function() {*/
 'use strict';
 dmtApplication.controller("questionController", questionController);
+dmtApplication.controller("questionPopUpController",questionPopUpController);
 
 function questionController($scope, questionService, Excel, $state, $mdDialog,
-		$mdToast, $timeout, $mdSidenav, $log) {
-	var self = {
-		init : init
-	};
-	function init() {
-		// console.log($state.current.name);
-		var current = $state.current.name;
-		$scope.currentState = current.split(/[\s.]+/);
-		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
-		$scope.customFullscreen = false;
-		$scope.updatePage = false;
-		$scope.coursesData = [];
-		$scope.collection = [];
-		$scope.selected = [];
-		$scope.headerEnable = {};
-		$scope.exportData = [];
+    $mdToast, $timeout, $mdSidenav, $log, $rootScope) {
+    var self = {
+        init: init
+    };
 
-		$scope.record = {
-						
-		"endClient": "",
-		"question": "",
-		"answers": "",
-		"createdDate": "",
-		"description": ""
-}
-		/*questionService.getAllQuestion().then(function(response) {
-			$scope.question = response.data;
-		});*/
-		$scope.progressBar = true;
-		questionService.getAllQuestion().then(function(response) {
-			$scope.questionData = response.data;
-			$scope.questionLength = response.data.length;
-			// console.log($scope.tasksData);
-			$scope.questionOptions = [ 200 , 300 ];
-			$scope.questionPage = {
-				pageSelect : true
-			};
-			$scope.query = {
-				order : 'name',
-				limit : 100,
-				page : 1
-			};
-			$scope.progressBar = false;
-		}, function(error) {
+    function init() {
+        $rootScope.currentController = 'Question';
+        var current = $state.current.name;
+        $rootScope.currentDataEnable = true;
+        $scope.currentState = current.split(/[\s.]+/);
+        $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
+        $scope.customFullscreen = false;
+        $scope.updatePage = false;
+        $scope.coursesData = [];
+        $scope.collection = [];
+        $scope.selected = [];
+        $scope.headerEnable = {};
+        $scope.exportData = [];
 
-		});
+        $scope.cancelRecord = function() {
+            $mdSidenav('right').close().then(function() {
+                $log.debug("close RIGHT is done");
+            });
+        }
+        
+        $scope.record = {
+            "endClient": "",
+            "question": "",
+            "answers": "",
+            "createdDate": "",
+            "description": ""
+        }
 
-		$scope.saveRecord = function() {
-			console.log($scope.record);		
-				
-			questionService.create($scope.record).then(function(response) {
-				console.log("resp", response);
-			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
-		}
+        $scope.loading = true;
+        questionService.getAllQuestion().then(function(response) {
+            $scope.questionData = response.data;
+            $scope.questionLength = response.data.length;
+            $rootScope.currentTableLength = 'Records Count :' + response.data.length;
+            $scope.questionOptions = [200, 300];
+            $scope.questionPage = {
+                pageSelect: true
+            };
+            $scope.query = {
+                order: 'name',
+                limit: 100,
+                page: 1
+            };
+            $scope.loading = false;
+        }, function(error) {
+            alert("failed");
+            $scope.loading = false;
+        });
 
-		$scope.setRowData = function(row) {
-			$scope.updatePage = true;
-			
-			$scope.record = {		
-				"endClient" : row.endClient,
-				"question" : row.question,
-				"answers" : row.answers,
-				"updatedDate":"",
-				"description" : row.description,				
-				"id" : row.id
-			
- 			};
-			// console.log($scope.create.status);
-		};
-		$scope.updateRecord = function() {
-			console.log($scope.record);
-			questionService.update($scope.record).then(function(response) {
-				console.log("resp", response);
-			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
-		}
-		$scope.emptyForm = function() {
-			$scope.updatePage = false;
-			
-		};
+        $scope.getDetailedInfo = function(id,ev){
+        	console.log(id);
+        	$rootScope.questionId = id;
+            $mdDialog.show({
+      controller: questionPopUpController,
+      templateUrl: 'pages/app.question/question.answer.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+    .then(function(answer) {
+      $scope.status = 'You said the information was "' + answer + '".';
+    }, function() {
+      $scope.status = 'You cancelled the dialog.';
+    });
+        }
 
-		$scope.rowSelect = function(row) {
-			$scope.selected.push(row.id);
-		};
-		$scope.selectAll = function() {
-			for ( var i in $scope.questionData) {
-				$scope.questionData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.questionData[i].id);
-			}
-			;
-		};
-
-		$scope.deSelectAll = function() {
-			for ( var i in $scope.questionData) {
-				$scope.questionData[i]["checkboxValue"] = 'off';
-			}
-			;
-			$scope.selected = [];
-		};
-
-		$scope.deleteSelected = function(ev) {
-			// Appending dialog to document.body to cover sidenav in docs app
-			if ($scope.selected.length > 0) {
-				var confirm = $mdDialog
-						.confirm()
-						.title('Would you like to delete your Task?')
-						.textContent(
-								'All of the Tasks have agreed to forgive you your task.')
-						.ariaLabel('Lucky day').targetEvent(ev).ok(
-								'Please do it!').cancel('Sounds like a scam');
-
-				$mdDialog
-						.show(confirm)
-						.then(
-								function() {
-									$scope.coursesData = $scope.coursesData
-											.filter(function(obj) {
-												return $scope.selected
-														.indexOf(obj.id) === -1;
-											});
-									$scope.coursesLength = $scope.coursesData.length;
-								},
-								function() {
-									$scope.status = 'You decided to keep your Task.';
-								});
-			} else {
-				alert("please select any one");
+        $scope.splitData = function(text) {
+			var content = text.substring(0,25);
+			return content;
 			}
 
-		};
+        /*Header icon functionality*/
+        var deregisterListener = $rootScope.$on("CallQuestionMethod", function() {
+            if ($rootScope.$$listeners["CallQuestionMethod"].length > 1) {
+                $rootScope.$$listeners["CallQuestionMethod"].pop();
 
-		$scope.exportData = function(tableId) {
-			// $scope.tasksOptions = [ $scope.tasksData.length ];
-			var exportHref = Excel.tableToExcel(tableId, 'sheet name');
-			$timeout(function() {
-				location.href = exportHref;
-			}, 100); // trigger download
-		}
+            }
+            $scope.toggleRight();
+            $scope.emptyForm();
+        });
 
-		/* Tooltip Starrts */
+        var deregisterListener = $rootScope.$on("CallQuestionSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallQuestionSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallQuestionSearchMethod"].pop();
+            }
+            $scope.filterByText = args.text;
+        });
+        $scope.saveRecord = function() {
+            //console.log($scope.record);		
 
-		$scope.demo = {
-			showTooltip : false,
-			tipDirection : ''
-		};
+            questionService.create($scope.record).then(function(response) {
+                //	console.log("resp", response);
+            });
+            $mdSidenav('right').close().then(function() {
+                $log.debug("close RIGHT is done");
+            });
+            window.location.reload();
+        }
 
-		$scope.demo.delayTooltip = undefined;
-		$scope.$watch('demo.delayTooltip', function(val) {
-			$scope.demo.delayTooltip = parseInt(val, 10) || 0;
-		});
+        $scope.setRowData = function(row) {
+            $scope.updatePage = true;
 
-		$scope.$watch('demo.tipDirection', function(val) {
-			if (val && val.length) {
-				$scope.demo.showTooltip = true;
-			}
-		});
-		/* Tooltip Ends */
+            $scope.record = {
+                "endClient": row.endClient,
+                "question": row.question,
+                "answers": row.answers,
+                "updatedDate": "",
+                "description": row.description,
+                "id": row.id
 
-		/* Side nav starts */
-		$scope.toggleLeft = buildDelayedToggler('left');
-		$scope.toggleRight = buildToggler('right');
-		$scope.isOpenRight = function() {
-			return $mdSidenav('right').isOpen();
-		};
+            };
+            // console.log($scope.create.status);
+        };
+        $scope.updateRecord = function() {
+            console.log($scope.record);
+            questionService.update($scope.record).then(function(response) {
+                //console.log("resp", response);
+            });
+            $mdSidenav('right').close().then(function() {
+                $log.debug("close RIGHT is done");
+            });
+            window.location.reload();
+            $scope.currentPage = 'Create';
+        }
+        $scope.emptyForm = function() {
+            $scope.updatePage = false;
+              $scope.record = {
+            "endClient": "",
+            "question": "",
+            "answers": "",
+            "createdDate": "",
+            "description": ""
+        }
+        };
 
-		function debounce(func, wait, context) {
-			var timer;
+        $scope.rowSelect = function(row) {
+            $scope.selected.push(row);
+        };
+        $scope.headerCheckbox = false;
+        $scope.selectAll = function() {
+            if (!$scope.headerCheckbox) {
+                for (var i in $scope.questionData) {
+                    $scope.questionData[i]["checkboxValue"] = 'on';
+                    $scope.selected.push($scope.questionData[i]);
+                };
+                $scope.headerCheckbox = ($scope.headerCheckbox == false) ? true : false;
+            } else if ($scope.headerCheckbox) {
+                for (var i in $scope.questionData) {
+                    $scope.questionData[i]["checkboxValue"] = 'off';
+                    $scope.selected = [];
+                };
+                $scope.headerCheckbox = ($scope.headerCheckbox == true) ? false : true;
+            };
+            //	console.log($scope.selected);
+        };
 
-			return function debounced() {
-				var context = $scope, args = Array.prototype.slice
-						.call(arguments);
-				$timeout.cancel(timer);
-				timer = $timeout(function() {
-					timer = undefined;
-					func.apply(context, args);
-				}, wait || 10);
-			};
-		}
 
-		function buildDelayedToggler(navID) {
-			return debounce(function() {
-				// Component lookup should always be available since we are not
-				// using `ng-if`
-				$mdSidenav(navID).toggle().then(function() {
-					$log.debug("toggle " + navID + " is done");
-				});
-			}, 200);
-		}
 
-		function buildToggler(navID) {
+        $scope.deleteRow = function(ev, row) {
+            var confirm = $mdDialog
+                .confirm()
+                .title('Are you sure want to Delete Record?')
 
-			return function() {
-				// Component lookup should always be available since we are not
-				// using `ng-if`
-				$mdSidenav(navID).toggle().then(function() {
-					$log.debug("toggle " + navID + " is done");
-				});
-			}
-		}
-		/* Side nav ends */
-	}
-	init();
+                .ariaLabel('Lucky day').targetEvent(ev).ok(
+                    'Ok').cancel('Cancel');
 
-	return self;
+            $mdDialog.show(confirm).then(function() {
+                questionService.deleteRow(row.id).then(function(response) {});
+                window.location.reload();
+
+            }, function() {
+                $scope.status = 'You decided to keep your Task.';
+            });
+
+        };
+
+
+        /* Tooltip Starrts */
+
+        $scope.demo = {
+            showTooltip: false,
+            tipDirection: ''
+        };
+
+        $scope.demo.delayTooltip = undefined;
+        $scope.$watch('demo.delayTooltip', function(val) {
+            $scope.demo.delayTooltip = parseInt(val, 10) || 0;
+        });
+
+        $scope.$watch('demo.tipDirection', function(val) {
+            if (val && val.length) {
+                $scope.demo.showTooltip = true;
+            }
+        });
+        /* Tooltip Ends */
+
+        /* Side nav starts */
+        $scope.toggleLeft = buildDelayedToggler('left');
+        $scope.toggleRight = buildToggler('right');
+        $scope.isOpenRight = function() {
+            return $mdSidenav('right').isOpen();
+        };
+
+        function debounce(func, wait, context) {
+            var timer;
+
+            return function debounced() {
+                var context = $scope,
+                    args = Array.prototype.slice
+                    .call(arguments);
+                $timeout.cancel(timer);
+                timer = $timeout(function() {
+                    timer = undefined;
+                    func.apply(context, args);
+                }, wait || 10);
+            };
+        }
+
+        function buildDelayedToggler(navID) {
+            return debounce(function() {
+                // Component lookup should always be available since we are not
+                // using `ng-if`
+                $mdSidenav(navID).toggle().then(function() {
+                    $log.debug("toggle " + navID + " is done");
+                });
+            }, 200);
+        }
+
+        function buildToggler(navID) {
+
+            return function() {
+                // Component lookup should always be available since we are not
+                // using `ng-if`
+                $mdSidenav(navID).toggle().then(function() {
+                    $log.debug("toggle " + navID + " is done");
+                });
+            }
+        }
+        /* Side nav ends */
+    }
+    init();
+
+    return self;
 };
 
+function questionPopUpController($scope, questionService, $mdDialog, $rootScope, $mdToast, $timeout,
+    $state, $mdSidenav, $log){       
+                $scope.questionId = $rootScope.questionId;
+            questionService.getAllQuestion().then(function(response) {
+                    $scope.questionsData = response.data;
+                    angular.forEach($scope.questionsData, function(value, key) {
+                    	if(value.id == $scope.questionId){
+                    		$scope.answers = value.answers;
+                    	}
+ 
+});       
+                        });
+            $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+}
+
 dmtApplication.directive('createQuestion', function($state) {
-	return {
-		restrict : 'E',
-		replace : true,
-		templateUrl : function() {
-			var current = $state.current.name;
-			return '../dmt/pages/' + current + '/' + current + '.record.html';
-		}
-	};
+    return {
+        restrict: 'E',
+        replace: true,
+        templateUrl: function() {
+            var current = $state.current.name;
+            return '../dmt/pages/' + current + '/' + current + '.record.html';
+        }
+    };
 });

@@ -3,15 +3,16 @@
     dmtApplication
         .controller("employeeDesignationController", employeeDesignationController);
 
-    function employeeDesignationController($scope,employeeDesignationService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
+    function employeeDesignationController($scope,employeeDesignationService,$mdDialog, $rootScope,$mdToast,$state, $mdSidenav,$log) {
           
 
         var self = {
         init : init
     };
     function init() {
-        // console.log($state.current.name);
+        $rootScope.currentController='Employee Designation';
         var current = $state.current.name;
+        $rootScope.currentDataEnable = true;
         $scope.currentState = current.split(/[\s.]+/);
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
@@ -33,7 +34,8 @@
         employeeDesignationService.getAllEmployeeDesignations().then(function(response) {
             $scope.employeeDesignationsData = response.data;
             $scope.employeeDesignationsLength = response.data.length;
-            console.log($scope.employeeDesignationsData);
+            $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+          //  console.log($scope.employeeDesignationsData);
             $scope.employeeDesignationsOptions = [  200, 300 ];
             $scope.employeeDesignationPage = {
                 pageSelect : true
@@ -45,22 +47,30 @@
             };
             $scope.loading=false;
         }, function(error) {
-
+alert("failed");
+                    $scope.loading=false;
         });
     
+    var deregisterListener = $rootScope.$on("CallemployeeDesignationSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallemployeeDesignationSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallemployeeDesignationSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
         
         $scope.saveRecord = function() {
-             console.log($scope.create);
+           //  console.log($scope.create);
              employeeDesignationService.create($scope.record).then(function(response) {
-                console.log("resp", response);
+            //    console.log("resp", response);
             });
-            $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
-            });
+             $scope.cancelRecord();
+               window.location.reload();
+
+               
         }
 
         $scope.setRowData = function(row) {
-             console.log(row);
+            // console.log(row);
             $scope.rowData = row;
             $scope.updatePage = true;
             $scope.record = {
@@ -74,61 +84,84 @@
         $scope.updateData = function() {
             // console.log($scope.create);
 
-        	employeeDesignationService.update($scope.record).then(function(response) {
-                console.log("resp", response);
+            employeeDesignationService.update($scope.record).then(function(response) {
+             //   console.log("resp", response);
             });
 
-            $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
-            });
+            $scope.cancelRecord();
+               window.location.reload();
+                $scope.currentPage = 'Create';
         }
-        $scope.emptyForm1 = function() {
-            $scope.updatePage = false;
-            $scope.record = {};
-        };
+       
+        $scope.cancelRecord = function() {
+            $mdSidenav('right').close().then(function() {
+                    $log.debug("close RIGHT is done");
+                });
+                
+            };
 
         $scope.rowSelect = function(row) {
             $scope.selected.push(row.id);
         };
+        $scope.emptyForm = function() {
+             $scope.record = {
+             "designation" : "",
+            "createdDate":"",
+            "description" : ""
+        };
+         };
+        var deregisterListener = $rootScope.$on("CallEmployeeDesignationMethod", function(){
+            if ($rootScope.$$listeners["CallEmployeeDesignationMethod"].length > 1) {
+                            $rootScope.$$listeners["CallEmployeeDesignationMethod"].pop();
+
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });
+        
+        $scope.headerCheckbox = false;
         $scope.selectAll = function() {
+            if(!$scope.headerCheckbox){
             for ( var i in $scope.employeeDesignationsData) {
                 $scope.employeeDesignationsData[i]["checkboxValue"] = 'on';
-                $scope.selected.push($scope.employeeDesignationsData[i].id);
-            }
-            ;
-        };
-
-        $scope.deSelectAll = function() {
+                $scope.selected.push($scope.employeeDesignationsData[i]);
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+        }else if($scope.headerCheckbox){
             for ( var i in $scope.employeeDesignationsData) {
                 $scope.employeeDesignationsData[i]["checkboxValue"] = 'off';
-            }
-            ;
-            $scope.selected = [];
+                $scope.selected = [];
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+        };
+       // console.log($scope.selected);
         };
 
-        $scope.deleteSelected = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            if ($scope.selected.length > 0) {
+            
+
+            $scope.deleteRow = function(ev,row) {
+            
                 var confirm = $mdDialog
                         .confirm()
-                        .title('Would you like to delete your Task?')
-                        .textContent(
-                                'All of the Tasks have agreed to forgive you your task.')
+                        .title('Are you sure want to Delete Record?')
+                        
                         .ariaLabel('Lucky day').targetEvent(ev).ok(
-                                'Please do it!').cancel('Sounds like a scam');
+                                'Ok').cancel('Cancel');
 
-                $mdDialog.show(confirm).then(function() {
-                    $scope.employeeDesignationsData = $scope.employeeDesignationsData.filter(function(obj) {
-                        return $scope.selected.indexOf(obj.id) === -1;
-                    });
-                    $scope.employeeDesignationsLength = $scope.employeeDesignationsData.length;
-                }, function() {
-                    $scope.status = 'You decided to keep your Task.';
-                });
-            } else {
-                alert("please select any one");
-            }
-
+                $mdDialog
+                        .show(confirm)
+                        .then(
+                                function() {
+                                    employeeDesignationService.deleteRow(row.id).then(function(response) {
+                
+            });
+                                   window.location.reload();
+                                },
+                                function() {
+                                    $scope.status = 'You decided to keep your Task.';
+                                });
+            
+    
         };
 
        

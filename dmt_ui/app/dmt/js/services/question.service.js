@@ -5,7 +5,8 @@ function questionService($http, $window, __env) {
 		getAllQuestion : getAllQuestion,
 		//getAllQuestion : getAllQuestion,
 		create : create,
-		update : update
+		update : update,
+		deleteRow:deleteRow
 	}, url = __env.baseUrl + __env.context
 	return service;
 	
@@ -19,6 +20,16 @@ function questionService($http, $window, __env) {
 			url : url + '/questions/create',
 			method : "POST",
 			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+	function deleteRow(id) {
+		return $http({
+			url : url + '/questions/delete?id='+id,
+			method : "POST"
 		}).then(function(response) {
 			// success
 		}, function(response) { // optional

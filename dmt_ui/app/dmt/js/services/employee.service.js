@@ -7,16 +7,17 @@ function EmployeeService($http, __env, $window) {
 		getAllEmployees : getAllEmployees,
 		getAllRoles:getAllRoles,
 		create : create,
-		update : update
+		update : update,
+		deleteRow:deleteRow
 
 	}, url = __env.baseUrl + __env.context
 	return service;
 	function getAllEmployees() {
 		return $http.get(url + "/employees/readAll");
 	}
-	
+
 	function getAllRoles() {
-		return $http.get("./mock/roleConstants.json");
+		return $http.get(url + "/employeesDesignation/readAll");
 	}
 
 	function create(jsonData) {
@@ -42,6 +43,16 @@ function EmployeeService($http, __env, $window) {
 		}, function(response) { // optional
 			// failed
 			console.log("fai");
+		});
+	}
+	function deleteRow(data) {
+		return $http({
+			url : url + '/employees/delete?id='+data,
+			method : "POST"
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
 		});
 	}
 }

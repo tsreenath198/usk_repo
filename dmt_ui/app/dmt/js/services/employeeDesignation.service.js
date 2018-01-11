@@ -6,8 +6,8 @@
            var service = {
            getAllEmployeeDesignations:getAllEmployeeDesignations, 
            create:create,
-           update:update
-                   
+           update:update,
+           deleteRow:deleteRow       
           }, url = __env.baseUrl + __env.context
        return service;
        function getAllEmployeeDesignations() {
@@ -37,8 +37,17 @@
       // failed
     });
   }
-      
+  function deleteRow(data) {
+    return $http({
+      url : url + '/employeesDesignation/delete?id='+data,
+      method : "POST"
+    }).then(function(response) {
+      // success
+    }, function(response) { // optional
+      // failed
+    });
+  }
 
-		    
+        
     }
 /*}());*/

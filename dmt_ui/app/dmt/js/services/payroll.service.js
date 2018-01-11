@@ -1,8 +1,8 @@
 'use strict';
-dmtApplication.factory("salaryService", salaryService);
-function salaryService($http, $window, __env) {
+dmtApplication.factory("payrollService", payrollService);
+function payrollService($http, $window, __env) {
 	var service = {
-		getAllSalaries : getAllSalaries,
+		getAllPayRolls : getAllPayRolls,
 		getAllEmployees : getAllEmployees,
 		getAllMonth : getAllMonth,
 		getAllBatchesBasedOnEmployeeId:getAllBatchesBasedOnEmployeeId,
@@ -12,23 +12,32 @@ function salaryService($http, $window, __env) {
 	}, url = __env.baseUrl + __env.context
 	return service;
 	
-	function getAllSalaries() {
-		return $http.get(url + "/payroll/readAll");
+	function getAllPayRolls() {
+		return $http.get(url +"/payroll/readAll");
 	}
 	function getAllEmployees() {
-		return $http.get(url + "/employees/readAll");
+		return $http.get(url +"/employees/readAll");
 	}
 	function getAllMonth() {
     return $http.get("./mock/month.json");
   }
 
-  function getAllBatchesBasedOnEmployeeId(id) {
-	return $http.get(url + "/batches/readAllById?id="+id);
+  
+ 
+  function getAllBatchesBasedOnEmployeeId(date,id) {
+	$http({
+		url : url +'/payroll/readByMonthAndId?date=date&&employeeId=id',
+		method : "POST"
+	}).then(function(response) {
+		// success
+	}, function(response) { // optional
+		// failed
+	});
 }
 
 function deleteRow(data) {
 		return $http({
-			url : url + '/salary/delete?id='+data,
+			url : url +'/payroll/delete?id='+data,
 			method : "POST"
 		}).then(function(response) {
 			// success
@@ -38,7 +47,7 @@ function deleteRow(data) {
 	}
 	function create(data) {
 		return $http({
-			url : url + '/salary/create',
+			url : url +'/payroll/readByMonthAndId?month=data&&employeeId=data',
 			method : "POST",
 			data : data
 		}).then(function(response) {
@@ -49,7 +58,7 @@ function deleteRow(data) {
 	}
 	function update(data) {
 		return $http({
-			url : url + '/salary/update',
+			url :url +'/dmt_rest_service/payroll/update',
 			method : "POST",
 			data : data
 		}).then(function(response) {

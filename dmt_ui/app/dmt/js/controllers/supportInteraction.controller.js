@@ -4,13 +4,15 @@
         .controller("supportInteractionController", supportInteractionController);
 
     function supportInteractionController($scope, supportInteractionService, Excel, $state, $mdDialog,
-    $mdToast, $timeout, $mdSidenav, $log) {
+    $mdToast, $timeout, $mdSidenav, $log, $rootScope) {
       var self = {
     init : init
   };
   function init() {
-    // console.log($state.current.name);
+    $rootScope.currentController = 'Support Interaction';
+    $scope.currentPage = 'Create';
     var current = $state.current.name;
+    $rootScope.currentDataEnable = true;
     $scope.currentState = current.split(/[\s.]+/);
     $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
     $scope.customFullscreen = false;
@@ -20,28 +22,28 @@
     $scope.selected = [];
     $scope.headerEnable = {};
     $scope.exportData = [];
+    
     $scope.record = {
       "count": "",
-      "leadId": "",
       "traineeId": "",
       "employeeId": "",
-      "lead": "Sreenath Thatikonda",
       "date": "",
       "createdDate": "",
       "description": ""
     };   
-
+    
     supportInteractionService.getAllEmployees().then(function(response) {
       $scope.employees = response.data;
     });
      supportInteractionService.getAllTrainees().then(function(response) {
       $scope.trainees = response.data;
     });
-
+    $scope.loading = true;
     supportInteractionService.getAllSupportInteractions().then(function(response) {
       $scope.supportInteractionsData = response.data;
       $scope.supportInteractionsLength = response.data.length;
-      console.log($scope.supportInteractionsData);
+      $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+     // console.log($scope.supportInteractionsData);
       $scope.supportInteractionsOptions = [ 200 , 300];
       $scope.supportInteractionPage = {
         pageSelect : true
@@ -51,31 +53,59 @@
         limit : 100,
         page : 1
       };
+      $scope.loading = false;
     }, function(error) {
-
+alert("failed");
+          $scope.loading=false;
     });
-  
+    var deregisterListener = $rootScope.$on("CallSupportInteractionMethod", function(){
+      if ($rootScope.$$listeners["CallSupportInteractionMethod"].length > 1) {
+                    $rootScope.$$listeners["CallSupportInteractionMethod"].pop();
+            }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });
+       var deregisterListener = $rootScope.$on("CallsupportInteractionSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallsupportInteractionSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallsupportInteractionSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
     
-    $scope.saveRecord = function() {   			
-		supportInteractionService.create($scope.record).then(function(response) {
-			
-		});
-		$mdSidenav('right').close().then(function() {
-			$log.debug("close RIGHT is done");
-		});
-    }
+    
+    /* Side nav ends */
+  }
+  init();
+  $scope.saveRecord = function() {        
+    supportInteractionService.create($scope.record).then(function(response) {     
+    });
+    $scope.cancelRecord();
+      window.location.reload();
+    };
 
+    $scope.cancelRecord = function(){
+        $mdSidenav('right').close().then(function() {
+        $log.debug("close RIGHT is done");
+      })
+    };
+  $scope.getLead = function(data){
+      
+      $scope.record['leadId'] = data.id;
+      $scope.record['lead'] = data.name;
+      
+    };
     $scope.setRowData = function(row) {
-       console.log(row);
+      $scope.currentPage = 'Update';
       $scope.rowData = row;
       $scope.updatePage = true;
+      $scope.leadId = row.leadId;
       $scope.record = {
         "count": row.count,
-      "leadId": row.leadId,
+      
       "traineeId": row.traineeId,
       "employeeId": row.employeeId,
-      "lead": "Sreenath Thatikonda",
-      "date": row.date,
+      
+      "date": new Date(row.date),
       "updatedDate": "",
       "description": row.description,
       "id":row.id
@@ -86,24 +116,42 @@
      supportInteractionService.update($scope.record).then(function(response) {
       
     });
-      $mdSidenav('right').close().then(function() {
-        $log.debug("close RIGHT is done");
-      });
+     $scope.cancelRecord();
+        window.location.reload();
+     $scope.currentPage = 'Create';
     }
     $scope.emptyForm = function() {
       $scope.updatePage = false;
-      $scope.create = {};
+      $scope.leadId = '';
+     $scope.record = {
+      "count": "",
+      "traineeId": "",
+      "employeeId": "",
+      "date": "",
+      "createdDate": "",
+      "description": ""
+    };   
     };
 
     $scope.rowSelect = function(row) {
-      $scope.selected.push(row.id);
+      $scope.selected.push(row);
     };
+    $scope.headerCheckbox = false;
     $scope.selectAll = function() {
+     if(!$scope.headerCheckbox){
       for ( var i in $scope.supportInteractionsData) {
         $scope.supportInteractionsData[i]["checkboxValue"] = 'on';
-        $scope.selected.push($scope.supportInteractionsData[i].id);
-      }
-      ;
+        $scope.selected.push($scope.supportInteractionsData[i]);
+      };
+      $scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+    }else if($scope.headerCheckbox){
+      for ( var i in $scope.supportInteractionsData) {
+        $scope.supportInteractionsData[i]["checkboxValue"] = 'off';
+        $scope.selected = [];
+      };
+      $scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+    };
+   // console.log($scope.selected);
     };
 
     $scope.deSelectAll = function() {
@@ -114,38 +162,24 @@
       $scope.selected = [];
     };
 
-    $scope.deleteSelected = function(ev) {
-      // Appending dialog to document.body to cover sidenav in docs app
-      if ($scope.selected.length > 0) {
-        var confirm = $mdDialog
+    $scope.deleteRow = function(ev,row) {
+      
+       var confirm = $mdDialog
             .confirm()
-            .title('Would you like to delete your Trainer?')
-            .textContent(
-                'All of the Tasks have agreed to forgive you your trainer.')
+            .title('Are you sure want to Delete Record?')
+            
             .ariaLabel('Lucky day').targetEvent(ev).ok(
-                'Please do it!').cancel('Sounds like a scam');
-
+                'Ok').cancel('Cancel');
         $mdDialog.show(confirm).then(function() {
-          $scope.supportInteractionsData = $scope.supportInteractionsData.filter(function(obj) {
-            return $scope.selected.indexOf(obj.id) === -1;
-          });
-          $scope.supportInteractionsLength = $scope.supportInteractionsData.length;
+          supportInteractionService.deleteRow(row.id).then(function(response) {
+      
+        });
+         window.location.reload();
         }, function() {
           $scope.status = 'You decided to keep your Trainer.';
         });
-      } else {
-        alert("please select any one");
-      }
-
+     
     };
-
-    $scope.export = function(tableId) {
-      // $scope.tasksOptions = [ $scope.tasksData.length ];
-      var exportHref = Excel.tableToExcel(tableId, 'sheet name');
-      $timeout(function() {
-        location.href = exportHref;
-      }, 100); // trigger download
-    }
 
     /* Tooltip Starrts */
 
@@ -207,10 +241,6 @@
         });
       }
     }
-    /* Side nav ends */
-  }
-  init();
-
   return self;
 };
   

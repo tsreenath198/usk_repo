@@ -7,7 +7,8 @@
            getAllUserDetails: getAllUserDetails, 
            getAllRoles:getAllRoles,
            create:create,
-           update:update
+           update:update,
+           deleteRow:deleteRow
                    
           }, url = __env.baseUrl + __env.context
        return service;
@@ -34,6 +35,19 @@ function getAllRoles() {
       url : url + '/userDetails/update',
       method : "POST",
       data : jsonData
+    }).then(function(response) {
+      // success
+    }, function(response) { // optional
+      // failed
+    });
+  }
+      
+
+  function deleteRow(id) {
+    return $http({
+      url : url + '/userDetails/delete?id='+id,
+      method : "POST"
+      
     }).then(function(response) {
       // success
     }, function(response) { // optional

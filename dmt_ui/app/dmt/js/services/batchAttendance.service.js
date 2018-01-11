@@ -5,14 +5,19 @@ function batchAttendanceService($http, __env, $window) {
 
 	var service = {
 		getAllBatchAttendances : getAllBatchAttendances,
+		getAllBatches : getAllBatches,
 		trainees:trainees,
 		create : create,
-		update: update
+		update: update,
+		deleteRow:deleteRow
 
 	},url = __env.baseUrl + __env.context
 	return service;
-	function getAllBatchAttendances() {
+	function getAllBatches() {
 		return $http.get(url + "/batches/readAll");
+	}
+	function getAllBatchAttendances() {
+		return $http.get(url + "/batchAttendances/readAll");
 	}
 	
 	function trainees(batch_id) {
@@ -35,6 +40,17 @@ function batchAttendanceService($http, __env, $window) {
 			url : url + '/batchAttendances/update',
 			method : "POST",
 			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+	
+	function deleteRow(data) {
+		return $http({
+			url : url + '/batchAttendances/delete?id='+data,
+			method : "POST"
 		}).then(function(response) {
 			// success
 		}, function(response) { // optional

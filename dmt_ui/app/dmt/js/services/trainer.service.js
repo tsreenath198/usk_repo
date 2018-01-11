@@ -9,7 +9,8 @@ function TrainerService($http, __env, $window) {
 		getAllEmployees : getAllEmployees,
 		getAllTechnologies : getAllTechnologies,
 		create : create,
-		update: update
+		update: update,
+		deleteRow:deleteRow
 
 	},url = __env.baseUrl + __env.context
 	return service;
@@ -45,12 +46,16 @@ function TrainerService($http, __env, $window) {
 			// failed
 		});
 	}
-
-
-
-	
-
-	
+	function deleteRow(data) {
+		return $http({
+			url : url + '/trainers/delete?id='+data,
+			method : "POST"
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}	
 }
 
 /* }()); */

@@ -3,7 +3,7 @@
 dmtApplication
     .controller("DashboardController", DashboardController);
 
-function DashboardController($scope, DashboardService, $mdDialog, $mdToast) {
+function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$rootScope) {
     var self = {
         init: init,
         isPanelShown: false,
@@ -24,54 +24,15 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast) {
     };
 
     function init() {
+       
+      $rootScope.loading = true;
+      $rootScope.currentDataEnable = false;
         DashboardService.getAllApplications().then(function(response) {
-            $scope.applications = response.data;
-            $scope.paymentSummariesLength = $scope.applications.paymentSummaries.length;
-            $scope.paymentSummariesOptions = [5, 10, 15];
-            $scope.paymentSummariesPage = {
-                pageSelect: true
-            };
-            $scope.payment = {
-                order: 'name',
-                limit: 5,
-                page: 1
-            };
-
-
-            $scope.supportSummariesLength = $scope.applications.supportSummaries.length;
-            $scope.supportSummariesOptions = [5, 10, 15];
-            $scope.supportSummariesPage = {
-                pageSelect: true
-            };
-            $scope.support = {
-                order: 'name',
-                limit: 5,
-                page: 1
-            };
-
-            $scope.interviewSummariesLength = $scope.applications.interviewSummaries.length;
-            $scope.interviewSummariesOptions = [5, 10, 15];
-            $scope.interviewSummariesPage = {
-                pageSelect: true
-            };
-            $scope.interview = {
-                order: 'name',
-                limit: 5,
-                page: 1
-            };
-            $scope.batchSummariesLength = $scope.applications.batchSummaries.length;
-            $scope.batchSummariesOptions = [5, 10, 15];
-            $scope.batchSummariesPage = {
-                pageSelect: true
-            };
-            $scope.batch = {
-                order: 'name',
-                limit: 5,
-                page: 1
-            };
-
+            $scope.applications = response.data;    
+            $rootScope.loading = false;
         }, function(error) {
-
+  alert("failed");
+                    $scope.loading=false;
         });
 
     }

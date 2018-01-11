@@ -3,14 +3,16 @@
     dmtApplication
         .controller("taskController", taskController);
 
-    function taskController($scope,TaskService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {         
+    function taskController($scope,TaskService,$mdDialog,$mdToast,$state, $mdSidenav,$log,$rootScope) {         
 
         var self = {
         init : init
     };
     function init() {
-        // console.log($state.current.name);
+        $rootScope.currentController = 'Task';
+         $scope.currentPage = 'Create';
         var current = $state.current.name;
+        $rootScope.currentDataEnable = true;
         $scope.currentState = current.split(/[\s.]+/);
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
@@ -22,65 +24,75 @@
         $scope.exportData = [];
 
 
-        $scope.record = {           
-            "category": "",
-            "taskDate": "",
-            "status": "",
-            "assignedTo":"" ,
-            "estimatedTime": "",
-            "createdDate": "",
-            "description": ""
-        };
+        $scope.cancelRecord = function(){
+            $mdSidenav('right').close().then(function() {
+                $log.debug("close RIGHT is done");
+            });
+        }
+        $scope.record =  {
+        "category": "",
+        "referenceId": "1",
+        "createdDate": "",
+        "description": ""
+};
         TaskService.getAllEmployees().then(function(response) {
                 $scope.employees = response.data;
             });
         TaskService.getAllStatuses().then(function(response) {
                   $scope.statuses = response.data;
             });
+        TaskService.getAllCategories().then(function(response) {
+            $scope.categories = response.data;
+        });
 
         TaskService.getAllTimes().then(function(response) {
                   $scope.times = response.data;
             });
+        $scope.loading = true;
         TaskService.getAllTask().then(function(response) {
-            $scope.TaskData = response.data;
-            $scope.TaskLength = response.data.length;
-            console.log($scope.TaskData);
-            $scope.TaskOptions = [ 5, 10, 15 ];
-            $scope.TaskPage = {
-                pageSelect : true
-            };
-
-            $scope.query = {
-                order : 'name',
-                limit : 5,
-                page : 1
-            };
+            $scope.tasksData = response.data;
+            $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+           
+            $scope.loading = false;
         }, function(error) {
-
+alert("failed");
+                    $scope.loading=false;
         });
     
-        
+        /*Header icon functionality*/
+        var deregisterListener = $rootScope.$on("CallTaskMethod", function(){
+            if ($rootScope.$$listeners["CallTaskMethod"].length > 1) {
+                            $rootScope.$$listeners["CallTaskMethod"].pop();
+
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });
+        var deregisterListener = $rootScope.$on("CallTaskSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallTaskSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallTaskSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
         $scope.saveRecord = function() {
-             console.log($scope.record);
+          //   console.log($scope.record);
           TaskService.create($scope.record).then(function(response) {
-                console.log("resp", response);
+            //    console.log("resp", response);
             });
             $mdSidenav('right').close().then(function() {
                 $log.debug("close RIGHT is done");
             });
+               window.location.reload();
         }
 
         $scope.updateRow = function(row) {
-             console.log(row);
+             $scope.currentPage = 'Update';
             $scope.rowData = row;
             $scope.updatePage = true;
             $scope.record = { 
 
             "category" :row.category,
-            "taskDate":new Date(row.taskDate),
-            "status":row.status,
-            "assignedTo":row.assignedTo,
-            "estimatedTime":row.estimatedTime,
+            "referenceId":row.referenceId,      
             "updatedDate": "",
             "description":row.description,
              "id" : row.id
@@ -91,72 +103,65 @@
             // console.log($scope.create);
 
           TaskService.update($scope.record).then(function(response) {
-                console.log("resp", response);
-            });
-
+               // console.log("resp", response);
+            }); 
+             window.location.reload();     
+           $scope.currentPage = 'Create';
             $mdSidenav('right').close().then(function() {
                 $log.debug("close RIGHT is done");
             });
         }
-        $scope.emptyForm1 = function() {
+        $scope.emptyForm = function() {
             $scope.updatePage = false;
-            $scope.create = {};
+             $scope.record =  {
+        "category": "",
+        "referenceId": "1",
+        "createdDate": "",
+        "description": ""
+};
         };
 
         $scope.rowSelect = function(row) {
-            $scope.selected.push(row.id);
+            $scope.selected.push(row);
         };
+        $scope.headerCheckbox = false;
         $scope.selectAll = function() {
-            for ( var i in $scope.taskData) {
-                $scope.taskData[i]["checkboxValue"] = 'on';
-                $scope.selected.push($scope.taskData[i].id);
-            }
-            ;
+            if(!$scope.headerCheckbox){
+            for ( var i in $scope.tasksData) {
+                $scope.tasksData[i]["checkboxValue"] = 'on';
+                $scope.selected.push($scope.tasksData[i]);
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+        }else if($scope.headerCheckbox){
+            for ( var i in $scope.tasksData) {
+                $scope.tasksData[i]["checkboxValue"] = 'off';
+                $scope.selected = [];
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+        };
+       // console.log($scope.selected);
         };
 
-        $scope.deSelectAll = function() {
-            for ( var i in $scope.taskData) {
-                $scope.taskData[i]["checkboxValue"] = 'off';
-            }
-            ;
-            $scope.selected = [];
-        };
 
-        $scope.deleteSelected = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            if ($scope.selected.length > 0) {
-                var confirm = $mdDialog
+        $scope.deleteRow = function(ev,row) {
+            
+            var confirm = $mdDialog
                         .confirm()
-                        .title('Would you like to delete your Task?')
-                        .textContent(
-                                'All of the Tasks have agreed to forgive you your task.')
+                        .title('Are you sure want to Delete Record?')
+                        
                         .ariaLabel('Lucky day').targetEvent(ev).ok(
-                                'Please do it!').cancel('Sounds like a scam');
+                                'Ok').cancel('Cancel');
 
                 $mdDialog.show(confirm).then(function() {
-                    $scope.taskData = $scope.taskData.filter(function(obj) {
-                        return $scope.selected.indexOf(obj.id) === -1;
-                    });
-                       $scope.taskLength = $scope.taskData.length;
+                        TaskService.deleteRow(row.id).then(function(response) {
+            });
+                           window.location.reload();
                 }, function() {
                     $scope.status = 'You decided to keep your Task.';
                 });
-            } else {
-                alert("please select any one");
-            }
-
         };
 
        
-
-        $scope.export = function(tableId) {
-            // $scope.tasksOptions = [ $scope.tasksData.length ];
-            var exportHref = Excel.tableToExcel(tableId, 'sheet name');
-            $timeout(function() {
-                location.href = exportHref;
-            }, 100); // trigger download
-        }
-
         /* Tooltip Starrts */
 
         $scope.demo = {

@@ -3,12 +3,15 @@
 dmtApplication.controller("interviewController", interviewController);
 
 function interviewController($scope, interviewService, Excel, $state, $mdDialog,
-		$mdToast, $timeout, $mdSidenav, $log) {
+		$mdToast, $timeout, $mdSidenav, $log,$rootScope) {
 	var self = {
 		init : init
 	};
 	function init() {
-		// console.log($state.current.name);
+		
+		$rootScope.currentController = 'Interview';
+		$scope.currentPage = 'Create';
+		$rootScope.currentDataEnable = true;
 		var current = $state.current.name;
 		$scope.currentState = current.split(/[\s.]+/);
 		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
@@ -19,8 +22,7 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
-
-		$scope.headers = [ "interviewer", "clientName","employeeName" ];
+		$scope.headers = [{"key":"interviewer","value":"Interviewer"},{"key":"clientName","value":"Client Name"},{"key":"employeeName","value":"Employee Name"}]
 
 		$scope.headerEnable = {
 			"clientName" : false
@@ -31,18 +33,20 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 		};
 
 		$scope.record = {
-			"traineeId" : "",
-			"assistedBy" : "",
-			"clientId" : "",
-			"interviewer" : "",
-			"time" : "",
-			"status" : "",
-			"createdDate" : "",
-			"paidStatus" : "",
-			"receivedStatus" : "",
-			"description" : "",
-			"date":""
-		};
+			"traineeId": "",
+			"assistedBy": "",
+			"clientId": "",
+			"interviewer": "",
+			"time": "",
+			"status": "",
+			"createdDate": "",
+			"paidStatus": "",
+			"receivedStatus": "",
+			"description": "",
+			"date": "",
+			"technologyId": "",
+			"invoice": ""
+			};
 		
 		interviewService.getAllEmployees().then(function(response) {
 			$scope.employees = response.data;
@@ -52,6 +56,9 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 		});
 		interviewService.getAllClients().then(function(response) {
 			$scope.clients = response.data;
+		});
+		interviewService.getAllTechnologies().then(function(response) {
+			$scope.technologies = response.data;
 		});
 		interviewService.getAllTimes().then(function(response) {
 			$scope.times = response.data;
@@ -66,10 +73,11 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 			$scope.statuses = response.data;
 		});
 
-		$scope.progressBar = true;
+		$scope.loading = true;
 		interviewService.getAllInterviews().then(function(response) {
 			$scope.interviewsData = response.data;
 			$scope.interviewsLength = response.data.length;
+			$rootScope.currentTableLength = 'Records Count :'+response.data.length;
 			//console.log($scope.tasksData);
 			$scope.interviewsOptions = [200,300 ];
 			$scope.interviewPage = {
@@ -80,24 +88,34 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 				limit : 100,
 				page : 1
 			};
-			$scope.progressBar = false;
+			$scope.loading = false;
 		}, function(error) {
-
+					alert("failed");
+					$scope.loading=false;
 		});
 	
+	 var deregisterListener = $rootScope.$on("CallInterviewSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallInterviewSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallInterviewSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
 		
 		$scope.saveRecord = function() {
-		console.log($scope.record);
+		//console.log($scope.record);
 			interviewService.create($scope.record).then(function(response) {
-
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			   window.location.reload();
 		}
 
+		$scope.cancelRecord = function(){
+				$mdSidenav('right').close().then(function() {
+				$log.debug("close RIGHT is done");
+			});
+			};
 		$scope.rowData = function(row) {
-			 console.log(row);
+			 $scope.currentPage = 'Update';
 			$scope.rowData = row;
 			$scope.updatePage = true;
 			$scope.record = {
@@ -112,119 +130,94 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 			"paidStatus" : row.paidStatus,
 			"receivedStatus" : row.receivedStatus,
 			"description" : row.description,
-			"date":row.date,
+			"date":new Date(row.date),
+			"technologyId":row.technologyId,
+			"invoice":row.invoice,
 			"id":row.id
 		};
-		
-			// console.log($scope.create.status);
 		};
-		$scope.updateRecord = function() {
-			// console.log($scope.create);
-			interviewService.update($scope.record).then(function(response) {
 
+		var deregisterListener = $rootScope.$on("CallInterviewMethod", function(){
+		//	console.log($state.current.name);
+			if ($rootScope.$$listeners["CallInterviewMethod"].length > 1) {
+				            $rootScope.$$listeners["CallInterviewMethod"].pop();
+        		}
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });
+         
+		$scope.updateRecord = function() {			
+			interviewService.update($scope.record).then(function(response) {
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			   window.location.reload();
+			$scope.currentPage = 'Create';
 		}
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
-			$scope.create = {};
+			$scope.record = {
+			"traineeId": "",
+			"assistedBy": "",
+			"clientId": "",
+			"interviewer": "",
+			"time": "",
+			"status": "",
+			"paidStatus": "",
+			"receivedStatus": "",
+			"description": "",
+			"date": "",
+			"technologyId": "",
+			"invoice": ""
+			};
 		};
 
 		$scope.rowSelect = function(row) {
-			$scope.selected.push(row.id);
+			$scope.selected.push(row);
+		//	console.log($scope.selected);
 		};
+		$scope.headerCheckbox = false;
+
 		$scope.selectAll = function() {
+			
+			if(!$scope.headerCheckbox){
 			for ( var i in $scope.interviewsData) {
 				$scope.interviewsData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.interviewsData[i].id);
-			}
-			;
-		};
-
-		$scope.deSelectAll = function() {
+				$scope.selected.push($scope.interviewsData[i]);
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+		}else if($scope.headerCheckbox){
 			for ( var i in $scope.interviewsData) {
 				$scope.interviewsData[i]["checkboxValue"] = 'off';
-			}
-			;
-			$scope.selected = [];
+				$scope.selected = [];
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+		};
+		//console.log($scope.selected);
 		};
 
-		$scope.deleteSelected = function(ev) {
+		$scope.deleteRow = function(ev,row) {
 			// Appending dialog to document.body to cover sidenav in docs app
-			if ($scope.selected.length > 0) {
+			
 				var confirm = $mdDialog
 						.confirm()
-						.title('Would you like to delete your Task?')
-						.textContent(
-								'All of the Tasks have agreed to forgive you your task.')
+						.title('Are you sure want to Delete Record?')
+						
 						.ariaLabel('Lucky day').targetEvent(ev).ok(
-								'Please do it!').cancel('Sounds like a scam');
+								'Ok').cancel('Cancel');
 
 				$mdDialog.show(confirm).then(function() {
-					$scope.interviewsData = $scope.interviewsData.filter(function(obj) {
-						return $scope.selected.indexOf(obj.id) === -1;
-					});
-					//$scope.tasksLength = $scope.interviewsData.length;
+						interviewService.deleteRow(row.id).then(function(response) {
+			});
+						   window.location.reload();
 				}, function() {
 					$scope.status = 'You decided to keep your Task.';
 				});
-			} else {
-				alert("please select any one");
-			}
+			
 
 		};
 
-		$scope.moreColumns = function(ev) {
-
-			$mdDialog.show({
-				controller : interviewController,
-				templateUrl : 'pages/app.interview/app.interview.moreHeaders.html',
-				parent : angular.element(document.body),
-				targetEvent : ev,
-				clickOutsideToClose : true,
-				fullscreen : $scope.customFullscreen
-			}).then(
-					function(answer) {
-						$scope.status = 'You said the information was "'
-								+ answer + '".';
-					}, function() {
-						$scope.status = 'You cancelled the dialog.';
-					});
-		};
-
-		$scope.openMoreOptions = function(header) {
-			console.log(header);
-			if (header.length > 0) {
-				for ( var i in header) {
-					if (header[i] == 'interviewer') {
-						$scope.headerEnable.interviewer = true;
-					} else if (header[i] == 'clientName') {
-						$scope.headerEnable.clientName = true;
-					} else if (header[i] == 'employeeName') {
-						$scope.headerEnable.clientName = true;
-					}
-				}
-			} else {
-				$scope.headerEnable = {
-					"interviewer" : false
-				}, {
-					"clientName" : false
-				},{
-					"employeeName":false
-				};
-			}
-		}
-
-		$scope.exportData = function(tableId) {
-			// $scope.tasksOptions = [ $scope.tasksData.length ];
-			var exportHref = Excel.tableToExcel(tableId, 'sheet name');
-			$timeout(function() {
-				location.href = exportHref;
-			}, 100); // trigger download
-		}
-
+		
+		
 		/* Tooltip Starrts */
 
 		$scope.demo = {
@@ -288,6 +281,28 @@ function interviewController($scope, interviewService, Excel, $state, $mdDialog,
 		/* Side nav ends */
 	}
 	init();
+	var originatorEv;
+            this.openMenu = function($mdOpenMenu, ev) {
+            originatorEv = ev;
+               $mdOpenMenu(ev);
+            };
+            $scope.menuItemClick = function(index,key) {
+            	
+					if (key == 'interviewer') {
+						$scope.interviewer = true;
+						$scope.clientName = false;
+						$scope.employeeName = false;
+					} else if (key == 'clientName') {
+						$scope.interviewer = false;
+						$scope.clientName = true;
+						$scope.employeeName = false;
+
+					} else if (key == 'employeeName') {
+						$scope.interviewer = false;
+						$scope.clientName = false;
+						$scope.employeeName = true;
+					}
+	            };
 
 	return self;
 };

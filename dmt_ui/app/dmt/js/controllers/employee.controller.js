@@ -1,7 +1,7 @@
 'use strict';
 dmtApplication.controller("EmployeeController", EmployeeController);
 
-function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
+function EmployeeController($scope, EmployeeService, Excel,$rootScope, $state, $mdDialog,
 		$mdToast, $timeout, $mdSidenav, $log) {
 
 	var self = {
@@ -9,7 +9,9 @@ function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
 	};
 	function init() {
 		// console.log($state.current.name);
+		$rootScope.currentController = 'Employee';
 		var current = $state.current.name;
+		$rootScope.currentDataEnable = true;
 		$scope.currentState = current.split(/[\s.]+/);
 		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
 		$scope.customFullscreen = false;
@@ -34,10 +36,13 @@ function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
 			$scope.roles = response.data;
 			
 			});
+
+
 		EmployeeService.getAllEmployees().then(function(response) {
 			$scope.employeesData = response.data;
 			$scope.employeesLength = response.data.length;
-			console.log($scope.employeesData);
+			$rootScope.currentTableLength = 'Records Count :'+response.data.length;
+		//	console.log($scope.employeesData);
 			$scope.employeesOptions = [ 200,300 ];
 			$scope.employeePage = {
 				pageSelect : true
@@ -49,18 +54,35 @@ function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
 			};
 			$scope.loading=false;
 		}, function(error) {
+			alert("failed");
+					$scope.loading=false;
 		});
+		var deregisterListener = $rootScope.$on("CallEmployeeMethod", function(){
+            if ($rootScope.$$listeners["CallEmployeeMethod"].length > 1) {
+                            $rootScope.$$listeners["CallEmployeeMethod"].pop();
+
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });
+        var deregisterListener = $rootScope.$on("CallEmployeeSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallEmployeeSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallEmployeeSearchMethod"].pop();
+            }            
+            $scope.filter = args.text;
+        });
+
+
 		$scope.saveRecord = function() {
 			EmployeeService.create($scope.record).then(function(response) {
-				console.log(response);
+			//	console.log(response);
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			  window.location.reload();
 		}
 
 		$scope.setRowData = function(row) {
-			console.log(row);
+			//console.log(row);
 			$scope.updatePage = true;
 			$scope.record = {
 				"name" : row.name,
@@ -77,64 +99,76 @@ function EmployeeController($scope, EmployeeService, Excel, $state, $mdDialog,
 			// console.log($scope.create);
 			EmployeeService.update($scope.record).then(function(response) {
 				// $scope.technology = response.data;
-				console.log(response);
+				//console.log(response);
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			   window.location.reload();
+			    $scope.currentPage = 'Create';
 		}
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
-			$scope.create = {};
+			$scope.record = {
+			"name" : "",
+			"phone" : "",
+			"email" : "",
+			"role" : "",
+			"baseSalary" : "",
+			"createdDate" : "",
+			"description" : ""
 		};
-
+		};
+		$scope.cancelRecord = function() {
+			$mdSidenav('right').close().then(function() {
+					$log.debug("close RIGHT is done");
+				});
+				
+			};
 		$scope.rowSelect = function(row) {
 			$scope.selected.push(row.id);
 		};
+		$scope.headerCheckbox = false;
 		$scope.selectAll = function() {
+			if(!$scope.headerCheckbox){
 			for ( var i in $scope.employeesData) {
 				$scope.employeesData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.employeesData[i].id);
-			}
-			;
-		};
-
-		$scope.deSelectAll = function() {
+				$scope.selected.push($scope.employeesData[i]);
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+		}else if($scope.headerCheckbox){
 			for ( var i in $scope.employeesData) {
 				$scope.employeesData[i]["checkboxValue"] = 'off';
-			}
-			;
-			$scope.selected = [];
+				$scope.selected = [];
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+		};
+	//	console.log($scope.selected);
 		};
 
-		$scope.deleteSelected = function(ev) {
-			// Appending dialog to document.body to cover sidenav in docs app
-			if ($scope.selected.length > 0) {
+			
+
+			$scope.deleteRow = function(ev,row) {
+			
 				var confirm = $mdDialog
 						.confirm()
-						.title('Would you like to delete your Employee?')
-						.textContent(
-								'All of the Employees have agreed to forgive you your Employee.')
+						.title('Are you sure want to Delete Record?')
+						
 						.ariaLabel('Lucky day').targetEvent(ev).ok(
-								'Please do it!').cancel('Sounds like a scam');
+								'Ok').cancel('Cancel');
 
 				$mdDialog
 						.show(confirm)
 						.then(
 								function() {
-									$scope.employeesData = $scope.employeesData
-											.filter(function(obj) {
-												return $scope.selected
-														.indexOf(obj.id) === -1;
-											});
-									$scope.employeesLength = $scope.employeesData.length;
+									EmployeeService.deleteRow(row.id).then(function(response) {
+				
+			});
+								   window.location.reload();
 								},
 								function() {
-									$scope.status = 'You decided to keep your Employee.';
+									$scope.status = 'You decided to keep your Task.';
 								});
-			} else {
-				alert("please select any one");
-			}
+			
+	
 		};
 
 		$scope.export = function(tableId) {

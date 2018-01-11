@@ -5,13 +5,15 @@ function interviewService($http, $window, __env) {
 		getAllInterviews : getAllInterviews,
 		create:create,
 		update:update,
+		deleteRow:deleteRow,
 		getAllTrainees : getAllTrainees,
 		getAllEmployees : getAllEmployees,
 		getAllClients:getAllClients,
 		getAllTimes:getAllTimes,
 		getAllPaidStatus:getAllPaidStatus,
 		getAllReceivedStatus:getAllReceivedStatus,
-		getAllStatus:getAllStatus
+		getAllStatus:getAllStatus,
+		getAllTechnologies:getAllTechnologies
 	}, url = __env.baseUrl + __env.context;
 	return service;
 	function getAllInterviews() {
@@ -42,6 +44,17 @@ function interviewService($http, $window, __env) {
 			// failed
 		});
 	}
+	function deleteRow(data) {
+		return $http({
+			url : url + '/interviews/delete?id='+data,
+			method : "POST"
+		}).then(function(response) {
+			console.log("success");
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
 	function getAllTrainees() {
 		return $http.get(url+"/trainees/readAll");
 	}
@@ -53,6 +66,9 @@ function interviewService($http, $window, __env) {
 	}
 	function getAllTimes() {
 		return $http.get("./mock/timeConstants.json");
+	}
+	function getAllTechnologies() {
+		return $http.get(url+"/technologies/readAll");
 	}
 	function getAllPaidStatus() {
 		return $http.get("./mock/paidStatusConstants.json");

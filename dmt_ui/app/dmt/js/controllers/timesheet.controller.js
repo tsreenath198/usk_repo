@@ -1,17 +1,18 @@
-/*(function() {*/
-    'use strict';
+ 'use strict';
     dmtApplication
         .controller("timesheetController", timesheetController);
 
-    function timesheetController($scope,timesheetService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
+    function timesheetController($scope,timesheetService,$mdDialog,$rootScope,$mdToast,$state, $mdSidenav,$log) {
           
 
         var self = {
         init : init
     };
     function init() {
-        // console.log($state.current.name);
+        $scope.pageInfo = 'Create';
+        $rootScope.currentController = 'Time sheet';
         var current = $state.current.name;
+        $rootScope.currentDataEnable = true;
         $scope.currentState = current.split(/[\s.]+/);
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
@@ -21,23 +22,15 @@
         $scope.selected = [];
         $scope.headerEnable = {};
         $scope.exportData = [];
+        $scope.taskList = [{"category":"","referenceId":"","description":"","createdDate":""}];           
+      
 
-       
-
-        $scope.record = {
-            "date" : "",
-            "employeeId" : "",
-            "category" : "",
-            "categoryRefNo" : "",
-            "durationInHours" : "",
-            "createdDate":"",
-            "description" : ""
-        };
         $scope.loading=true;
         timesheetService.getAllTimesheets().then(function(response) {
             $scope.timesheetsData = response.data;
             $scope.timesheetsLength = response.data.length;
-            console.log($scope.timesheetsData);
+            $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+            //console.log($scope.timesheetsData);
             $scope.timesheetsOptions = [200, 300 ];
             $scope.timesheetPage = {
                 pageSelect : true
@@ -49,90 +42,155 @@
             };
             $scope.loading=false;
         }, function(error) {
+        alert("failed");
+                    $scope.loading=false;
+        });
 
+        timesheetService.getAllTimes().then(function(response) {
+            $scope.times = response.data;
+        });
+        timesheetService.getAllCategories().then(function(response) {
+            $scope.categories = response.data;
+        });
+        timesheetService.getAllEmployees().then(function(response) {
+            $scope.employees = response.data;
         });
     
+        var deregisterListener = $rootScope.$on("CallTimeSheetMethod", function(){
+            if ($rootScope.$$listeners["CallTimeSheetMethod"].length > 1) {
+                            $rootScope.$$listeners["CallTimeSheetMethod"].pop();
+
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });     
+         var deregisterListener = $rootScope.$on("CallTimeSheetSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallTimeSheetSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallTimeSheetSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
+
+         $scope.addMoreCategories = function(){
+          
+            $scope.taskList.push({"category":"","referenceId":"","description":"","createdDate":""});
+          
+        }
+
+        $scope.removeCategories = function(index){
+            $scope.taskList.splice(index, 1);
+                     }
+
+        $scope.record = {
+            "date" : "",
+            "inTime" : "",
+            "createdDate":"",
+            "employeeId":""
+        };
+
+        $scope.cancelRecord = function() {
+            $mdSidenav('right').close().then(function() {
+                    $log.debug("close RIGHT is done");
+                });
+                
+            };
         
         $scope.saveRecord = function() {
-        	timesheetService.create($scope.record).then(function(response) {
-                console.log("resp", response);
+         
+             $scope.record['taskList']= $scope.taskList;
+            // console.log("timesheet",$scope.record);
+
+            timesheetService.create($scope.record).then(function(response) {
             });
-            $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
-            });
+            $scope.cancelRecord();
+               window.location.reload();
         }
 
         $scope.setRowData = function(row) {
-        	$scope.updatePage=true;
-            $scope.record = {
-                "date" : new Date(row.date),
-                "employeeId" : row.employeeId,
-                "category" : row.category,
-                "categoryRefNo" : row.categoryRefNo,
-                "durationInHours" : row.durationInHours,
-                "updatedDate" :"",
-                "description" : row.description,
-                "id" : row.id
-                };
-            // console.log($scope.create.status);
+            $scope.pageInfo = 'Update';
+             $scope.record = {
+                    "date" : new Date(row.date),
+                    "inTime" : row.inTime,                    
+                    "employeeId":row.employeeId,
+                    "id":row.id
+             };
+             $scope.timesheetId = {"timeSheetId":row.id};
+             timesheetService.getTasksById($scope.timesheetId).then(function(response) {
+             //   console.log(response.data);
+               $scope.taskList = response.data;
+            });
+            
+            $scope.updatePage=true;
+
         };
         $scope.updateData = function() {
-            
-        	timesheetService.update($scope.record).then(function(response) {
-                console.log("resp", response);
+             $scope.record['taskList']= $scope.taskList;
+            timesheetService.update($scope.record).then(function(response) {
+                //console.log(response);
             });
 
-            $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
-            });
+            $scope.cancelRecord();
+            //$state.reload();
+            window.location.reload();
+            $scope.currentPage = 'Create';
         }
         $scope.emptyForm = function() {
             $scope.updatePage = false;
-            $scope.record = {};
+             $scope.record = {
+            "date" : "",
+            "inTime" : "",
+            "createdDate":"",
+            "employeeId":""
+        };
         };
 
         $scope.rowSelect = function(row) {
             $scope.selected.push(row.id);
         };
+        $scope.headerCheckbox = false;
         $scope.selectAll = function() {
+            if(!$scope.headerCheckbox){
             for ( var i in $scope.timesheetsData) {
                 $scope.timesheetsData[i]["checkboxValue"] = 'on';
-                $scope.selected.push($scope.timesheetsData[i].id);
-            }
-            ;
-        };
-
-        $scope.deSelectAll = function() {
+                $scope.selected.push($scope.timesheetsData[i]);
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+        }else if($scope.headerCheckbox){
             for ( var i in $scope.timesheetsData) {
                 $scope.timesheetsData[i]["checkboxValue"] = 'off';
-            }
-            ;
-            $scope.selected = [];
+                $scope.selected = [];
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+        };
+       // console.log($scope.selected);
         };
 
-        $scope.deleteSelected = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            if ($scope.selected.length > 0) {
+            
+
+            $scope.deleteRow = function(ev,row) {
+            
                 var confirm = $mdDialog
                         .confirm()
-                        .title('Would you like to delete your Timesheet?')
-                        .textContent(
-                                'All of the InVoice have agreed to forgive you Timesheet.')
+                        .title('Are you sure want to Delete Record?')
+                        
                         .ariaLabel('Lucky day').targetEvent(ev).ok(
-                                'Please do it!').cancel('Sounds like a scam');
+                                'Ok').cancel('Cancel');
 
-                $mdDialog.show(confirm).then(function() {
-                    $scope.timesheetsData = $scope.timesheetsData.filter(function(obj) {
-                        return $scope.selected.indexOf(obj.id) === -1;
-                    });
-                    $scope.timesheetsLength = $scope.timesheetsData.length;
-                }, function() {
-                    $scope.status = 'You decided to keep your timesheets.';
-                });
-            } else {
-                alert("please select any one");
-            }
-
+                $mdDialog
+                        .show(confirm)
+                        .then(
+                                function() {
+                                    timesheetService.deleteRow(row.id).then(function(response) {
+                
+            });
+                                  window.location.reload();
+                                },
+                                function() {
+                                    $scope.status = 'You decided to keep your Task.';
+                                });
+                        
+            
+    
         };
 
        
@@ -224,33 +282,3 @@ dmtApplication.directive('createTimesheet', function($state) {
         }
     };
 });
-dmtApplication.filter('capitalize', function() {
-    return function(input) {
-        return (!!input) ? input.charAt(0).toUpperCase()
-                + input.substr(1).toLowerCase() : '';
-    }
-});
-
-dmtApplication
-        .factory(
-                'Excel',
-                function($window) {
-                    var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
-                            s) {
-                        return $window.btoa(unescape(encodeURIComponent(s)));
-                    }, format = function(s, c) {
-                        return s.replace(/{(\w+)}/g, function(m, p) {
-                            return c[p];
-                        })
-                    };
-                    return {
-                        tableToExcel : function(tableId, worksheetName) {
-                            var table = $(tableId), ctx = {
-                                worksheet : worksheetName,
-                                table : table.html()
-                            }, href = uri + base64(format(template, ctx));
-                            return href;
-                        }
-                    };
-                });
-        

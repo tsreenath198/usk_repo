@@ -6,7 +6,9 @@ function oppurtunityTrackerService($http, $window, __env) {
 		getAllEmployees : getAllEmployees,
 		getAllProvidedFor:getAllProvidedFor,
 		create : create,
-		update : update
+		update : update,
+		deleteRow : deleteRow
+
 	}, url = __env.baseUrl + __env.context
 	return service;
 	
@@ -25,6 +27,17 @@ function oppurtunityTrackerService($http, $window, __env) {
 			url : url + '/opportunityTrackers/create',
 			method : "POST",
 			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+
+	function deleteRow(id) {
+		return $http({
+			url : url + '/opportunityTrackers/delete?id='+id,
+			method : "POST"
 		}).then(function(response) {
 			// success
 		}, function(response) { // optional

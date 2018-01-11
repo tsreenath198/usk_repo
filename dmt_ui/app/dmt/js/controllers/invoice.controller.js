@@ -1,17 +1,17 @@
 /*(function() {*/
-    'use strict';
-    dmtApplication
-        .controller("invoiceController", invoiceController);
+'use strict';
+dmtApplication.controller("invoiceController", invoiceController);
 
-    function invoiceController($scope,invoiceService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
-          
+function invoiceController($scope, invoiceService, $mdDialog, $rootScope,$mdToast,
+        $timeout, $state, $mdSidenav, $log) {
 
-        var self = {
+    var self = {
         init : init
     };
     function init() {
-        // console.log($state.current.name);
+        $rootScope.currentController='Invoice';
         var current = $state.current.name;
+        $rootScope.currentDataEnable = true;
         $scope.currentState = current.split(/[\s.]+/);
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
@@ -21,8 +21,10 @@
         $scope.selected = [];
         $scope.headerEnable = {};
         $scope.exportData = [];
-
-       
+        $scope.headers = [ "InvoiceType" ];
+        $scope.headerEnable = {
+            "Invoice Type" : false
+        };
 
         $scope.record = {
             "invoiceDate" : "",
@@ -30,15 +32,19 @@
             "actualAmount" : "",
             "receivedAmount" : "",
             "receivedDate" : "",
-            "createdDate":"",
             "description" : ""
         };
-        $scope.loading=true;
+
+        invoiceService.getAllInvoiceType().then(function(response) {
+            $scope.invoiceTypes = response.data;
+        });
+
         invoiceService.getAllInVoices().then(function(response) {
             $scope.invoicesData = response.data;
             $scope.invoicesLength = response.data.length;
-            console.log($scope.invoicesData);
-            $scope.invoicesOptions = [200, 300 ];
+            $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+            //console.log($scope.invoicesData);
+            $scope.invoicesOptions = [ 200, 300 ];
             $scope.invoicePage = {
                 pageSelect : true
             };
@@ -47,95 +53,169 @@
                 limit : 100,
                 page : 1
             };
-            $scope.loading=false;
+            $scope.loading = false;
         }, function(error) {
-
+                    alert("failed");
+                    $scope.loading=false;
         });
-    
-        
+        var deregisterListener = $rootScope.$on("CallInvoiceSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallInvoiceSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallInvoiceSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
+
         $scope.saveRecord = function() {
-             invoiceService.create($scope.record).then(function(response) {
-                console.log("resp", response);
+            var jsonData = $scope.create;
+            var date = new Date();
+            invoiceService.create($scope.record).then(function(response) {
+            //    console.log(response);
             });
-            $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
-            });
+            $scope.cancelRecord();
+               window.location.reload();
+
         }
 
         $scope.setRowData = function(row) {
-        	$scope.updatePage=true;
+          //  console.log(row);
+            $scope.rowData = row;
+            $scope.updatePage = true;
             $scope.record = {
                 "invoiceDate" : new Date(row.invoiceDate),
                 "invoiceType" : row.invoiceType,
                 "actualAmount" : row.actualAmount,
                 "receivedAmount" : row.receivedAmount,
                 "receivedDate" : new Date(row.receivedDate),
-                "updatedDate" :"",
                 "description" : row.description,
                 "id" : row.id
-                };
+            };
             // console.log($scope.create.status);
         };
         $scope.updateData = function() {
-            
-        	invoiceService.update($scope.record).then(function(response) {
-                console.log("resp", response);
+            invoiceService.update($scope.record).then(function(response) {
+             //   console.log(response);
             });
+            $scope.cancelRecord();
+              window.location.reload();
+        }
 
+        $scope.cancelRecord = function() {
             $mdSidenav('right').close().then(function() {
                 $log.debug("close RIGHT is done");
             });
-        }
+
+        };
         $scope.emptyForm = function() {
-            $scope.updatePage = false;
-            $scope.record = {};
+             $scope.record = {
+             "invoiceDate" : "",
+            "invoiceType" : "",
+            "actualAmount" : "",
+            "receivedAmount" : "",
+            "receivedDate" : "",
+            "description" : ""
         };
+         };
+        var deregisterListener = $rootScope.$on("CallInvoiceMethod", function(){
+            if ($rootScope.$$listeners["CallInvoiceMethod"].length > 1) {
+                            $rootScope.$$listeners["CallInvoiceMethod"].pop();
 
-        $scope.rowSelect = function(row) {
-            $scope.selected.push(row.id);
-        };
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        }); 
+
+        $scope.headerCheckbox = false;
         $scope.selectAll = function() {
-            for ( var i in $scope.invoicesData) {
-                $scope.invoicesData[i]["checkboxValue"] = 'on';
-                $scope.selected.push($scope.invoicesData[i].id);
+            if (!$scope.headerCheckbox) {
+                for ( var i in $scope.invoicesData) {
+                    $scope.invoicesData[i]["checkboxValue"] = 'on';
+                    $scope.selected.push($scope.invoicesData[i]);
+                }
+                ;
+                $scope.headerCheckbox = ($scope.headerCheckbox == false) ? true
+                        : false;
+            } else if ($scope.headerCheckbox) {
+                for ( var i in $scope.invoicesData) {
+                    $scope.invoicesData[i]["checkboxValue"] = 'off';
+                    $scope.selected = [];
+                }
+                ;
+                $scope.headerCheckbox = ($scope.headerCheckbox == true) ? false
+                        : true;
             }
             ;
+         //   console.log($scope.selected);
         };
 
-        $scope.deSelectAll = function() {
-            for ( var i in $scope.invoicesData) {
-                $scope.invoicesData[i]["checkboxValue"] = 'off';
-            }
-            ;
-            $scope.selected = [];
-        };
+        $scope.deleteRow = function(ev, row) {
 
-        $scope.deleteSelected = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            if ($scope.selected.length > 0) {
-                var confirm = $mdDialog
-                        .confirm()
-                        .title('Would you like to delete your InVoice?')
-                        .textContent(
-                                'All of the InVoice have agreed to forgive you InVoice.')
-                        .ariaLabel('Lucky day').targetEvent(ev).ok(
-                                'Please do it!').cancel('Sounds like a scam');
+            var confirm = $mdDialog.confirm().title(
+                    'Are you sure want to Delete Record?')
 
-                $mdDialog.show(confirm).then(function() {
-                    $scope.invoicesData = $scope.invoicesData.filter(function(obj) {
-                        return $scope.selected.indexOf(obj.id) === -1;
-                    });
-                    $scope.invoicesLength = $scope.invoicesData.length;
-                }, function() {
-                    $scope.status = 'You decided to keep your InVoice.';
+            .ariaLabel('Lucky day').targetEvent(ev).ok('Ok').cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function() {
+                invoiceService.deleteRow(row.id).then(function(response) {
+
                 });
-            } else {
-                alert("please select any one");
-            }
+                  window.location.reload();
+            }, function() {
+                $scope.status = 'You decided to keep your Task.';
+            });
 
         };
 
-       
+        $scope.moreColumns = function(ev) {
+            $mdDialog.show({
+                controller : supportController,
+                templateUrl : 'pages/app.invoice/app.invoice.moreHeaders.html',
+                parent : angular.element(document.body),
+                targetEvent : ev,
+                clickOutsideToClose : true,
+                fullscreen : $scope.customFullscreen
+            }).then(
+                    function(answer) {
+                        $scope.status = 'You said the information was "'
+                                + answer + '".';
+                    }, function() {
+                        $scope.status = 'You cancelled the dialog.';
+                    });
+        };
+
+        $scope.openMoreOptions = function(header) {
+            if (header.length > 0) {
+                for ( var i in header) {
+                    if (header[i] == 'Batch') {
+                        $scope.headerEnable.batchId = true;
+                    } else if (header[i] == 'Status') {
+                        $scope.headerEnable.invoiceFeeStatus = true;
+                    } else if (header[i] == 'Client') {
+                        $scope.headerEnable.clientId = true;
+                    } else if (header[i] == 'Skype Id') {
+                        $scope.headerEnable.skypeId = true;
+                    } else if (header[i] == 'Time Zone') {
+                        $scope.headerEnable.timezone = true;
+                    } else if (header[i] == 'Alternate Phone') {
+                        $scope.headerEnable.alternatePhone = true;
+                    }
+
+                }
+            } else {
+                $scope.headerEnable = {
+                    "Batch" : false
+                }, {
+                    "Status" : false
+                }, {
+                    "Client" : false
+                }, {
+                    "Skype Id" : false
+                }, {
+                    "Altenate Phone" : false
+                }, {
+                    "Time Zone" : false
+                };
+            }
+        }
 
         $scope.export = function(tableId) {
             // $scope.tasksOptions = [ $scope.tasksData.length ];
@@ -211,16 +291,15 @@
 
     return self;
 };
-  
 
-
-dmtApplication.directive('createInVoice', function($state) {
+dmtApplication.directive('createInvoice', function($state) {
     return {
         restrict : 'E',
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/' + current + '/' + current + '.record.html';
+            return '../dmt/pages/' + current + '/' + current
+                    + '.record.html';
         }
     };
 });
@@ -253,4 +332,3 @@ dmtApplication
                         }
                     };
                 });
-        

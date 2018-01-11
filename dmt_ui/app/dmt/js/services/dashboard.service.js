@@ -2,7 +2,7 @@
     'use strict';
     
     dmtApplication.factory("DashboardService", DashboardService);
-    function DashboardService($http,__env,$window) {
+    function DashboardService($http,__env,$window,$rootScope) {
            var service = {
 		        getAllApplications: getAllApplications,
             getApplicationByName: getApplicationByName,
@@ -12,8 +12,8 @@
           }, url = __env.baseUrl + __env.context
     	 return service;
        function getAllApplications() {
-        		    //return $http.get(__env.baseUrl+__env.context+__env.api+"/app");
-                return $http.get(url+"/dashboardSummary/readAll");
+        		   
+      return $http.get(url+"/dashboardSummary/readAll");
 		   }
 
        function getApplicationByName(data) {

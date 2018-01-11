@@ -3,15 +3,17 @@
     dmtApplication
         .controller("UserDetailsController", UserDetailsController);
 
-    function UserDetailsController($scope,UserDetailsService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
+    function UserDetailsController($scope,UserDetailsService,$mdDialog,$rootScope,$mdToast,$state, $mdSidenav,$log) {
           
 
         var self = {
         init : init
     };
     function init() {
-        // console.log($state.current.name);
+       $rootScope.currentController = 'User Details';
+       $scope.currentPage = 'Create';
         var current = $state.current.name;
+        $rootScope.currentDataEnable = true;
         $scope.currentState = current.split(/[\s.]+/);
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
@@ -23,6 +25,11 @@
         $scope.exportData = [];
 
 
+        $scope.cancelRecord = function(){
+            $mdSidenav('right').close().then(function() {
+                $log.debug("close RIGHT is done");
+            });
+        }
         $scope.record = {
 
             "userName" : "",
@@ -41,110 +48,149 @@
             $scope.roles = response.data;
             
             });
+        $scope.loading = true;
+
         UserDetailsService.getAllUserDetails().then(function(response) {
             $scope.userDetailsData = response.data;
             $scope.userDetailsLength = response.data.length;
-            console.log($scope.userDetailsData);
-            $scope.userDetailsOptions = [ 5, 10, 15 ];
+            $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+            $scope.userDetailsOptions = [ 200 , 300 ];
             $scope.userDetailsPage = {
                 pageSelect : true
             };
 
             $scope.query = {
                 order : 'name',
-                limit : 5,
+                limit : 100,
                 page : 1
-            };
+            };$scope.loading = false;
         }, function(error) {
-
+alert("failed");
+                    $scope.loading=false;
         });
     
-        
+    /*Header icon functionality*/
+        var deregisterListener = $rootScope.$on("CallUserDetailsMethod", function(){
+            if ($rootScope.$$listeners["CallUserDetailsMethod"].length > 1) {
+                            $rootScope.$$listeners["CallUserDetailsMethod"].pop();
+
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });
+         var deregisterListener = $rootScope.$on("CalluserDetailsSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CalluserDetailsSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CalluserDetailsSearchMethod"].pop();
+            }            
+            $scope.filter = args.text;
+        });
+
         $scope.saveRecord = function() {
-             console.log($scope.record);
+             //console.log($scope.record);
             UserDetailsService.create($scope.record).then(function(response) {
-                console.log("resp", response);
+               // console.log("resp", response);
             });
+             window.location.reload();
             $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
+               // $log.debug("close RIGHT is done");
             });
+        };
+         
+        $scope.checkPassword = function(){
+            if($scope.record.password == $scope.record.confirmPassword){
+                $scope.confirmpassword = false;
+            }else{
+                $scope.confirmpassword = true;
+            }
+            
         }
 
         $scope.updateRow = function(row) {
-             console.log(row);
+             $scope.currentPage = 'Update';
             $scope.rowData = row;
             $scope.updatePage = true;
             $scope.record = {             
-                "userName" :row.username,
-            "firstName":row.firtname,
-            "lastName":row.lastname,
+            "userName" :row.userName,
+            "firstName":row.firstName,
+            "lastName":row.lastName,
             "email":row.email,
-            "phoneNo":row.phoneno,
+            "phoneNo":row.phoneNo,
             "password":row.password,
-            "confirmPassword": null,
+            "confirmPassword": row.confirmPassword,
             "role":row.role,
             "description":row.description,
-             "id" : row.id
-                };
-            // console.log($scope.create.status);
+            "id" : row.id
+            };
+            
         };
         $scope.updateRecord = function() {
-            // console.log($scope.create);
-
             UserDetailsService.update($scope.record).then(function(response) {
-                console.log("resp", response);
+               //console.log("resp", response);
             });
-
+              $scope.currentPage = 'Create';
+            window.location.reload();
             $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
+                //$log.debug("close RIGHT is done");
             });
         }
-        $scope.emptyForm1 = function() {
+        $scope.emptyForm = function() {
             $scope.updatePage = false;
-            $scope.create = {};
+             $scope.record = {
+
+            "userName" : "",
+            "firstName":"",
+            "lastName":"",
+            "email":"",
+            "phoneNo":"",
+            "password":"",
+            "confirmPassword": null,
+            "role":"",
+            "description":""
+     
+        };
         };
 
         $scope.rowSelect = function(row) {
-            $scope.selected.push(row.id);
+            $scope.selected.push(row);
         };
+        $scope.headerCheckbox = false;
         $scope.selectAll = function() {
+            if(!$scope.headerCheckbox){
             for ( var i in $scope.userDetailsData) {
                 $scope.userDetailsData[i]["checkboxValue"] = 'on';
-                $scope.selected.push($scope.userDetailsData[i].id);
-            }
-            ;
-        };
-
-        $scope.deSelectAll = function() {
+                $scope.selected.push($scope.userDetailsData[i]);
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+        }else if($scope.headerCheckbox){
             for ( var i in $scope.userDetailsData) {
                 $scope.userDetailsData[i]["checkboxValue"] = 'off';
-            }
-            ;
-            $scope.selected = [];
+                $scope.selected = [];
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+        };
+       // console.log($scope.selected);
         };
 
-        $scope.deleteSelected = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            if ($scope.selected.length > 0) {
-                var confirm = $mdDialog
+      
+        $scope.deleteRow = function(ev,row) {
+          var confirm = $mdDialog
                         .confirm()
-                        .title('Would you like to delete your Task?')
-                        .textContent(
-                                'All of the Tasks have agreed to forgive you your task.')
+                        .title('Are you sure want to Delete Record?')
+                        
                         .ariaLabel('Lucky day').targetEvent(ev).ok(
-                                'Please do it!').cancel('Sounds like a scam');
+                                'Ok').cancel('Cancel');
 
-                $mdDialog.show(confirm).then(function() {
-                    $scope.userDetailsData = $scope.userDetailsData.filter(function(obj) {
-                        return $scope.selected.indexOf(obj.id) === -1;
-                    });
-                       $scope.userDetailsLength = $scope.userDetailsData.length;
-                }, function() {
-                    $scope.status = 'You decided to keep your Task.';
-                });
-            } else {
-                alert("please select any one");
-            }
+                $mdDialog
+                        .show(confirm)
+                        .then(
+                                function() {
+                                    UserDetailsService.deleteRow(row.id).then(function(response) {
+            });
+                                  window.location.reload();
+                                },
+                                function() {
+                                    $scope.status = 'You decided to keep your Task.';
+                                }); 
 
         };
 
@@ -234,37 +280,7 @@ dmtApplication.directive('createUser', function($state) {
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/userdetails/user.details.create.html';
+            return '../dmt/pages/app.userdetails/app.userdetails.create.html';
         }
     };
 });
-dmtApplication.filter('capitalize', function() {
-    return function(input) {
-        return (!!input) ? input.charAt(0).toUpperCase()
-                + input.substr(1).toLowerCase() : '';
-    }
-});
-
-dmtApplication
-        .factory(
-                'Excel',
-                function($window) {
-                    var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
-                            s) {
-                        return $window.btoa(unescape(encodeURIComponent(s)));
-                    }, format = function(s, c) {
-                        return s.replace(/{(\w+)}/g, function(m, p) {
-                            return c[p];
-                        })
-                    };
-                    return {
-                        tableToExcel : function(tableId, worksheetName) {
-                            var table = $(tableId), ctx = {
-                                worksheet : worksheetName,
-                                table : table.html()
-                            }, href = uri + base64(format(template, ctx));
-                            return href;
-                        }
-                    };
-                });
-        

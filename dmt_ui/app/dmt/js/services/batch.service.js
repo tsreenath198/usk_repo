@@ -11,8 +11,10 @@ function batchService($http, __env, $window) {
 		getAllReceivedStatus : getAllReceivedStatus,
 		getAllStatus : getAllStatus,
 		getAllTechnologies : getAllTechnologies,
+		getAllTraineesBasedOnBatchId : getAllTraineesBasedOnBatchId,
 		create : create,
-		update : update
+		update : update,
+		deleteRow:deleteRow
 
 	}, url = __env.baseUrl + __env.context
 	return service;
@@ -40,6 +42,10 @@ function batchService($http, __env, $window) {
 		return $http.get(url + "/technologies/readAll");
 	}
 
+	function getAllTraineesBasedOnBatchId(id) {
+		return $http.get(url +"/trainees/readByValues?batchId="+id);
+	}	
+	
 	function create(jsonData) {
 		return $http({
 			url : url + '/batches/create',
@@ -57,6 +63,17 @@ function batchService($http, __env, $window) {
 			url : url + '/batches/update',
 			method : "POST",
 			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+	
+	function deleteRow(data) {
+		return $http({
+			url : url + '/batches/delete?id='+data,
+			method : "POST"
 		}).then(function(response) {
 			// success
 		}, function(response) { // optional

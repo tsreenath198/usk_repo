@@ -3,12 +3,13 @@
 dmtApplication.controller("oppurtunityTrackerController", oppurtunityTrackerController);
 
 function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, $state, $mdDialog,
-		$mdToast, $timeout, $mdSidenav, $log) {
+		$mdToast, $timeout, $mdSidenav, $log,$rootScope) {
 	var self = {
 		init : init
 	};
 	function init() {
-		// console.log($state.current.name);
+		$rootScope.currentController = 'Oppurtunity Tracker';
+		$scope.currentPage = 'Create';
 		var current = $state.current.name;
 		$scope.currentState = current.split(/[\s.]+/);
 		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
@@ -21,7 +22,7 @@ function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, 
 		$scope.exportData = [];
 
 		$scope.types = [{"key":"trainee","value":"Trainee"},{"key":"trainer","value":"Trainer"},{"key":"client","value":"Client"},{"key":"employee","value":"Employee"}];
-		$scope.categories = [{"key":"training","value":"Training"},{"key":"suppport","value":"Suppport"},{"key":"interview","value":"Interview"},{"key":"resume","value":"Resume"}];
+		$scope.categories = [{"key":"training","value":"Training"},{"key":"support","value":"Support"},{"key":"interview","value":"Interview"},{"key":"resume","value":"Resume"}];
 		$scope.paidStatus = [{"key":"yes","value":"Yes"},{"key":"no","value":"No"}];
 
 		$scope.record = {
@@ -36,14 +37,7 @@ function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, 
 			$scope.employees = response.data;
 		});
 
-		 $scope.changed = function(test) { 
-		oppurtunityTrackerService.getAllProvidedFor(test).then(function(response) {
-			//console.log(response.data);
-			$scope.provides = response.data;
-		});
-		 	
-		 };
-		 $scope.progressBar = true;
+		$scope.loading = true;
 		oppurtunityTrackerService.getAllOpportunity().then(function(response) {
 			$scope.oppurtunityTrackersData = response.data;
 			$scope.oppurtunityTrackersLength = response.data.length;
@@ -57,99 +51,141 @@ function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, 
 				limit : 100,
 				page : 1
 			};
-			$scope.progressBar = false;
+			$scope.loading = false;
 		}, function(error) {
-
+alert("failed");
+					$scope.loading=false;
 		});
 
+                var deregisterListener = $rootScope.$on("CalloppurtunityTrackerSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CalloppurtunityTrackerSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CalloppurtunityTrackerSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
+
+		var deregisterListener = $rootScope.$on("CallOppurtunityTrackerMethod", function(){
+			
+			if ($rootScope.$$listeners["CallOppurtunityTrackerMethod"].length > 1) {
+				            $rootScope.$$listeners["CallOppurtunityTrackerMethod"].pop();
+        		}
+           $scope.toggleRight();
+           $scope.emptyForm();
+          // $scope.destroyListener();
+        });
+         
+	};
+	init();
+
+	$scope.changed = function(test) { 
+var checked = test.toLowerCase();
+		oppurtunityTrackerService.getAllProvidedFor(checked).then(function(response) {
+			console.log(response.data);
+			$scope.provides = response.data;
+		});
+		 	
+		};
+
 		$scope.saveRecord = function() {
-			console.log($scope.record);		
+			//console.log($scope.record);		
 				
 			oppurtunityTrackerService.create($scope.record).then(function(response) {
-				console.log("resp", response);
+			//	console.log("resp", response);
 			});
+			$scope.cancelRecord();
+				   window.location.reload();
+		};
+
+		$scope.cancelRecord = function(){
 			$mdSidenav('right').close().then(function() {
 				$log.debug("close RIGHT is done");
 			});
 		}
 
 		$scope.setRowData = function(row) {
-			
+
+			$scope.currentPage = 'Update';
 			$scope.rowData = row;
 			$scope.updatePage = true;
+			
+			$scope.changed(row.type);
 			$scope.record = {				
 				"type" : row.type,
-				"providedBy" : row.providedBy,
+				"providedBy" : row.providedById,
 				"providedFor" : row.providedFor,
 				"opportunityDate" : new Date(row.opportunityDate),
 				"category":row.category,
 				"paid":row.paid,
 				"id":row.id
 			};
-			// console.log($scope.create.status);
 		};
 		$scope.updateRecord = function() {
-			console.log($scope.record);
+		//	console.log($scope.record);
 			oppurtunityTrackerService.update($scope.record).then(function(response) {
-				console.log("resp", response);
+				//console.log($scope.record)
+				//console.log("resp", response);
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+				   window.location.reload();
+				$scope.currentPage = 'Create';
 		}
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
+			$scope.record = {
+			"type" : "",
+			"providedBy" : "",
+			"providedFor" : "",
+			"opportunityDate" : "",
+			"category":"",
+			"paid":""
+		};
 			
 		};
 
 		$scope.rowSelect = function(row) {
-			$scope.selected.push(row.id);
+			$scope.selected.push(row);
+		//	console.log($scope.selected);	
 		};
+		$scope.headerCheckbox = false;
 		$scope.selectAll = function() {
+			if(!$scope.headerCheckbox){
 			for ( var i in $scope.oppurtunityTrackersData) {
 				$scope.oppurtunityTrackersData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.oppurtunityTrackersData[i].id);
-			}
-			;
-		};
-
-		$scope.deSelectAll = function() {
+				$scope.selected.push($scope.oppurtunityTrackersData[i]);
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+		}else if($scope.headerCheckbox){
 			for ( var i in $scope.oppurtunityTrackersData) {
 				$scope.oppurtunityTrackersData[i]["checkboxValue"] = 'off';
-			}
-			;
-			$scope.selected = [];
+				$scope.selected = [];
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+		};
+	//	console.log($scope.selected);
 		};
 
-		$scope.deleteSelected = function(ev) {
-			// Appending dialog to document.body to cover sidenav in docs app
-			if ($scope.selected.length > 0) {
+		$scope.deleteRow = function(ev,row) {
+			
 				var confirm = $mdDialog
 						.confirm()
-						.title('Would you like to delete your Task?')
-						.textContent(
-								'All of the Tasks have agreed to forgive you your task.')
+						.title('Are you sure want to Delete Record?')
+						
 						.ariaLabel('Lucky day').targetEvent(ev).ok(
-								'Please do it!').cancel('Sounds like a scam');
+								'Ok').cancel('Cancel');
 
 				$mdDialog
 						.show(confirm)
 						.then(
 								function() {
-									$scope.oppurtunityTrackersData = $scope.oppurtunityTrackersData
-											.filter(function(obj) {
-												return $scope.selected
-														.indexOf(obj.id) === -1;
-											});
-									$scope.oppurtunityTrackersLength = $scope.oppurtunityTrackersData.length;
-								},
+									oppurtunityTrackerService.deleteRow(row.id).then(function(response) {
+			//	console.log("resp", response);
+			});
+									   window.location.reload();
+									},
 								function() {
 									$scope.status = 'You decided to keep your Task.';
 								});
-			} else {
-				alert("please select any one");
-			}
-
+			
 		};
 
 		$scope.exportData = function(tableId) {
@@ -158,7 +194,7 @@ function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, 
 			$timeout(function() {
 				location.href = exportHref;
 			}, 100); // trigger download
-		}
+		};
 
 		/* Tooltip Starrts */
 
@@ -221,8 +257,6 @@ function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, 
 			}
 		}
 		/* Side nav ends */
-	}
-	init();
 
 	return self;
 };

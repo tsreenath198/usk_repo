@@ -20,6 +20,7 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 		$scope.headerEnable = {};
 		$scope.exportData = [];
 
+
 		$scope.record = {
 			
 			"technologyId" : "",
@@ -31,10 +32,11 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 		courseService.getAllTechnologies().then(function(response) {
 			$scope.technologies = response.data;
 		});
-		$scope.progressBar = true;
+		$scope.loading = true;
 		courseService.getAllCourses().then(function(response) {
 			$scope.coursesData = response.data;
 			$scope.coursesLength = response.data.length;
+			$rootScope.currentTableLength = 'Records Count :'+response.data.length;
 			// console.log($scope.tasksData);
 			$scope.coursesOptions = [ 200 , 300 ];
 			$scope.coursePage = {
@@ -45,20 +47,36 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 				limit : 100,
 				page : 1
 			};
-			$scope.progressBar = false;
+			$scope.loading = false;
 		}, function(error) {
-
+					alert("failed");
+					$scope.loading=false;
 		});
+			var deregisterListener = $rootScope.$on("CallClientMethod", function(){
+			if ($rootScope.$$listeners["CallClientMethod"].length > 1) {
+				            $rootScope.$$listeners["CallClientMethod"].pop();
 
-		$scope.saveRecord = function() {
-			console.log($scope.record);		
-				
-			courseService.create($scope.record).then(function(response) {
-				console.log("resp", response);
+        		}
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });       
+ var deregisterListener = $rootScope.$on("CallCourseMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallCourseMethod"].length > 1) {
+                $rootScope.$$listeners["CallCourseMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
+	}
+	init();
+
+	$scope.saveRecord = function() {
+							
+			courseService.create($scope.record).then(function(response) {				
 			});
 			$mdSidenav('right').close().then(function() {
 				$log.debug("close RIGHT is done");
 			});
+			init();
 		}
 
 		$scope.setRowData = function(row) {
@@ -207,9 +225,6 @@ function courseController($scope, courseService, Excel, $state, $mdDialog,
 				});
 			}
 		}
-		/* Side nav ends */
-	}
-	init();
 
 	return self;
 };

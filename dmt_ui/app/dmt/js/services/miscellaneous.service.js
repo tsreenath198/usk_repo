@@ -1,34 +1,28 @@
 'use strict';
-dmtApplication.factory("salaryService", salaryService);
-function salaryService($http, $window, __env) {
+dmtApplication.factory("miscellaneousService", miscellaneousService);
+function miscellaneousService($http, $window, __env) {
 	var service = {
-		getAllSalaries : getAllSalaries,
 		getAllEmployees : getAllEmployees,
-		getAllMonth : getAllMonth,
-		getAllBatchesBasedOnEmployeeId:getAllBatchesBasedOnEmployeeId,
+		getAllMonth:getAllMonth,
+        getAllmiscellaneous:getAllmiscellaneous,
 		create : create,
 		update : update,
 		deleteRow:deleteRow
 	}, url = __env.baseUrl + __env.context
-	return service;
-	
-	function getAllSalaries() {
-		return $http.get(url + "/payroll/readAll");
-	}
+    return service;
+    
 	function getAllEmployees() {
-		return $http.get(url + "/employees/readAll");
+		return $http.get(url +"/employees/readAll");
 	}
 	function getAllMonth() {
-    return $http.get("./mock/month.json");
-  }
-
-  function getAllBatchesBasedOnEmployeeId(id) {
-	return $http.get(url + "/batches/readAllById?id="+id);
-}
-
+        return $http.get("./mock/month.json");
+      }
+    function getAllmiscellaneous() {
+		return $http.get(url +"/miscellaneous/readAll");
+	}
 function deleteRow(data) {
 		return $http({
-			url : url + '/salary/delete?id='+data,
+			url : url +'/miscellaneous/delete?id='+data,
 			method : "POST"
 		}).then(function(response) {
 			// success
@@ -38,7 +32,7 @@ function deleteRow(data) {
 	}
 	function create(data) {
 		return $http({
-			url : url + '/salary/create',
+			url : url +'/miscellaneous/create',
 			method : "POST",
 			data : data
 		}).then(function(response) {
@@ -49,7 +43,7 @@ function deleteRow(data) {
 	}
 	function update(data) {
 		return $http({
-			url : url + '/salary/update',
+			url :url +'/miscellaneous/update',
 			method : "POST",
 			data : data
 		}).then(function(response) {

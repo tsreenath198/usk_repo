@@ -5,6 +5,8 @@ function supportService($http, $window, __env) {
 		getAllSupports : getAllSupports,
 		getAllStatus : getAllStatus,
 		create : create,
+		update:update,
+		deleteRow:deleteRow,
 		getAllEmployees : getAllEmployees,
 		getAllTrainees : getAllTrainees,
 		getAllTrainers : getAllTrainers,
@@ -28,8 +30,29 @@ function supportService($http, $window, __env) {
 			// failed
 		});
 	}
+	function deleteRow(id) {
+		return $http({
+			url : url + '/supports/delete?id='+id,
+			method : "POST"
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+	function update(data) {
+		return $http({
+			url : url + '/supports/update',
+			method : "POST",
+			data : data
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
 	function getAllStatus() {
-		return $http.get("./mock/supportConstants.json");
+		return $http.get("./mock/feeStatus.json");
 	}
 	function getAllEmployees() {
 		return $http.get(url + "/employees/readAll");

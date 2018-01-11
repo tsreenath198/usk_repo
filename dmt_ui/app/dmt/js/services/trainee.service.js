@@ -14,7 +14,8 @@
 		       getAllStatus:getAllStatus,
 		       getAllTechnologies:getAllTechnologies,
 		       create:create,
-		       update:update
+		       update:update,
+		       deleteRow:deleteRow
             
           },url = __env.baseUrl + __env.context
     	 return service;
@@ -67,5 +68,16 @@
 					// failed
 				});
 			}
+    	 
+    	 function deleteRow(data) {
+    			return $http({
+    				url : url + '/trainees/delete?id='+data,
+    				method : "POST"
+    			}).then(function(response) {
+    				// success
+    			}, function(response) { // optional
+    				// failed
+    			});
+    		}
             }
     

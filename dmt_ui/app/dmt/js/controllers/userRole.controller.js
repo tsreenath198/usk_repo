@@ -3,15 +3,16 @@
     dmtApplication
         .controller("userRoleController", userRoleController);
 
-    function userRoleController($scope,userRoleService,$mdDialog,$mdToast,$state, $mdSidenav,$log) {
+    function userRoleController($scope,userRoleService,$mdDialog,$mdToast,$state,$rootScope, $mdSidenav,$log) {
           
 
         var self = {
         init : init
     };
     function init() {
-        // console.log($state.current.name);
+        $rootScope.currentController='User Roles';
         var current = $state.current.name;
+        $rootScope.currentDataEnable = true;
         $scope.currentState = current.split(/[\s.]+/);
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
@@ -33,8 +34,9 @@
         userRoleService.getAllUserRoles().then(function(response) {
             $scope.userRolesData = response.data;
             $scope.userRolesLength = response.data.length;
-            console.log($scope.userRolesData);
-            $scope.userRolesOptions = [ 200, 300 ];
+            $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+          //  console.log($scope.userRolesData);
+            $scope.userRolesOptions = [  200, 300 ];
             $scope.userRolePage = {
                 pageSelect : true
             };
@@ -45,21 +47,24 @@
             };
             $scope.loading=false;
         }, function(error) {
-
-        });
+alert("failed");
+                    $scope.loading=false;
+        });       
     
         
         $scope.saveRecord = function() {
-             console.log($scope.create);
+          //   console.log($scope.create);
              userRoleService.create($scope.record).then(function(response) {
-                console.log("resp", response);
+           //     console.log("resp", response);
             });
-            $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
-            });
+             $scope.cancelRecord();
+               window.location.reload();
         }
 
         $scope.setRowData = function(row) {
+           //  console.log(row);
+            $scope.rowData = row;
+            $scope.updatePage = true;
             $scope.record = {
                 "name" : row.name,
                 "updatedDate" :"",
@@ -71,61 +76,93 @@
         $scope.updateData = function() {
             // console.log($scope.create);
 
-        	userRoleService.update($scope.record).then(function(response) {
+            userRoleService.update($scope.record).then(function(response) {
                 console.log("resp", response);
             });
 
-            $mdSidenav('right').close().then(function() {
-                $log.debug("close RIGHT is done");
-            });
+            $scope.cancelRecord();
+               window.location.reload();
+                $scope.currentPage = 'Create';
         }
-        $scope.emptyForm = function() {
-            $scope.updatePage = false;
-            $scope.record = {};
-        };
+        
+        $scope.cancelRecord = function() {
+            $mdSidenav('right').close().then(function() {
+                    $log.debug("close RIGHT is done");
+                });
+                
+            };
 
         $scope.rowSelect = function(row) {
             $scope.selected.push(row.id);
         };
+
+         $scope.emptyForm = function() {
+             $scope.record = {
+            "name" : "",
+            "createdDate":"",
+            "description" : ""
+        };
+         };
+        var deregisterListener = $rootScope.$on("CallUserRoleMethod", function(){
+            if ($rootScope.$$listeners["CallUserRoleMethod"].length > 1) {
+                            $rootScope.$$listeners["CallUserRoleMethod"].pop();
+
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });   
+
+var deregisterListener = $rootScope.$on("CalluserRolesSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CalluserRolesSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CalluserRolesSearchMethod"].pop();
+            }            
+            $scope.filter = args.text;
+        });
+        $scope.headerCheckbox = false;
         $scope.selectAll = function() {
+            if(!$scope.headerCheckbox){
             for ( var i in $scope.userRolesData) {
                 $scope.userRolesData[i]["checkboxValue"] = 'on';
-                $scope.selected.push($scope.userRolesData[i].id);
-            }
-            ;
-        };
-
-        $scope.deSelectAll = function() {
+                $scope.selected.push($scope.userRolesData[i]);
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+        }else if($scope.headerCheckbox){
             for ( var i in $scope.userRolesData) {
                 $scope.userRolesData[i]["checkboxValue"] = 'off';
-            }
-            ;
-            $scope.selected = [];
+                $scope.selected = [];
+            };
+            $scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+        };
+    //    console.log($scope.selected);
         };
 
-        $scope.deleteSelected = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            if ($scope.selected.length > 0) {
+            
+
+            $scope.deleteRow = function(ev,row) {
+            
+                
+                
                 var confirm = $mdDialog
                         .confirm()
-                        .title('Would you like to delete your Task?')
-                        .textContent(
-                                'All of the Tasks have agreed to forgive you your task.')
+                        .title('Are you sure want to Delete Record?')
+                        
                         .ariaLabel('Lucky day').targetEvent(ev).ok(
-                                'Please do it!').cancel('Sounds like a scam');
+                                'Ok').cancel('Cancel');
 
-                $mdDialog.show(confirm).then(function() {
-                    $scope.userRolesData = $scope.userRolesData.filter(function(obj) {
-                        return $scope.selected.indexOf(obj.id) === -1;
-                    });
-                    $scope.userRolesLength = $scope.userRolesData.length;
-                }, function() {
-                    $scope.status = 'You decided to keep your Task.';
-                });
-            } else {
-                alert("please select any one");
-            }
-
+                $mdDialog
+                        .show(confirm)
+                        .then(
+                                function() {
+                                    userRoleService.deleteRow(row.id).then(function(response) {
+                
+            });
+                                   window.location.reload();
+                                },
+                                function() {
+                                    $scope.status = 'You decided to keep your Task.';
+                                });
+            
+    
         };
 
        
@@ -213,7 +250,7 @@ dmtApplication.directive('createUserRole', function($state) {
         replace : true,
         templateUrl : function() {
             var current = $state.current.name;
-            return '../dmt/pages/' + current + '/' + current + '.create.html';
+            return '../dmt/pages/' + current + '/' + current + '.record.html';
         }
     };
 });

@@ -2,13 +2,14 @@
 'use strict';
 dmtApplication.controller("salaryController", salaryController);
 
-function salaryController($scope, salaryService, Excel, $state, $mdDialog,
+function salaryController($scope, salaryService,$rootScope, Excel, $state, $mdDialog,
 		$mdToast, $timeout, $mdSidenav, $log) {
 	var self = {
 		init : init
 	};
 	function init() {
 		// console.log($state.current.name);
+		$rootScope.currentController = 'Payroll';
 		var current = $state.current.name;
 		$scope.currentState = current.split(/[\s.]+/);
 		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
@@ -19,9 +20,12 @@ function salaryController($scope, salaryService, Excel, $state, $mdDialog,
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
+		$scope.headers = [ "month" ];
+        $scope.headerEnable = {
+            "month" : false
+        };
 
 		$scope.record = {
-			
 			"employeeId": "",
 			"month": "",
 			"year": "",
@@ -32,11 +36,25 @@ function salaryController($scope, salaryService, Excel, $state, $mdDialog,
 		salaryService.getAllEmployees().then(function(response) {
 			$scope.employees = response.data;
 		});
-		$scope.progressBar = true;
+
+		$scope.getBatchesIntoPayRoll = function(id){
+			$rootScope.empId = id;
+			salaryService.getAllBatchesBasedOnEmployeeId($rootScope.empId).then(function(response) {
+				$scope.batchesData = response.data;
+				console.log($scope.batchesData);
+					});
+			
+        }
+		
+        salaryService.getAllMonth().then(function(response) {
+            $scope.months = response.data;
+        });
+		$scope.loading = true;
 		salaryService.getAllSalaries().then(function(response) {
 			$scope.salariesData = response.data;
 			$scope.salariesLength = response.data.length;
-			// console.log($scope.tasksData);
+		console.log($scope.salariesData);
+			$rootScope.currentTableLength = 'Records Count :'+response.data.length;
 			$scope.salariesOptions = [ 200 , 300 ];
 			$scope.salaryPage = {
 				pageSelect : true
@@ -46,20 +64,34 @@ function salaryController($scope, salaryService, Excel, $state, $mdDialog,
 				limit : 100,
 				page : 1
 			};
-			$scope.progressBar = false;
+			$scope.loading = false;
 		}, function(error) {
+			alert("failed");
+					$scope.loading=false;
+		});	
+		var deregisterListener = $rootScope.$on("CallSalaryMethod", function(){
+			if ($rootScope.$$listeners["CallSalaryMethod"].length > 1) {
+				            $rootScope.$$listeners["CallSalaryMethod"].pop();
+        		}
+           $scope.toggleRight();
+           $scope.emptyForm();
+          // $scope.destroyListener();
+        });
+	var deregisterListener = $rootScope.$on("CallSalarySearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallSalarySearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallSalarySearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
+	}
+	init();
 
-		});
-
-		$scope.saveRecord = function() {
-			console.log($scope.record);		
-				
+		$scope.saveRecord = function() {			
 			salaryService.create($scope.record).then(function(response) {
-				console.log("resp", response);
+				
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			  window.location.reload();
 		}
 
 		$scope.setRowData = function(row) {
@@ -78,67 +110,79 @@ function salaryController($scope, salaryService, Excel, $state, $mdDialog,
 			// console.log($scope.create.status);
 		};
 		$scope.updateRecord = function() {
-			console.log($scope.record);
+			//console.log($scope.record);
 			salaryService.update($scope.record).then(function(response) {
-				console.log("resp", response);
+				
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			   window.location.reload();
+			   $scope.currentPage = 'Create';
 		}
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
+			$scope.record = {
+			
+			"employeeId": "",
+			"month": "",
+			"year": "",
+			"salary": "",
+			"createdDate": "",
+			"description": ""
+		};
+		};
+		$scope.cancelRecord = function() {
+		$mdSidenav('right').close().then(function() {
+				$log.debug("close RIGHT is done");
+			});
 			
 		};
 
 		$scope.rowSelect = function(row) {
-			$scope.selected.push(row.id);
+			$scope.selected.push(row);
 		};
+		$scope.headerCheckbox = false;
 		$scope.selectAll = function() {
+			if(!$scope.headerCheckbox){
 			for ( var i in $scope.salariesData) {
 				$scope.salariesData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.salariesData[i].id);
-			}
-			;
-		};
-
-		$scope.deSelectAll = function() {
+				$scope.selected.push($scope.salariesData[i]);
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+		}else if($scope.headerCheckbox){
 			for ( var i in $scope.salariesData) {
 				$scope.salariesData[i]["checkboxValue"] = 'off';
-			}
-			;
-			$scope.selected = [];
+				$scope.selected = [];
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+		};
+		//console.log($scope.selected);
 		};
 
-		$scope.deleteSelected = function(ev) {
-			// Appending dialog to document.body to cover sidenav in docs app
-			if ($scope.selected.length > 0) {
+			
+
+			$scope.deleteRow = function(ev,row) {
+			
 				var confirm = $mdDialog
 						.confirm()
-						.title('Would you like to delete your Task?')
-						.textContent(
-								'All of the Tasks have agreed to forgive you your task.')
+						.title('Are you sure want to Delete Record?')
+						
 						.ariaLabel('Lucky day').targetEvent(ev).ok(
-								'Please do it!').cancel('Sounds like a scam');
+								'Ok').cancel('Cancel');
 
 				$mdDialog
 						.show(confirm)
 						.then(
 								function() {
-									$scope.salariesData = $scope.salariesData
-											.filter(function(obj) {
-												return $scope.selected
-														.indexOf(obj.id) === -1;
-											});
-									$scope.salariesLength = $scope.salariesData.length;
+									salaryService.deleteRow(row.id).then(function(response) {
+				
+			});
+								   window.location.reload();
 								},
 								function() {
 									$scope.status = 'You decided to keep your Task.';
 								});
-			} else {
-				alert("please select any one");
-			}
-
+			
+	
 		};
 
 		$scope.exportData = function(tableId) {
@@ -210,10 +254,10 @@ function salaryController($scope, salaryService, Excel, $state, $mdDialog,
 			}
 		}
 		/* Side nav ends */
-	}
-	init();
 
 	return self;
+
+
 };
 
 dmtApplication.directive('createSalary', function($state) {

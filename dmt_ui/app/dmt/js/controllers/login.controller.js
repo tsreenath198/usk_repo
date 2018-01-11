@@ -8,26 +8,22 @@ function loginController($scope, loginService, Excel, $state, $mdDialog,$locatio
 		init : init
 	};
 	function init() {
-		
 		$scope.record = {			
-			"userName" : "",
+			"username" : "",
 			"password" : ""
 		};
-		$scope.validate = function(){
-		loginService.validate($scope.record).then(function(response) {
-				$location.path("/trainer");
-			/*if(response === "true"){
-				$location.path("/trainer");
+		$scope.login = function(){
+			if($scope.record.username !== "" && $scope.record.password !== ""){
+				$location.path("/dashboard");
+				loginService.validate($scope.record).then(function(response) {
+							
+				});
 			}else{
-				$location.path("/login");
-			}*/
-			
-		});
-	};
-		
+				alert("Provide Username and password");
+			}
+		};
 	}
 	init();
-
 	return self;
 };
 

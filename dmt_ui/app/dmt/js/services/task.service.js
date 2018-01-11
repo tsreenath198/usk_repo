@@ -8,8 +8,10 @@
            getAllEmployees:getAllEmployees,
            getAllStatuses:getAllStatuses,
            getAllTimes:getAllTimes,
+           getAllCategories:getAllCategories,
            create:create,
-           update:update
+           update:update,
+           deleteRow:deleteRow
                    
           }, url = __env.baseUrl + __env.context
        return service;
@@ -25,12 +27,25 @@
               function getAllTimes() {
                 return $http.get("./mock/timeConstants.json");  
               }
+              function getAllCategories() {
+          return $http.get("./mock/timesheetCategory.json");
+        }
 
     function create(jsonData) {
     return $http({
       url : url + '/toDos/create',
       method : "POST",
       data : jsonData
+    }).then(function(response) {
+      // success
+    }, function(response) { // optional
+      // failed
+    });
+  }
+  function deleteRow(id) {
+    return $http({
+      url : url + '/toDos/delete?id='+id,
+      method : "POST"
     }).then(function(response) {
       // success
     }, function(response) { // optional

@@ -5,7 +5,9 @@ function clientService($http, $window, __env) {
 		getAllClients : getAllClients,
 		getAllTechnologies : getAllTechnologies,
 		create : create,
-		update : update
+		update : update,
+		deleteRow:deleteRow,
+		getContactsById:getContactsById
 	}, url = __env.baseUrl + __env.context
 	return service;
 	
@@ -14,6 +16,13 @@ function clientService($http, $window, __env) {
 	}
 	function getAllTechnologies() {
 		return $http.get(url + "/technologies/readAll");
+	}
+	function getContactsById(data) {
+		return $http({
+			url : url + '/contacts/readByValues',
+			method : "POST",
+			data : data
+		});
 	}
 
 	function create(jsonData) {
@@ -32,6 +41,16 @@ function clientService($http, $window, __env) {
 			url : url + '/clients/update',
 			method : "POST",
 			data : jsonData
+		}).then(function(response) {
+			// success
+		}, function(response) { // optional
+			// failed
+		});
+	}
+	function deleteRow(id) {
+		return $http({
+			url : url + '/clients/delete?id='+id,
+			method : "POST"
 		}).then(function(response) {
 			// success
 		}, function(response) { // optional

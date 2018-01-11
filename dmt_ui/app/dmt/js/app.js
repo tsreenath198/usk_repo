@@ -1,5 +1,5 @@
 /**
- * Top level module of the Policy Application.
+ * Top level module of the DMT Application.
  * 
  * @module DmtApplication
  * @requires ngMaterial
@@ -15,7 +15,7 @@
        env.api = "/api";
     }
 
-    var dmtApplication = angular.module('DmtApplication', ['ngMaterial', 'ui.router','ngIdle','md.data.table','ngResource','angularSpinner'])
+    var dmtApplication = angular.module('DmtApplication', ['ngMaterial', 'ui.router','ngIdle','md.data.table','ngResource','ngSanitize', 'ngCsv'])
         .constant('__env', env)
         .config(function(IdleProvider, KeepaliveProvider) {
               // configure Idle settings
@@ -40,8 +40,8 @@
 })
         .config(['$locationProvider', '$stateProvider', '$urlRouterProvider',
             function($locationProvider, $stateProvider, $urlRouterProvider) {
-                $locationProvider.html5Mode(true);
-                $stateProvider
+                //$locationProvider.html5Mode(true);
+                 $stateProvider
                     .state('app', {
                         url: '',
                         abstract: true,
@@ -58,6 +58,129 @@
                                 controllerAs: 'self'
 
                             }
+                        }
+                    });
+
+                 $stateProvider .state(
+                    'app.interview',
+                    {
+                        name : "interview",
+                        url : "/interview",
+                        views : {
+
+                            "content@" : {
+                                controller : "interviewController",
+                                controllerAs : 'self',
+                                templateUrl : "pages/app.interview/app.interview.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.oppurtunityTracker', {
+                        name: "oppurtunityTracker",
+                        url: "/oppurtunityTracker",
+                        views: {
+
+                            "content@": {
+                                controller: "oppurtunityTrackerController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.oppurtunityTracker/app.oppurtunityTracker.html"
+
+                            }
+                        }
+                    });
+
+
+                     $stateProvider
+                    .state('app.client', {
+                        name: "client",
+                        url: "/client",
+                        views: {
+
+                            "content@": {
+                                controller: "clientController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.client/app.client.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.miscellaneous', {
+                        name: "miscellaneous",
+                        url: "/miscellaneous",
+                        views: {
+
+                            "content@": {
+                                controller: "miscellaneousController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.miscellaneous/app.miscellaneous.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.evaluation', {
+                        name: "evaluation",
+                        url: "/evaluation",
+                        views: {
+
+                            "content@": {
+                                controller: "evaluationController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.evaluation/app.evaluation.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.payroll', {
+                        name: "payroll",
+                        url: "/payroll",
+                        views: {
+
+                            "content@": {
+                                controller: "payrollController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.payroll/app.payroll.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.resume', {
+                        name: "resume",
+                        url: "/resume",
+                        views: {
+
+                            "content@": {
+                                controller: "resumeController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.resume/app.resume.html"
+                            }
+                        }
+                    });
+                    $stateProvider
+                    .state('app.salary', {
+                        name: "salary",
+                        url: "/salary",
+                        views: {
+
+                            "content@": {
+                                controller: "salaryController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.salary/app.salary.html"
+                            }
+                        }
+                    });
+
+                     $stateProvider
+                    .state('app.supportInteraction', {
+                        name: "supportInteraction",
+                        url: "/supportInteraction",
+                        views: {
+
+                            "content@": {
+                                controller: "supportInteractionController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.supportInteraction/app.supportInteraction.html"
+                                }
                         }
                     });
 
@@ -88,19 +211,7 @@
                         }
                     }
                 });
-                    $stateProvider
-                    .state('app.login', {
-                        name: "login",
-                        url: "/login",
-                        views: {
-
-                            "content@": {
-                                controller: "loginController",
-                                controllerAs: 'self',
-                                templateUrl: "pages/app.login/app.login.html"
-                            }
-                        }
-                    });
+                    
 
                       $stateProvider
                     .state('app.userDetails', {
@@ -111,11 +222,39 @@
                             "content@": {
                                 controller: "UserDetailsController",
                                 controllerAs: 'self',
-                                templateUrl: "pages/userdetails/user.details.html"
+                                templateUrl: "pages/app.userdetails/app.userdetails.html"
+                            }
+                        }
+                    });
+
+                    $stateProvider
+                    .state('app.userRoles', {
+                        name: "userRoles",
+                        url: "/userRoles",
+                        views: {
+
+                            "content@": {
+                                controller: "userRoleController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.userRoles/app.userRoles.html"
                             }
                         }
                     });
                      
+
+                     $stateProvider
+                    .state('app.employeeDesignation', {
+                        name: "employeeDesignation",
+                        url: "/employeeDesignation",
+                        views: {
+
+                            "content@": {
+                                controller: "employeeDesignationController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.employeeDesignation/app.employeeDesignation.html"
+                            }
+                        }
+                    });
                       $stateProvider
                     .state('app.technology', {
                         name: "technology",
@@ -142,19 +281,7 @@
                                 }
                         }
                     });
-                    $stateProvider
-                    .state('app.supportInteraction', {
-                        name: "supportInteraction",
-                        url: "/supportInteraction",
-                        views: {
-
-                            "content@": {
-                                controller: "supportInteractionController",
-                                controllerAs: 'self',
-                                templateUrl: "pages/app.supportInteraction/app.supportInteraction.html"
-                                }
-                        }
-                    });
+                   
 
                     $stateProvider
                     .state('app.timesheet', {
@@ -195,6 +322,7 @@
                             }
                         }
                     });
+
                     $stateProvider
                     .state('app.batch', {
                         name: "batch",
@@ -209,76 +337,6 @@
                         }
                     });
 
-                    $stateProvider
-                    .state('app.client', {
-                        name: "client",
-                        url: "/client",
-                        views: {
-
-                            "content@": {
-                                controller: "clientController",
-                                controllerAs: 'self',
-                                templateUrl: "pages/app.client/app.client.html"
-                            }
-                        }
-                    });
-                    $stateProvider
-                    .state('app.salary', {
-                        name: "salary",
-                        url: "/salary",
-                        views: {
-
-                            "content@": {
-                                controller: "salaryController",
-                                controllerAs: 'self',
-                                templateUrl: "pages/app.salary/app.salary.html"
-                            }
-                        }
-                    });
-                    $stateProvider
-                    .state('app.oppurtunityTracker', {
-                        name: "oppurtunityTracker",
-                        url: "/oppurtunityTracker",
-                        views: {
-
-                            "content@": {
-                                controller: "oppurtunityTrackerController",
-                                controllerAs: 'self',
-                                templateUrl: "pages/app.oppurtunityTracker/app.oppurtunityTracker.html"
-
-                            }
-                        }
-                    });
-                        $stateProvider
-                                    .state(
-                                            'app.course',
-                                            {
-                                                name : "course",
-                                                url : "/course",
-                                                views : {
-
-                                                    "content@" : {
-                                                        controller : "courseController",
-                                                        controllerAs : 'self',
-                                                        templateUrl : "pages/app.course/app.course.html"
-                                                    }
-                                                }
-                                            });
-                                    $stateProvider
-                                    .state(
-                                            'app.interview',
-                                            {
-                                                name : "interview",
-                                                url : "/interview",
-                                                views : {
-
-                                                    "content@" : {
-                                                        controller : "interviewController",
-                                                        controllerAs : 'self',
-                                                        templateUrl : "pages/app.interview/app.interview.html"
-                                                    }
-                                                }
-                                            });
                                      $stateProvider
                                     .state(
                                             'app.task',
@@ -331,6 +389,21 @@
                             }
                         }
                     });
+                    $stateProvider
+                                    .state(
+                                            'app.course',
+                                            {
+                                                name : "course",
+                                                url : "/course",
+                                                views : {
+
+                                                    "content@" : {
+                                                        controller : "courseController",
+                                                        controllerAs : 'self',
+                                                        templateUrl : "pages/app.course/app.course.html"
+                                                    }
+                                                }
+                                            });
                 $stateProvider
                     .state(
                             'app.trainer',
@@ -361,16 +434,96 @@
                                 }
                             }
                         });
+
+                        $stateProvider
+                        .state(
+                                'app.expense',
+                                {
+                                    name : "expense",
+                                    url : "/expense",
+                                    views : {
+        
+                                        "content@" : {
+                                            controller : "expenseController",
+                                            controllerAs : 'self',
+                                            templateUrl : "pages/app.expense/app.expense.html"
+                                        }
+                                    }
+                                });
+                $stateProvider
+                    .state('login', {
+                        name: "login",
+                        url: "/login",
+                        views: {
+                            'header': {
+                            },
+                            'navbar': {
+                            },
+                            "content@": {
+                                controller: "loginController",
+                                controllerAs: 'self',
+                                templateUrl: "pages/app.login/app.login.html"
+                            }
+                        }
+                    });
                 $urlRouterProvider.otherwise("/login");
 
             }
         ]);
 
-        dmtApplication.filter('capitalize', function() {
+dmtApplication.filter('capitalize', function() {
     return function(input) {
         return (!!input) ? input.charAt(0).toUpperCase()
                 + input.substr(1).toLowerCase() : '';
     }
+});
+
+dmtApplication.directive('onlyDigits', function () {
+    return {
+      require: 'ngModel',
+      restrict: 'A',
+      link: function (scope, element, attr, ctrl) {
+        function inputValue(val) {
+          if (val) {
+            var digits = val.replace(/[^0-9.+-]/g, '');
+
+            if (digits.split('.').length > 2) {
+              digits = digits.substring(0, digits.length - 1);
+            }
+
+            if (digits !== val) {
+              ctrl.$setViewValue(digits);
+              ctrl.$render();
+            }
+            return parseFloat(digits);
+          }
+          return undefined;
+        }            
+        ctrl.$parsers.push(inputValue);
+      }
+    };
+ });
+
+dmtApplication.directive('replace', function() {
+  return {
+    require: 'ngModel',
+    scope: {
+      regex: '@replace',
+      with: '@with'
+    }, 
+    link: function(scope, element, attrs, model) {
+      model.$parsers.push(function(val) {
+        if (!val) { return; }
+        var regex = new RegExp(scope.regex);
+        var replaced = val.replace(regex, scope.with); 
+        if (replaced !== val) {
+          model.$setViewValue(replaced);
+          model.$render();
+        }         
+        return replaced;         
+      });
+    }
+  };
 });
 
 dmtApplication

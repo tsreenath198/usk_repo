@@ -2,7 +2,7 @@
 'use strict';
 dmtApplication.controller("TraineeController", TraineeController);
 
-function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
+function TraineeController($scope, TraineeService, $mdDialog,$rootScope, $mdToast,
 		$timeout, $state, $mdSidenav, $log) {
 
 	var self = {
@@ -10,7 +10,9 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 	};
 	function init() {
 		// console.log($state.current.name);
+		 $rootScope.currentController = 'Trainee';
 		var current = $state.current.name;
+		$rootScope.currentDataEnable = true;
 		$scope.currentState = current.split(/[\s.]+/);
 		$scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
 		$scope.customFullscreen = false;
@@ -20,20 +22,15 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 		$scope.selected = [];
 		$scope.headerEnable = {};
 		$scope.exportData = [];
-		$scope.headers = [ "Batch", "Status", "Client","Skype Id","Altenate Phone","Time Zone"];
+		$scope.headers = [ {"key":"batch","value":"Batch"},{"key":"status","value":"Status"},{"key":"client","value":"Client"}];
 		$scope.headerEnable = {
-				"Batch" : false
+				"batch" : false
 			}, {
-				"Status" : false
+				"status" : false
 			},{
-				"Client" : false
-			},{
-				"Skype Id" : false
-			},{
-				"Altenate Phone" : false
-			},{
-				"Time Zone" : false
+				"client" : false
 			};
+
 
 		$scope.record = {
 			"name" : "",
@@ -51,6 +48,7 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 			"receivedStatus" : "",
 			"technologyId" : ""
 		};
+
 		$scope.loading=true;
 		TraineeService.getAllClients().then(function(response) {
 			$scope.clients = response.data;
@@ -62,7 +60,7 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 
 		TraineeService.getAllBatchs().then(function(response) {
 			$scope.batches = response.data;
-			console.log("$scope.batches", $scope.batches);
+		//	console.log("$scope.batches", $scope.batches);
 		});
 
 		TraineeService.getAllPaidStatus().then(function(response) {
@@ -81,13 +79,16 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 		});
 
 		TraineeService.getAllTrainees().then(function(response) {
+		//	console.log(response.data.length);
 			$scope.traineesData = response.data;
 			$scope.traineesLength = response.data.length;
-			console.log($scope.traineesData);
+			$rootScope.currentTableLength = 'Records Count :'+response.data.length;
+		//	console.log($scope.traineesData);
 			$scope.traineesOptions = [ 200,300 ];
 			$scope.traineePage = {
 				pageSelect : true
 			};
+
 			$scope.query = {
 				order : 'name',
 				limit : 100,
@@ -95,24 +96,36 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 			};
 			$scope.loading=false;
 		}, function(error) {
-
+alert("failed");
+					$scope.loading=false;
 		});
+		var deregisterListener = $rootScope.$on("CallTraineeMethod", function(){
+            if ($rootScope.$$listeners["CallTraineeMethod"].length > 1) {
+                            $rootScope.$$listeners["CallTraineeMethod"].pop();
 
+                }
+           $scope.toggleRight();
+           $scope.emptyForm();
+        });
+ var deregisterListener = $rootScope.$on("CallTraineeSearchMethod", function(event, args) {
+            if ($rootScope.$$listeners["CallTraineeSearchMethod"].length > 1) {
+                $rootScope.$$listeners["CallTraineeSearchMethod"].pop();
+            }            
+            $scope.filterByText = args.text;
+        });
 		$scope.saveRecord = function() {
 			var jsonData = $scope.create;
 			var date = new Date();
-			// var dataForCreate = [ jsonData.name,date,jsonData.description ];
 			TraineeService.create($scope.record).then(function(response) {
-				// $scope.technology = response.data;
-				console.log(response);
+		//		console.log(response);
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			  window.location.reload();
+			
 		}
 
 		$scope.setRowData = function(row) {
-			console.log(row);
+		//	console.log(row);
 			$scope.rowData = row;
 			$scope.updatePage = true;
 			$scope.record = {
@@ -136,65 +149,83 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 		};
 		$scope.updateData = function() {
 			TraineeService.update($scope.record).then(function(response) {
-				console.log(response);
+				//console.log(response);
 			});
-			$mdSidenav('right').close().then(function() {
-				$log.debug("close RIGHT is done");
-			});
+			$scope.cancelRecord();
+			   window.location.reload();
+			    $scope.currentPage = 'Create';
 		}
+		
+		$scope.cancelRecord = function() {
+			$mdSidenav('right').close().then(function() {
+					$log.debug("close RIGHT is done");
+				});
+				
+			};
 		$scope.emptyForm = function() {
 			$scope.updatePage = false;
-			$scope.create = {};
+		$scope.record = {
+			"name" : "",
+			"email" : "",
+			"alternatePhone" : "",
+			"clientId" : "",
+			"skypeId" : "",
+			"timezone" : "",
+			"batchId" : "",
+			"createdDate" :"",
+			"description" : "",
+			"phone" : "",
+			"traineeFeeStatus" : "",
+			"paidStatus" : "",
+			"receivedStatus" : "",
+			"technologyId" : ""
 		};
 
-		$scope.rowSelect = function(row) {
-			$scope.selected.push(row.id);
 		};
+
+		$scope.headerCheckbox = false;
 		$scope.selectAll = function() {
+			if(!$scope.headerCheckbox){
 			for ( var i in $scope.traineesData) {
 				$scope.traineesData[i]["checkboxValue"] = 'on';
-				$scope.selected.push($scope.traineesData[i].id);
-			}
-			;
-		};
-
-		$scope.deSelectAll = function() {
+				$scope.selected.push($scope.traineesData[i]);
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == false)?true:false;
+		}else if($scope.headerCheckbox){
 			for ( var i in $scope.traineesData) {
 				$scope.traineesData[i]["checkboxValue"] = 'off';
-			}
-			;
-			$scope.selected = [];
+				$scope.selected = [];
+			};
+			$scope.headerCheckbox = ($scope.headerCheckbox == true)?false:true;
+		};
+		//console.log($scope.selected);
 		};
 
-		$scope.deleteSelected = function(ev) {
-			// Appending dialog to document.body to cover sidenav in docs app
-			if ($scope.selected.length > 0) {
+			
+
+			$scope.deleteRow = function(ev,row) {
+			
 				var confirm = $mdDialog
 						.confirm()
-						.title('Would you like to delete your Trainee?')
-						.textContent(
-								'All of the Tasks have agreed to forgive you your trainee.')
+						.title('Are you sure want to Delete Record?')
+						
 						.ariaLabel('Lucky day').targetEvent(ev).ok(
-								'Please do it!').cancel('Sounds like a scam');
+								'Ok').cancel('Cancel');
 
 				$mdDialog
 						.show(confirm)
 						.then(
 								function() {
-									$scope.traineesData = $scope.traineesData
-											.filter(function(obj) {
-												return $scope.selected
-														.indexOf(obj.id) === -1;
-											});
-									$scope.traineesLength = $scope.traineesData.length;
+									TraineeService.deleteRow(row.id).then(function(response) {
+				
+			});
+								   window.location.reload();
 								},
 								function() {
 									$scope.status = 'You decided to keep your Task.';
 								});
-			} else {
-				alert("please select any one");
-			}
-
+			
+	
 		};
 		
 		$scope.moreColumns = function(ev) {
@@ -214,44 +245,7 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 					});
 		};
 
-		$scope.openMoreOptions = function(header) {
-			if (header.length > 0) {
-				for ( var i in header) {
-					if (header[i] == 'Batch') {
-						$scope.headerEnable.batchId = true;
-					} else if (header[i] == 'Status') {
-						$scope.headerEnable.traineeFeeStatus = true;
-					} else if (header[i] == 'Client') {
-						$scope.headerEnable.clientId = true;
-					}
-					else if (header[i] == 'Skype Id') {
-						$scope.headerEnable.skypeId = true;
-					}
-					else if (header[i] == 'Time Zone') {
-						$scope.headerEnable.timezone = true;
-					}
-					else if (header[i] == 'Alternate Phone') {
-						$scope.headerEnable.alternatePhone = true;
-					}
-					
-				}
-			} else {
-				$scope.headerEnable = {
-						"Batch" : false
-				}, {
-					"Status" : false
-				},{
-					"Client" : false
-				},{
-					"Skype Id" : false
-				},{
-					"Altenate Phone" : false
-				},{
-					"Time Zone" : false
-				};
-			}
-		}
-
+		
 		$scope.export = function(tableId) {
 			// $scope.tasksOptions = [ $scope.tasksData.length ];
 			var exportHref = Excel.tableToExcel(tableId, 'sheet name');
@@ -323,6 +317,29 @@ function TraineeController($scope, TraineeService, $mdDialog, $mdToast,
 		/* Side nav ends */
 	}
 	init();
+	var originatorEv;
+            this.openMenu = function($mdOpenMenu, ev) {
+            originatorEv = ev;
+               $mdOpenMenu(ev);
+            };
+            $scope.menuItemClick = function(index,key) {
+            	
+				
+					if (key == 'batch') {
+						$scope.batch = true;
+						$scope.status = false;
+						$scope.client = false;
+					} else if (key == 'status') {
+						$scope.status = true;
+						$scope.batch = false;
+						$scope.client = false;
+
+					} else if (key == 'client') {
+						$scope.client = true;
+						$scope.status = false;
+						$scope.batch = false;
+					} 
+            };
 
 	return self;
 };

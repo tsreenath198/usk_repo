@@ -20,9 +20,10 @@ public class TraineeServiceImpl extends TraineeService {
 	protected APIDAO<Trainee> getDao() {
 		return traineeDAO;
 	}
+
 	@Override
-	public List<Trainee> readAllById(Integer id) {
-		return traineeDAO.readAllById(id);
+	public List<Trainee> readByValues(int batchId) {
+		return traineeDAO.readByValues(batchId);
 	}
 
 }

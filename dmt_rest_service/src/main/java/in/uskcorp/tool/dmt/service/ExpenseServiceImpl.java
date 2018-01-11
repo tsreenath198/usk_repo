@@ -1,23 +1,22 @@
 package in.uskcorp.tool.dmt.service;
 
 import in.uskcorp.tool.dmt.dao.APIDAO;
-import in.uskcorp.tool.dmt.dao.ResumeDAO;
-import in.uskcorp.tool.dmt.domain.Resume;
+import in.uskcorp.tool.dmt.dao.ExpenseDAO;
+import in.uskcorp.tool.dmt.domain.Expense;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-@Service("resumeServiceImpl")
-public class ResumeServiceImpl extends ResumeService {
-
+@Service("expenseServiceImpl")
+public class ExpenseServiceImpl extends ExpenseService {
 	@Autowired
-	@Qualifier("resumeDaoImpl")
-	ResumeDAO resumeDAO;
+	@Qualifier("expenseDaoImpl")
+	ExpenseDAO expenseDAO;
 
 	@Override
-	protected APIDAO<Resume> getDao() {
-		return resumeDAO;
+	protected APIDAO<Expense> getDao() {
+		return expenseDAO;
 	}
 
 }

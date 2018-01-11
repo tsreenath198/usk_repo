@@ -28,17 +28,18 @@ public class TraineeController extends APIController<Trainee> {
 	protected APIService<Trainee> getService() {
 		return traineeService;
 	}
-	
-	@RequestMapping(value = DMTRestURIConstants.READ_ALL_BY_Id, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody
-	ResponseEntity<List<Trainee>> readAllById(@RequestParam Integer id) {
+
+	@RequestMapping(value = DMTRestURIConstants.READ_BY_VALUES, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<List<Trainee>> readByValues(
+			@RequestParam Integer batchId) {
 		try {
-			List<Trainee> list = traineeService.readAllById(id);
-			return new ResponseEntity<List<Trainee>>(list, HttpStatus.OK);
+			List<Trainee> tr = traineeService.readByValues(batchId);
+			return new ResponseEntity<List<Trainee>>(tr, HttpStatus.OK);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<List<Trainee>>(HttpStatus.SERVICE_UNAVAILABLE);
+			return new ResponseEntity<List<Trainee>>(
+					HttpStatus.SERVICE_UNAVAILABLE);
 
 		}
 	}

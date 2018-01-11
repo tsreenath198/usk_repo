@@ -22,4 +22,10 @@ public class ResumeController extends APIController<Resume>{
 		return resumeService;
 	}
 
-}
+} 
+
+
+
+
+
+

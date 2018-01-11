@@ -26,6 +26,7 @@ public abstract class APIController<T> {
 
 		}
 	}
+
 	@RequestMapping(value = DMTRestURIConstants.READ, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody
 	ResponseEntity<T> read(@RequestParam Integer id) {
@@ -39,7 +40,6 @@ public abstract class APIController<T> {
 
 		}
 	}
-	
 
 	@RequestMapping(value = DMTRestURIConstants.CREATE, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody

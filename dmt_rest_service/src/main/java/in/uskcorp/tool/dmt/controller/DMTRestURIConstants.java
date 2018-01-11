@@ -5,6 +5,11 @@ public interface DMTRestURIConstants {
 	 * SCREENS CONSTANTS HERE
 	 */
 	String CONTACTS = "/contacts";
+	String COFOUNDER = "/coFounder";
+	String EVALUATION = "/evaluation";
+	String MISCELLANEOUS = "/miscellaneous";
+	String EXPENSES="/expenses";
+	String PAYROLL = "/payroll";
 	String CLIENTS = "/clients";
 	String TECHNOLOGIES = "/technologies";
 	String BATCHES = "/batches";
@@ -30,8 +35,6 @@ public interface DMTRestURIConstants {
 	String USER_ROLES = "/userRoles";
 	String TIME_SHEETS = "/timeSheets";
 	String EMPLOYEE_ATTENDANCE = "/employeeAttendances";
-	String SALARY= "/salary";
-			
 	/**
 	 * OPERATIONS HERE
 	 */
@@ -41,7 +44,7 @@ public interface DMTRestURIConstants {
 	String UPDATE = "/update";
 	String DELETE = "/delete";
 	String READ_BY_VALUES = "/readByValues";
-	String READ_ALL_BY_Id = "/readAllById";
+	String READ_BY_MONTH_AND_ID = "/readByMonthAndId";
 	String SUPPORT_DASHBOARD = "/supportDashboard";
 	String INTERVIEW_DASHBOARD = "/interviewDashboard";
 	String BATCH_DASHBOARD = "/batchDashboard";

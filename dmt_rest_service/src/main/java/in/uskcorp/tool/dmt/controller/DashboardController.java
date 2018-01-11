@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -22,8 +23,8 @@ public class DashboardController {
 	DashboardSummaryService dashboardSummaryService;
 
 	@RequestMapping(value = DMTRestURIConstants.READ_ALL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<DashboardSummary> readAll() {
-		try {		
+	public @ResponseBody ResponseEntity<DashboardSummary> readALL() {
+		try {
 			DashboardSummary summary = dashboardSummaryService
 					.getDashboardSummary();
 			return new ResponseEntity<DashboardSummary>(summary, HttpStatus.OK);
@@ -34,6 +35,5 @@ public class DashboardController {
 					HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
-	
 
 }

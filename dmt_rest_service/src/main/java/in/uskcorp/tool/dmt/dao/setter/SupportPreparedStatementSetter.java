@@ -39,10 +39,12 @@ public class SupportPreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(9, support.getPaidStatus());
 		arg0.setString(10, support.getReceivedStatus());
 		arg0.setString(11, support.getTechnologyUsed());
-		arg0.setDate(12,
-				ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setDate(12, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(13, support.getDescription());
 		arg0.setString(14, support.getPaidBy());
+		arg0.setInt(14, support.getNumberOfInteractions());
+
+		
 
 		if (!isInsert) {
 			arg0.setInt(15, support.getId());

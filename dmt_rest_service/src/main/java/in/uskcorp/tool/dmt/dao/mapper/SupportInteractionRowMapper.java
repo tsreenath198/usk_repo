@@ -5,7 +5,6 @@ import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 
 import org.springframework.jdbc.core.RowMapper;
 
@@ -21,14 +20,16 @@ public class SupportInteractionRowMapper implements
 		supIntr.setLead(rs.getString("lead"));
 		supIntr.setLeadId(rs.getInt("lead_id"));
 		supIntr.setTraineeId(rs.getInt("trainee_id"));
-		supIntr.setEmployeeId(rs.getInt("employee_id"));
-		supIntr.setTraineeName(rs.getString("trainee"));
-		supIntr.setEmployeeName(rs.getString("employee"));
-		//supIntr.setTraineeName(rs.getString("trainee_name"));
-	//	supIntr.setTrainerName(rs.getString("trainer_name"));
+		supIntr.setTrainerId(rs.getInt("trainer_id"));
+		// supIntr.setTraineeName(rs.getString("trainee_name"));
+		// supIntr.setTrainerName(rs.getString("trainer_name"));
 		supIntr.setCreatedDate(ResultSetUtil.getDate(rs, "created_date"));
 		supIntr.setUpdatedDate(ResultSetUtil.getDate(rs, "updated_date"));
 		supIntr.setDescription(rs.getString("description"));
+
+		supIntr.setDetails(rs.getString("details"));
+		supIntr.setRate(rs.getInt("rate"));
+		supIntr.setMonth(rs.getString("month"));
 
 		return supIntr;
 	}

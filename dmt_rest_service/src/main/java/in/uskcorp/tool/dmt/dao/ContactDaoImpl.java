@@ -1,6 +1,7 @@
 package in.uskcorp.tool.dmt.dao;
 
 import in.uskcorp.tool.dmt.dao.mapper.ContactRowMapper;
+
 import in.uskcorp.tool.dmt.dao.setter.ContactPreparedStatementSetter;
 import in.uskcorp.tool.dmt.domain.Contact;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -14,7 +15,7 @@ public class ContactDaoImpl extends ContactDAO {
 	protected RowMapper<Contact> getRowMapper(Boolean isReadAll) {
 		return new ContactRowMapper();
 	}
-	
+
 	@Override
 	protected String getReadAllQuery() {
 		return SQLConstants.CONTACT_SELECT;

@@ -19,7 +19,7 @@ public class ContactPreparedStatementSetter implements PreparedStatementSetter {
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
 		if (isInsert) {
-			// get from sequence;
+			
 		} else {
 			arg0.setInt(0, contact.getId());
 		}

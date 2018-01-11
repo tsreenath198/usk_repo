@@ -33,8 +33,7 @@ public class InterviewPreparedStatementSetter implements
 		arg0.setString(4, interview.getInterviewer());
 		arg0.setString(5, interview.getTime());
 		arg0.setString(6, interview.getStatus());
-		arg0.setDate(7,
-				ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setDate(7, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(8, interview.getPaidStatus());
 		arg0.setString(9, interview.getReceivedStatus());
 		arg0.setString(10, interview.getDescription());

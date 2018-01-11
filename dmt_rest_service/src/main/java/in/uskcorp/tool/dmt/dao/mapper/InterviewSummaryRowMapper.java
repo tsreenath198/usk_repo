@@ -16,7 +16,7 @@ public class InterviewSummaryRowMapper implements RowMapper<InterviewSummary> {
 		interviewSummary.setInterviewDate(ResultSetUtil.getDate(resultSet,
 				"interview_date"));
 		interviewSummary.setTraineeName(resultSet.getString("trainee_name"));
-		interviewSummary.setSupportedBy(resultSet.getString("supported_By"));
+		interviewSummary.setEmployeeName(resultSet.getString("employee_name"));
 		interviewSummary.setStatus(resultSet.getString("status"));
 
 		// interviewSummary.setConsultancyName(resultSet.getString("consultancy"));

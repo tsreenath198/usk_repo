@@ -19,26 +19,23 @@ public class ResumePreparedStatementSetter implements PreparedStatementSetter {
 		this.isInsert = isInsert;
 	}
 
-	// end_client, question,answers,created_date,description
-
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
-
-		// arg0.setString(1, resume.getTraineeName());
+		System.out.println("Date::" + resume.getDate());
+		System.out.println("Updated Date::"
+				+ ResultSetUtil.converttoSQLDate(resume.getDate()));
 		arg0.setInt(1, resume.getTraineeId());
-		arg0.setString(2, resume.getPreparedBy());
+		arg0.setInt(2, resume.getPreparedBy());
 		arg0.setString(3, resume.getPaid());
-		arg0.setDate(4, ResultSetUtil.converttoSQLDate(resume.getDate()));
-		arg0.setDate(5,
-				ResultSetUtil.converttoSQLDate(new Date()));
-		/*arg0.setDate(6,
-				ResultSetUtil.converttoSQLDate(resume.getUpdated_date()));*/
+		arg0.setDate(4, ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setDate(5, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(6, resume.getReceivedStatus());
-		arg0.setString(7, resume.getDescription());
-
+		arg0.setString(7, resume.getDetails());
+		arg0.setInt(8, resume.getCount());
+		arg0.setInt(9, resume.getRate());
+		arg0.setString(10, resume.getDescription());
 		if (!isInsert) {
-			arg0.setInt(8, resume.getId());
+			arg0.setInt(11, resume.getId());
 		}
-
 	}
 }

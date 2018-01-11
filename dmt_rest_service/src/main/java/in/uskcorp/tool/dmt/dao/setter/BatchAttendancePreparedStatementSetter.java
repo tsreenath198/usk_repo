@@ -9,11 +9,12 @@ import java.util.Date;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
-public class BatchAttendancePreparedStatementSetter implements PreparedStatementSetter {
+public class BatchAttendancePreparedStatementSetter implements
+		PreparedStatementSetter {
 	private BatchAttendance batchAttendance;
 	private boolean isInsert;
 
-	public BatchAttendancePreparedStatementSetter(BatchAttendance a,
+	public BatchAttendancePreparedStatementSetter(BatchAttendance a, 
 			boolean isInsert) {
 		this.batchAttendance = a;
 		this.isInsert = isInsert;
@@ -21,15 +22,13 @@ public class BatchAttendancePreparedStatementSetter implements PreparedStatement
 
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
-		arg0.setInt(2, batchAttendance.getId());
-		//arg0.setString(2, batchAttendance.getName());
 		arg0.setInt(1, batchAttendance.getBatchId());
-		arg0.setDate(3, ResultSetUtil.converttoSQLDate(batchAttendance.getDate()));
-		arg0.setInt(4, batchAttendance.getTraineeId());
-		arg0.setDate(5, ResultSetUtil.converttoSQLDate(new Date()));
-		arg0.setString(6, batchAttendance.getDescription());
+		arg0.setDate(2, ResultSetUtil.converttoSQLDate(new Date()));
+		//arg0.setInt(3, batchAttendance.getTraineeId());
+		arg0.setDate(4, ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setString(5, batchAttendance.getDescription());
 		if (!isInsert) {
-			arg0.setInt(7, batchAttendance.getId());
+			arg0.setInt(6, batchAttendance.getId());
 		}
 
 	}

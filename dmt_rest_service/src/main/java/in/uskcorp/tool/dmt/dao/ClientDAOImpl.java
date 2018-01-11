@@ -1,12 +1,8 @@
 package in.uskcorp.tool.dmt.dao;
 
 import in.uskcorp.tool.dmt.dao.mapper.ClientRowMapper;
-import in.uskcorp.tool.dmt.dao.mapper.ClientSummaryRowMapper;
 import in.uskcorp.tool.dmt.dao.setter.ClientPreparedStatementSetter;
 import in.uskcorp.tool.dmt.domain.Client;
-import in.uskcorp.tool.dmt.domain.ClientSummary;
-
-import java.util.List;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
@@ -53,8 +49,18 @@ public class ClientDAOImpl extends ClientDAO {
 	}
 /*
 	@Override
-	public List<ClientSummary> getSummary() {
+	public List<Client> getSummary() {
 		return getJdbcTemplate().query(SQLConstants.CLIENT_SELECT,
-				new ClientSummaryRowMapper());
+				new ClientListSummaryRowMapper());
 	}*/
+
+	@Override
+	public Long getLastId() {
+		return getJdbcTemplate().queryForObject("select max(id) from client",
+				Long.class);
+	}
+
+	
+	
+	
 }

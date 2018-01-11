@@ -48,7 +48,7 @@ public class SupportDaoImpl extends SupportDAO {
 	@Override
 	protected PreparedStatementSetter getPreparedStatementSetter(Support a,
 			boolean isInsert) {
-		return new SupportPreparedStatementSetter(a, isInsert);
+		return new SupportPreparedStatementSetter (a, isInsert);
 	}
 
 	@Override
@@ -56,4 +56,7 @@ public class SupportDaoImpl extends SupportDAO {
 		return getJdbcTemplate().query(SQLConstants.SUPPORT_DASHBOARD,	
 				new SupportSummaryRowMapper());
 	}
+	
+	
+
 }

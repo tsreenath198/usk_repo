@@ -4,6 +4,8 @@ import in.uskcorp.tool.dmt.dao.mapper.BatchAttendanceRowMapper;
 import in.uskcorp.tool.dmt.dao.setter.BatchAttendancePreparedStatementSetter;
 import in.uskcorp.tool.dmt.domain.BatchAttendance;
 
+import java.util.List;
+
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -42,6 +44,10 @@ public class BatchAttendanceDAOImpl extends BatchAttendanceDAO {
 		return SQLConstants.BATCH_ATTENDANCE_DELETE;
 	}
 
+/*	public void addMulti(String[] strings,List<String> list){
+	    for (int i = 0; i < strings.length; i++) {
+	        list.add(strings[i]);
+	    }*/
 	@Override
 	protected PreparedStatementSetter getPreparedStatementSetter(
 			BatchAttendance a, boolean isInsert) {

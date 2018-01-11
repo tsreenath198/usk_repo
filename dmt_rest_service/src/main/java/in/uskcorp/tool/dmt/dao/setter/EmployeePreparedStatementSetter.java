@@ -24,12 +24,12 @@ public class EmployeePreparedStatementSetter implements PreparedStatementSetter 
 		arg0.setString(2, employee.getPhone());
 		arg0.setString(3, employee.getEmail());
 		arg0.setString(4, employee.getRole());
-		arg0.setFloat(5, employee.getBaseSalary());
-		arg0.setDate(6,ResultSetUtil.converttoSQLDate(new Date()));
-		arg0.setString(7, employee.getDescription());
+		//arg0.setFloat(5, employee.getBaseSalary());
+	//	arg0.setDate(6,ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setString(5, employee.getDescription());
 		
 		if (!isInsert) {
-			arg0.setInt(8, employee.getId());
+			arg0.setInt(6, employee.getId());
 		}
 
 	}

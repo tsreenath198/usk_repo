@@ -18,12 +18,6 @@ public class TraineePreparedStatementSetter implements PreparedStatementSetter {
 		this.isInsert = isInsert;
 	}
 
-	/*
-	 * name,
-	 * email,alternate_phone,client_id,skype_id,timezone,batch_id,created_date,"
-	 * + "description,phone,trainee_fee_status,paid_status,received_status,
-	 * technology_id
-	 */
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
 
@@ -35,15 +29,13 @@ public class TraineePreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(6, trainee.getTimezone());
 		arg0.setInt(7, trainee.getBatchId());
 		arg0.setDate(8, ResultSetUtil.converttoSQLDate(new Date()));
-
 		arg0.setString(9, trainee.getDescription());
 		arg0.setString(10, trainee.getPhone());
 		arg0.setString(11, trainee.getTraineeFeeStatus());
 		arg0.setString(12, trainee.getPaidStatus());
 		arg0.setString(13, trainee.getReceivedStatus());
 		arg0.setInt(14, trainee.getTechnologyId());
-		//arg0.setString(15, trainee.getTechnologyName());
-		//arg0.setDate(15, ResultSetUtil.converttoSQLDate(new Date()));
+		// arg0.setDate(15, ResultSetUtil.converttoSQLDate(new Date()));
 
 		if (!isInsert) {
 			arg0.setInt(15, trainee.getId());

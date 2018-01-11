@@ -47,5 +47,4 @@ public class EmployeeDAOImpl extends EmployeeDAO {
 		return new EmployeePreparedStatementSetter(a, isInsert);
 	}
 
-	
 }

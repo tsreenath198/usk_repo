@@ -20,7 +20,7 @@ public class SupportRowMapper implements RowMapper<Support> {
 		Support support = new Support();
 		support.setId(resultSet.getInt("id"));
 		support.setTraineeId(resultSet.getInt("trainee_id"));
-		support.setSupportedBy(resultSet.getInt("supported_by"));
+		// support.setSupportedBy(resultSet.getInt("supported_by"));
 		support.setTrainerId(resultSet.getInt("trainer_id"));
 		support.setStartDate(ResultSetUtil.getDate(resultSet, "start_date"));
 		support.setEndDate(ResultSetUtil.getDate(resultSet, "end_date"));
@@ -34,10 +34,11 @@ public class SupportRowMapper implements RowMapper<Support> {
 		support.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));
 		support.setUpdatedDate(ResultSetUtil.getDate(resultSet, "updated_date"));
 		support.setDescription(resultSet.getString("description"));
+		support.setNumberOfInteractions(resultSet.getInt("numberOf_Interactions"));
 
 		if (isReadAll) {
 			support.setTraineeName(resultSet.getString("trainee_name"));
-			support.setEmployeeName(resultSet.getString("employee_name"));
+			support.setEmployeeName(resultSet.getString("trainer_name"));
 		}
 
 		return support;

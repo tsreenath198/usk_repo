@@ -46,6 +46,4 @@ public class UserRoleDAOImpl extends UserRoleDAO {
 			boolean isInsert) {
 		return new UserRolePreparedStatementSetter(a, isInsert);
 	}
-
-	
 }

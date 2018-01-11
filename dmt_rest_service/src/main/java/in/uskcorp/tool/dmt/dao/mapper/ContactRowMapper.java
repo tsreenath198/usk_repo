@@ -1,6 +1,7 @@
 package in.uskcorp.tool.dmt.dao.mapper;
 
 import in.uskcorp.tool.dmt.domain.Contact;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
@@ -14,6 +15,7 @@ public class ContactRowMapper implements RowMapper<Contact> {
 		contact.setEmail(resultSet.getString("email"));
 		contact.setTelephone(resultSet.getString("phone"));
 		contact.setPoc(resultSet.getString("poc"));
+		contact.setDesignation(resultSet.getString("designation"));
 		return contact;
 	}
 

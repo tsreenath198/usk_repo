@@ -1,49 +1,9 @@
-[
-  {
-    "key": "client",
-    "value": "Client",
-    "route": "app.client"
-  },
+[ 
+  
   {
     "key": "userDetails",
     "value": "User Details",
     "route": "app.userDetails"
-  },
-  {
-    "key": "course",
-    "value": "Course",
-    "route": "app.client"
-  },
-  {
-    "key": "question",
-    "value": "Question",
-    "route": "app.question"
-  },
-  {
-    "key": "dashboard",
-    "value": "Dashboard",
-    "route": "app.dashboard"
-  }
-  ,
-  {
-    "key": "task",
-    "value": "Task",
-    "route": "app.task"
-  },
-  {
-    "key": "technology",
-    "value": "Technology",
-    "route": "app.technology"
-  },
-  {
-    "key": "support",
-    "value": "Support",
-    "route": "app.support"
-  },
-  {
-    "key": "trainer",
-    "value": "Trainer",
-    "route": "app.trainer"
   },
   {
     "key": "trainee",
@@ -51,29 +11,14 @@
     "route": "app.trainee"
   },
   {
-    "key": "timesheet",
-    "value": "Timesheet",
-    "route": "app.timesheet"
+    "key": "trainer",
+    "value": "Trainer",
+    "route": "app.trainer"
   },
   {
-    "key": "employee",
-    "value": "Employee",
-    "route": "app.employee"
-  },
-  {
-    "key": "batch",
-    "value": "Batch",
-    "route": "app.batch"
-  },
-    {
-    "key": "batchAttendance",
-    "value": "BatchAttendance",
-    "route": "app.batchAttendance"
-  },
-  {
-    "key": "invoice",
-    "value": "Invoice",
-    "route": "app.invoice"
+    "key": "support",
+    "value": "Support",
+    "route": "app.support"
   },
   {
     "key": "interview",
@@ -81,9 +26,54 @@
     "route": "app.interview"
   },
   {
-    "key": "salary",
-    "value": "Salary",
-    "route": "app.salary"
+    "key": "batch",
+    "value": "Batch",
+    "route": "app.batch"
+  },
+  {
+    "key": "client",
+    "value": "Client",
+    "route": "app.client"
+  },
+  {
+    "key": "supportInteraction",
+    "value": "Support Interaction",
+    "route": "app.supportInteraction"
+  },
+   {
+    "key": "technology",
+    "value": "Technology",
+    "route": "app.technology"
+  },
+  {
+    "key": "invoice",
+    "value": "Invoice",
+    "route": "app.invoice"
+  },
+  {
+    "key": "payroll",
+    "value": "PayRoll",
+    "route": "app.payroll"
+  },
+  {
+    "key": "evaluation",
+    "value": "Evaluation",
+    "route": "app.evaluation"
+  },
+  {
+    "key": "miscellaneous",
+    "value": "Miscellaneous",
+    "route": "app.miscellaneous"
+  },
+  {
+    "key": "expense",
+    "value": "Expense",
+    "route": "app.expense"
+  },
+  {
+    "key": "resume",
+    "value": "Resume",
+    "route": "app.resume"
   },
   {
     "key": "oppurtunityTracker",
@@ -91,13 +81,37 @@
     "route": "app.oppurtunityTracker"
   },
   {
-    "key": "employeeAttendance",
-    "value": "Employee Attendance",
-    "route": "app.employeeAttendance"
+    "key": "question",
+    "value": "Question",
+    "route": "app.question"
   },
   {
-    "key": "supportInteraction",
-    "value": "Support Interaction",
-    "route": "app.supportInteraction"
+    "key": "userRoles",
+    "value": "User Roles",
+    "route": "app.userRoles"
+  },
+  {
+    "key": "employeeDesignation",
+    "value": "Employee Designation",
+    "route": "app.employeeDesignation"
+  },
+  
+  {
+    "key": "dashboard",
+    "value": "Dashboard",
+    "route": "app.dashboard"
+  },  
+  {
+    "key": "employee",
+    "value": "Employee",
+    "route": "app.employee"
+  },
+  
+  
+  
+   {
+    "key": "batchAttendance",
+    "value": "Batch Attendance",
+    "route": "app.batchAttendance"
   }
 ]

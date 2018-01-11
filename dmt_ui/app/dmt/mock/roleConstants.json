@@ -1,22 +1,15 @@
 [
   {
-    "key": "programAnalyst",
-    "value": "Program Analyst"
+    "key": "powerUser",
+    "value": "Power User"
   },
   {
-    "key": "juniorDeveloper",
-    "value": "Junior Developer"
+    "key": "user",
+    "value": "User"
   },
   {
-    "key": "resourceCoordinator",
-    "value": "Resource Coordinator"
-  },
-  {
-    "key": "contractor",
-    "value": "Contractor"
-  },
-  {
-    "key": "director",
-    "value": "Director"
+    "key": "view",
+    "value": "View"
   }
+  
 ]

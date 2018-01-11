@@ -1,7 +1,7 @@
 <md-content layout-padding>
 <form name="technologyCreateForm">
     <md-input-container class="md-block"> <label>Name</label>
-    <input required name="name" ng-model="create.name"> </md-input-container>
+    <input required name="name" required ng-model="create.name"> </md-input-container>
 
     <md-input-container class="md-block"> <input
         type="hidden" name="Id" ng-model="create.id"> </md-input-container>
@@ -9,11 +9,14 @@
     <md-input-container class="md-block"> <label>Description</label>
     <input  name="Description" ng-model="create.description">
     </md-input-container>
+
+
+
     <md-button class="md-raised md-primary" ng-click="saveRecord()"
-        ng-hide="updatePage"> Save </md-button>
+        ng-hide="updatePage"  ng-disabled="technologyCreateForm.$invalid"> Save </md-button>
     <md-button class="md-raised md-primary" ng-click="updateData()"
-        ng-show="updatePage"> Update </md-button>
-    <md-button class="md-raised " ng-click="saveRecord()">
+        ng-show="updatePage"  ng-disabled="technologyCreateForm.$invalid"> Update </md-button>
+    <md-button class="md-raised " ng-click="cancelRecord()">
     Cancel </md-button>
 </form>
 </md-content>

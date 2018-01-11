@@ -1,0 +1,36 @@
+<md-content layout-padding>
+<form name="inVoiceCreateForm">
+	<md-input-container class="md-block"> <label>Invoice
+		Date</label> <input required type="date" name="invoiceDate"
+		ng-model="record.invoiceDate"> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Invoice
+		Type</label> <input type="text" required name="invoiceType" ng-model="record.invoiceType">
+	</md-input-container>
+
+	<md-input-container class="md-block"> <label>Actual
+		Amount</label> <input required name="actualAmount"
+		ng-model="record.actualAmount"> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Received
+		Amount</label> <input required name="receivedAmount"
+		ng-model="record.receivedAmount"> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Received
+		Date</label> <input required type="date" name="receivedDate"
+		ng-model="record.receivedDate"> </md-input-container>
+
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Description</label>
+	<input name="Description" ng-model="record.description"> </md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage" ng-disabled="inVoiceCreateForm.$invalid"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-click="updateData()"
+		ng-show="updatePage" ng-disabled="inVoiceCreateForm.$invalid">Update </md-button>
+	<md-button class="md-raised " ng-click="cancelRecord()">
+	Cancel </md-button>
+</form>
+</md-content>

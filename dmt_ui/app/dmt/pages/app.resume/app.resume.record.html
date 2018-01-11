@@ -1,0 +1,61 @@
+<md-content layout-padding>
+    <form name="resumeCreateForm">
+        <md-input-container class="md-block">
+            <label>
+                Date</label>
+            <input type="date" ng-model="record.date" required/> </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm> <label>Trainee </label>
+                <md-select ng-model="record.traineeId" required><md-optgroup
+                    label="Trainee">  <md-option>
+                <em>None</em> </md-option> <md-option ng-repeat="trainee in trainees|orderBy:'name'"
+                    ng-selected="trainee.id === record.traineeId" ng-value="{{trainee.id}}">
+                {{trainee.name}} </md-option> </md-optgroup></md-select> </md-input-container>
+
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Prepared By</label>
+                <md-select ng-model="record.preparedBy" required>
+                    <md-optgroup label="Employee">
+                        <md-option ng-repeat="employee in employees|orderBy:'name'" ng-selected="employee.id === record.employeeId"
+                            ng-value="{{employee.id}}">
+                            {{employee.name}} </md-option>
+                        </optgroup>
+                </md-select>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm> <label>Paid
+                Status</label> <md-select ng-model="record.paidStatus" required> <md-option>
+            <em>None</em> </md-option> <md-option ng-repeat="paidstatus in paidStatuses"
+                ng-selected="paidstatus.value === record.paidstatus"
+                ng-value="paidstatus.value"> {{paidstatus.value}}</md-option></md-select></md-input-container>
+        
+            <md-input-container class="md-block" flex-gt-sm><label>Received
+                Status</label> <md-select ng-model="record.receivedStatus" required> <md-option>
+            <em>None</em> </md-option> <md-option
+                ng-repeat="receivedstatus in receivedStatuses"
+                ng-selected="receivedstatus.value === record.receivedStatus"
+                ng-value="receivedstatus.value"> {{receivedstatus.value}}
+            </md-option> </md-select> </md-input-container>
+
+            <md-input-container class="md-block">
+                <label>Details</label>
+                <input name="details" type="text" ng-model="record.details"> </md-input-container>
+            <md-input-container class="md-block">
+                <label>Count</label>
+                <input name="count" type="text" ng-model="record.count"> </md-input-container>
+            <md-input-container class="md-block">
+                <label>Rate</label>
+                <input name="rate" type="text" ng-model="record.rate"> </md-input-container>
+            <md-input-container class="md-block">
+
+        <md-input-container class="md-block">
+            <label>Description
+            </label>
+            <input name="Description" ng-model="record.description">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="saveRecord()" ng-hide="updatePage" ng-disabled="resumeCreateForm.$invalid">
+            Save </md-button>
+        <md-button class="md-raised md-primary" ng-click="updateRecord()" ng-show="updatePage" ng-disabled="resumeCreateForm.$invalid">
+            Update </md-button>
+        <md-button class="md-raised" ng-click="cancelRecord()">
+            Cancel </md-button>
+    </form>
+</md-content>

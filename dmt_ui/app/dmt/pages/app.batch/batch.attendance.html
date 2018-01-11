@@ -1,0 +1,38 @@
+<md-dialog aria-label="Mango (Fruit)">
+    <form ng-cloak>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+         <span flex="95">
+         </span>
+          <md-button class="md-icon-button" ng-click="cancel()">
+           <i class="material-icons" ng-click="cancel()">highlight_off</i>
+          </md-button>
+        </div>
+      </md-toolbar>
+      <md-dialog-content>
+        <md-table-container>
+      <table md-table>
+          <thead md-head md-order="query.order">
+              <tr md-row ng-class-odd="'odd'">
+                  <th md-cell>Date</th>
+                  <th md-cell  ng-class-odd="'odd'" ng-repeat="data in attendance">{{data.name}}</th>
+              </tr>
+          </thead>
+          <tbody md-body>
+              <tr md-row ng-class-odd="'odd'">
+                <td md-cell><input type="date" ng-model="date" required/></td>
+                <td md-cell ng-class-odd="'odd'" ng-repeat="data in attendance"><input  type="checkbox" ng-model="data.isPresent">{{data.isPresent}}</td>
+              </tr>
+          </tbody>
+      </table>
+      <md-button class="md-raised md-primary" ng-click="saveAttendance(date)"
+      ng-hide="updatePage" ng-disabled="batchAttendanceCreateForm.$invalid"> Save </md-button>
+      <md-button class="md-raised" ng-click="cancel()">
+          Cancel </md-button>
+      </md-table-container>
+      </md-dialog-content>
+    </form>
+  </md-dialog>
+  
+  
+      

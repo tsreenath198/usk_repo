@@ -1,0 +1,102 @@
+<md-content layout-padding>
+    <form name="payrollCreateForm">
+        <md-input-container class="md-block"> <label>End
+                Date</label> <input type="date" ng-model="record.EndDate" required/> </md-input-container>
+
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Employee</label>
+            <md-select ng-model="record.employeeId" ng-change="getBatchesIntoPayRoll(record.employeeId,record.EndDate)" required>
+                <md-optgroup label="Employee">
+                    <md-option ng-repeat="employee in employees|orderBy:'name'" ng-selected="employee.id === record.employeeId"
+                        ng-value="{{employee.id}}">
+                        {{employee.name}} </md-option>
+                    </optgroup>
+            </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>BasicSalary</label>
+            <input name="basicSalary" type="text" ng-model="record.basicSalary" required only-digits> </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Details</label>
+            <input name="trDetails" type="text" ng-model="record.trDetails"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Count</label>
+            <input name="trCount" type="text" ng-model="record.trCount"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Rate</label>
+            <input name="trRate" type="text" ng-model="record.trRate"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Total</label>
+            <input name="trTotal" type="text" ng-model="record.trTotal"> </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Support</label>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Details</label>
+            <input name="supportDetails" type="text" ng-model="record.supDetails"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Count</label>
+            <input name="supportCount" type="text" ng-model="record.supCount"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Rate</label>
+            <input name="supportRate" type="text" ng-model="record.supRate"> </md-input-container>
+        <md-input-container class="md-block">
+        <md-input-container class="md-block">
+            <label>Evaluation</label>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Details</label>
+            <input name="evaluationDetails" type="text" ng-model="record.evaDetails"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Count</label>
+            <input name="evaluationCount" type="text" ng-model="record.evaCount"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Rate</label>
+            <input name="evaluationRate" type="text" ng-model="record.evaRate"> </md-input-container>
+        <md-input-container class="md-block">
+
+        <md-input-container class="md-block">
+            <label>Resume</label>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Details</label>
+            <input name="resumeDetails" type="text" ng-model="record.resDetails"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Count</label>
+            <input name="resumeCount" type="text" ng-model="record.resCount"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Rate</label>
+            <input name="resumeRate" type="text" ng-model="record.resRate"> </md-input-container>
+        <md-input-container class="md-block">
+            
+        <md-input-container class="md-block">
+            <label>Miscellaneous</label>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Details</label>
+            <input name="miscDetails" type="text" ng-model="record.misDetails"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Count</label>
+            <input name="misCount" type="text" ng-model="record.misCount"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Rate</label>
+            <input name="misRate" type="text" ng-model="record.misRate"> </md-input-container>
+        <md-input-container class="md-block">
+
+
+        <md-input-container class="md-block">
+            <label>Description
+            </label>
+            <input name="Description" ng-model="record.description">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="saveRecord()" ng-hide="updatePage" ng-disabled="payrollCreateForm.$invalid">
+        Save </md-button>
+        <md-button class="md-raised md-primary" ng-click="updateRecord()" ng-show="updatePage" ng-disabled="payrollCreateForm.$invalid">
+        Update </md-button>
+        <md-button class="md-raised" ng-click="cancelRecord()">
+            Cancel </md-button>
+    </form>
+</md-content>

@@ -1,0 +1,77 @@
+<md-content layout-padding>
+<form name="traineeCreateForm">
+	<md-input-container class="md-block"> <label>Name</label>
+	<input  name="name" ng-model="record.name" required> </md-input-container>
+	<md-input-container class="md-block"> <label>Email</label>
+	<input  name="email" ng-model="record.email" required> </md-input-container>
+
+    <md-input-container class="md-block"> <label>Phone</label>
+	<input  name="phone" ng-model="record.phone" required only-digits> </md-input-container>
+    
+    <md-input-container class="md-block"> <label>Alternate Phone</label>
+	<input  name="alternatePhone" ng-model="record.alternatePhone"> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Client</label> <md-select ng-model="record.clientId" required> <md-optgroup
+		label="Clients"> <md-option
+		ng-repeat="client in clients" ng-value="{{client.id}}"
+		ng-selected="client.id === record.client">{{
+	client.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+   <md-input-container class="md-block"> <label>Skype Id</label>
+	<input  name="skypeId" ng-model="record.skypeId"> </md-input-container>
+   
+	 <md-input-container class="md-block" flex-gt-sm> <label>Time Zone</label>
+	<md-select ng-model="record.timezone"> <md-option>
+	<em>None</em></md-option> <md-option ng-repeat="timezone in timezones"
+		ng-selected="timezone.value === record.timezone" ng-value="timezone.value">
+	{{timezone.value}} </md-option> </md-select> </md-input-container>
+
+
+   <md-input-container class="md-block" flex-gt-sm> <label>Batch</label> <md-select ng-model="record.batchId"> <md-optgroup
+		label="Batches"> <md-option
+		ng-repeat="batch in batches" ng-value="{{batch.id}}"
+		ng-selected="batch.id === record.batch">{{
+	batch.id }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Paid Status</label>
+	<md-select ng-model="record.paidStatus" required> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="paidstatus in paidstatuses"
+		ng-selected="paidstatus.value === record.paidstatus" ng-value="paidstatus.value">
+	{{paidstatus.value}}</md-option></md-select></md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Received Status</label>
+	<md-select ng-model="record.receivedStatus" required> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="receivedstatus in receivedstatuses"
+		ng-selected="receivedstatus.value === record.receivedstatus" ng-value="receivedstatus.value">
+	{{receivedstatus.value}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Status</label>
+	<md-select ng-model="record.traineeFeeStatus" required> <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="status in statuses"
+		ng-selected="status.value === record.status" ng-value="status.value">
+	{{status.value}} </md-option> </md-select> </md-input-container>
+
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Technology
+		Name</label> <md-select ng-model="record.technologyId" required> <md-optgroup
+		label="Technologies"> <md-option
+		ng-repeat="technology in technologies" ng-value="technology.id"
+		ng-selected="technology.id === record.technology">{{
+	technology.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+	
+	
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+	<md-input-container class="md-block"> <label>Description</label>
+	<input  name="description" ng-model="record.description">
+
+	</md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage" ng-disabled="traineeCreateForm.$invalid"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-click="updateData()"
+		ng-show="updatePage" ng-disabled="traineeCreateForm.$invalid">Update </md-button>
+	<md-button class="md-raised" ng-click="cancelRecord()" >
+	Cancel </md-button>
+</form>
+</md-content>

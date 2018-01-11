@@ -1,0 +1,90 @@
+<div class="demo-md-panel-animation md-padding">
+	<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
+		<div flex="40">
+			<md-input-container class="md-block"> <label>{{currentRoute
+				| capitalize}} Search</label> <input  name="filter"
+				ng-model="filter"> </md-input-container>
+		</div>
+		<div flex="40">
+			<md-button class="md-fab md-warn md-mini" aria-label="Create Button"
+				ng-click="toggleRight();emptyForm()" ng-hide="isOpenRight();">
+			<md-tooltip> Add New </md-tooltip> <i class="material-icons">create_new_folder</i>
+			</md-button>
+			<!-- <md-button class="md-fab md-warn md-mini" aria-label="Select Button"
+				ng-click="selectAll()"> <md-tooltip> Select
+			All </md-tooltip> <i class="material-icons">select_all</i> </md-button>
+			<md-button class="md-fab md-warn md-mini"
+				aria-label="DeSelect Button" ng-click="deSelectAll()"> <md-tooltip>
+			Deselect All </md-tooltip> <i class="material-icons">tab_unselected</i> </md-button>
+			<md-button class="md-fab md-warn md-mini" aria-label="Delete Button"
+				ng-click="deleteSelected($event)"> <md-tooltip>
+			Delete </md-tooltip> <i class="material-icons">delete_forever</i> </md-button> -->
+			<md-button class="md-fab md-warn md-mini" aria-label="Export Button"
+				ng-csv="selected" filename="employee-list.csv" > <md-tooltip>
+			Export </md-tooltip> <i class="material-icons">import_export</i> </md-button>
+
+			<md-button class="md-fab md-warn md-mini"
+				aria-label="Export All Button" ng-csv="employeesData"
+				csv-header="['Id','Name','Phone','Email','Role','Created Date', 'Updated Date', 'Description']"
+				filename="employee-list.csv"> <md-tooltip>
+			Export All</md-tooltip> <i class="material-icons">file_download</i> </md-button>
+
+		</div>
+	</div>
+
+	<div class="overlay loadingImg" ng-show="loading">
+		<h1 style="text-align: center; margin-top: 20%">loading....</h1>
+	</div>
+	<md-content layout="column" flex> <md-table-container>
+	<table md-table id="employeeTable">
+		<thead md-head md-order="query.order">
+			<tr md-row>
+				<th md-column><span> <md-checkbox ng-click="selectAll()" ng-model="data.checkboxValue"
+				 aria-label="Checkbox 2"
+						ng-true-value="'on'" ng-false-value="'off'"
+						class="md-warn md-align-top-left" flex></span></th>
+				<th md-column><span>Name</span></th>
+				<th md-column><span>Phone</span></th>
+				<th md-column><span>Email</span></th>
+				<th md-column><span>Role</span></th>
+				<th md-column><span>Base Salary</span></th>
+				<th md-column>Actions</th>
+			</tr>
+		</thead>
+		<tbody md-body>
+			<tr md-row
+				ng-repeat="data in employeesData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+				<td md-cell><md-checkbox ng-model="data.checkboxValue"
+						ng-click="rowSelect(data)" aria-label="Checkbox 2"
+						ng-true-value="'on'" ng-false-value="'off'"
+						class="md-warn md-align-top-left" flex></td>
+				<td md-cell>{{data.name}}</td>
+				<td md-cell>{{data.phone}}</td>
+				<td md-cell>{{data.email}}</td>
+				<td md-cell>{{data.role}}</td>
+				<td md-cell>{{data.baseSalary}}</td>
+				<td md-cell><span> <md-tooltip> Update </md-tooltip> <i
+						class="material-icons" ng-click="setRowData(data);toggleRight()"
+						ng-hide="isOpenRight()">border_color</i></span><span><md-tooltip>
+						Delete </md-tooltip> <i class="material-icons"  ng-click="deleteRow($event,data)">delete_forever</i></span> <span><md-tooltip>
+						{{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
+			</tr>
+		</tbody>
+	</table>
+	</md-table-container> <md-table-pagination md-limit="query.limit"
+		md-limit-options="employeesOptions" md-page="query.page"
+		md-total="{{employeesLength}}"
+		md-page-select="employeePage.pageSelect"></md-table-pagination> </md-content>
+
+	<div layout="column" ng-cloak>
+		<section layout="row" flex>
+			<md-sidenav class="md-sidenav-right md-whiteframe-4dp"
+				md-component-id="right"> <md-toolbar
+				class="md-theme-light">
+			<h1 class="md-toolbar-tools">Employee Create</h1>
+			</md-toolbar> <create-employee /> </md-sidenav>
+		</section>
+	</div>
+
+
+</div>

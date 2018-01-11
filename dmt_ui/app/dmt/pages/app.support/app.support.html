@@ -1,75 +1,51 @@
 <div class="demo-md-panel-animation md-padding">
-	<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
-		<div flex="40">
-			<md-input-container class="md-block"> <label>{{currentRoute
-				| capitalize}} Search</label> <input name="filter"
-				ng-model="filter"> </md-input-container>
-		</div>
-		<div flex="40">
-			<md-button class="md-fab md-warn md-mini" aria-label="Create Button"
-				ng-click="toggleRight();emptyForm()" ng-hide="isOpenRight();">
-			<md-tooltip> Add New </md-tooltip> <i class="material-icons">create_new_folder</i>
-			</md-button>
-			<md-button class="md-fab md-warn md-mini" aria-label="Select Button"
-				ng-click="selectAll()"> <md-tooltip> Select
-			All </md-tooltip> <i class="material-icons">select_all</i> </md-button>
-			<md-button class="md-fab md-warn md-mini"
-				aria-label="DeSelect Button" ng-click="deSelectAll()"> <md-tooltip>
-			Deselect All </md-tooltip> <i class="material-icons">tab_unselected</i> </md-button>
-			<md-button class="md-fab md-warn md-mini" aria-label="Delete Button"
-				ng-click="deleteSelected($event)"> <md-tooltip>
-			Delete </md-tooltip> <i class="material-icons">delete_forever</i> </md-button>
-			<md-button class="md-fab md-warn md-mini" aria-label="Export Button"
-				ng-click="exportTable('#supportTable')"> <md-tooltip>
-			Export </md-tooltip> <i class="material-icons">import_export</i> </md-button>
-
-			<md-button class="md-fab md-warn md-mini"
-				aria-label="Export All Button" ng-csv="supportsData"
-				filename="support-list.csv"> <md-tooltip>
-			Export All</md-tooltip> <i class="material-icons">file_download</i> </md-button>
-
-		</div>
-	</div>
-
-	<div class="moreHeaders">
-		<md-select placeholder="{{currentRoute}}" ng-model="moreOptions"
-			ng-change="openMoreOptions(moreOptions)" multiple> <md-optgroup>
-		{{currentRoute}} <md-option ng-repeat="header in headers">{{header}}</md-option></md-optgroup>
-		</md-select>
-	</div>
-
- <div ng-show="progressBar" layout="row" layout-sm="column" layout-align="space-around">
-     
-        <md-progress-circular md-mode="indeterminate" md-diameter="96"></md-progress-circular>
-    </div> 
-
-    
+	
+	<div class="overlay loadingImg" ng-show="loading">
+		<h1 style="text-align: center; margin-top: 20%">loading....</h1>
+	</div>   
 
 	<table md-table id="supportTable">
 		<thead md-head md-order="query.order">
-			<tr md-row>
-				<th md-column><span> </span></th>
+			<tr md-row ng-class-odd="'tableHead'">
+				<th md-column><span><md-checkbox ng-model="data.checkboxValue"
+						ng-click="selectAll()" aria-label="Checkbox 2"
+						ng-true-value="'on'" ng-false-value="'off'"
+						class="md-warn md-align-top-left" flex> </span></th>
 				<th md-column><span>Trainee</span></th>
 				<th md-column><span>Trainer</span></th>
 				<th md-column><span>Start Date</span></th>
-				<th md-column><span>End Date</span></th>
-				<th md-column ng-show="headerEnable.endClient"><span>End
-						Client</span></th>
-				<th md-column ng-show="headerEnable.technologyUsed"><span>Technology</span></th>
+				<th md-column ng-show="endDate"><span>End Date</span></th>
+				<th md-column ng-show="endClient"><span>End Client</span></th>
+				<th md-column ng-show="technologyUsed"><span>Technology</span></th>
+				<th md-column ng-show="allottedTime"><span>Alloted Time</span></th>
+				<!-- <th md-column ng-show="interviewer"><span>End Client</span></th> -->
 				<th md-column><span>Paid By</span></th>
-				<th md-column><span>Paid Status</span></th>
-				<th md-column><span>Received Status</span></th>
-				<th md-column><span>Status</span></th>
-				<th md-column ng-show="headerEnable.allottedTime"><span>Alloted
-						Time</span></th>
-				<th md-column>Actions</th>
+				<th md-column class="center"><span>Paid Status</span></th>
+				<th md-column class="center"><span>Received Status</span></th>
+				<th md-column class="center"><span>Status</span></th>
+				<th md-column><span>Invoice</span></th>
+				<th md-column>Actions <md-menu class="headerMore cursor">
+                  <!-- <i class="material-icons white" ng-click="$mdOpenMenu($event)">settings</i> -->
+             		<i class="material-icons white" ng-click="$mdOpenMenu($event)">keyboard_arrow_down</i>
+               <md-menu-content width="3">
+                  <md-menu-item ng-repeat="header in headers">
+                     <md-button ng-click="menuItemClick($index,header.key)">
+                        <div layout="row">
+                           <md-icon md-menu-align-target class="material-icons">keyboard_arrow_right</md-icon>
+                           <p flex>{{header.value}}</p>
+                        </div>
+                     </md-button>
+                  </md-menu-item>
+               </md-menu-content>
+            </md-menu>
+             </th>
 			</tr>
 		</thead>
 		<tbody md-body>
 		<md-content layout="column" flex> <md-table-container>
 	 
-			<tr md-row
-				ng-repeat="data in supportsData | orderBy: query.order | filter: filter | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+			<tr md-row ng-class-odd="'odd'"
+				ng-repeat="data in supportsData | orderBy: query.order | filter: filterByText | limitTo: query.limit : (query.page -1) * query.limit track by $index">
 				<td md-cell><md-checkbox ng-model="data.checkboxValue"
 						ng-click="rowSelect(data)" aria-label="Checkbox 2"
 						ng-true-value="'on'" ng-false-value="'off'"
@@ -78,24 +54,61 @@
 				<td md-cell>{{data.traineeName}}</td>
 				<td md-cell>{{data.employeeName}}</td>
 				<td md-cell>{{data.startDate}}</td>
-				<td md-cell>{{data.endDate}}</td>
-				<td md-cell ng-show="headerEnable.endClient">{{data.endClient}}</td>
-				<td md-cell ng-show="headerEnable.technologyUsed">{{data.technologyUsed}}</td>
+				<td md-cell ng-show="headerEnable.endDate">{{data.endDate}}</td>
+				<td md-cell ng-show="endClient">{{data.endClient}}</td>
+				<td md-cell ng-show="technologyUsed">{{data.technologyUsed}}</td>
+				<td md-cell ng-show="allottedTime">{{data.allottedTime}}</td>
 				<td md-cell>{{data.paidBy}}</td>
-				<td md-cell>{{data.paidStatus}}</td>
-				<td md-cell>{{data.receivedStatus}}</td>
-				<td md-cell>{{data.status}}</td>
-				<td md-cell ng-show="headerEnable.allottedTime">{{data.allottedTime}}</td>
+
+				<td md-cell class="center">
+				<div ng-switch="data.paidStatus">
+					<div ng-switch-when="1 - Paid"><md-tooltip>{{data.paidStatus}} </md-tooltip><i class="material-icons cursor green">check_circle</i></div>
+					<div ng-switch-when="2 - Not Paid"> <md-tooltip>{{data.paidStatus}} </md-tooltip> <i class="material-icons cursor red">cancel</i></div>
+					<div ng-switch-when=""></div>
+				</div>
+				</td>
+
+				<td md-cell class="center">
+				<div ng-switch="data.receivedStatus">
+					<div ng-switch-when="1 - Received"> <md-tooltip>{{data.receivedStatus}} </md-tooltip><i class="material-icons cursor green">check_circle</i></div>
+					<div ng-switch-when="2 - Not Received"> <md-tooltip>{{data.receivedStatus}} </md-tooltip><i class="material-icons cursor red">cancel</i></div>
+					<div ng-switch-when=""></div>
+				</div>
+				</td>
+
+				<td md-cell class="center">
+				<div ng-switch="data.status">
+					<div ng-switch-when="In Progress"><md-tooltip>{{data.status}} </md-tooltip><i class="material-icons cursor yellow">check_circle</i>
+					</div>
+					<div ng-switch-when="Not Started">
+					<md-tooltip>{{data.status}} </md-tooltip><i class="material-icons cursor grey">cancel</i></div>
+					<div ng-switch-when="Pending"> <md-tooltip>{{data.status}} </md-tooltip> <i class="material-icons cursor orange">cancel</i></div>
+					<div ng-switch-when="Rejected"> <md-tooltip>{{data.status}} </md-tooltip> <i class="material-icons  cursor red">cancel</i></div>
+					<div ng-switch-when="Closed"> <md-tooltip>{{data.status}} </md-tooltip> <i class="material-icons cursor green">check_circle</i></div>
+					<div ng-switch-when="Cancelled"> <md-tooltip>{{data.status}} </md-tooltip><i class="material-icons cursor black">cancel</i></div>
+					<div ng-switch-when=""></div>
+				</div>
+				</td>
+
+
+				<!-- <td md-cell><i class="material-icons" 
+				ng-class="{'green':data.receivedStatus == '1 - Received','red':data.receivedStatus == '2 - Not Received'}"
+
+				ng-if="data.receivedStatus == '1 - Received'?done = 'done' :done = 'clear'" >{{done}}</i></td> -->
+			 	 <!-- <td md-cell>{{data.status}}</td> -->
+				<td md-cell>{{data.invoice}}</td>
+				
 				<td md-cell><span> <md-tooltip> Update </md-tooltip> <i
-						class="material-icons" ng-click="rowData(data);toggleRight()"
+						class="material-icons cursor" ng-click="rowData(data);toggleRight()"
 						ng-hide="isOpenRight()">border_color</i></span> <span><md-tooltip>
-						{{data.description}} </md-tooltip> <i class="material-icons">description</i></span></td>
+						Delete</md-tooltip> <i class="material-icons cursor" ng-click="deleteRow($event,data)">delete_forever</i></span>
+						<span><md-tooltip>
+						{{data.description}} </md-tooltip> <i class="material-icons cursor">description</i></span>
+						</td>
 			</tr>
 		</tbody>
 	</table>
-	</md-table-container> <md-table-pagination md-limit="query.limit"
-		md-limit-options="supportsOptions" md-page="query.page"
-		md-total="{{supportsLength}}" md-page-select="supportPage.pageSelect"></md-table-pagination>
+	</md-table-container> 
 	</md-content>
 
 	<div layout="column" ng-cloak>
@@ -103,13 +116,12 @@
 			<md-sidenav class="md-sidenav-right md-whiteframe-4dp"
 				md-component-id="right"> <md-toolbar
 				class="md-theme-light">
-			<h1 class="md-toolbar-tools">Support Create</h1>
-			</md-toolbar> <create-support /> </md-sidenav>
+			<h1 class="md-toolbar-tools">Create Support</h1>
+			</md-toolbar> 
+<ng-include src="'pages/app.support/app.support.record.html'"></ng-include>
+			 </md-sidenav>
 		</section>
 	</div>
-
-
 </div>
-<div ng-if="morecolumns == true">
-	<h1>123456</h1>
-</div>
+	
+

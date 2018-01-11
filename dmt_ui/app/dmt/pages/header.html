@@ -1,17 +1,92 @@
-<header layout="row" class="md-warn" layout-padding layout-align="space-between start">
-
-<span flex="50" class='hide-xs margin-left-1'>Data Management Tool</span>
-<span flex="50" class='show-xs hide-sm hide-gt-sm hide-md hide-lg margin-left-1'>DMT</span>
-<span flex="66" align="right">
-<!-- <md-menu-bar class="md-menu-bar-cust">
- <md-menu>
-   <button>
-    Logged in as: User Name <i class="material-icons md-menu-bar-hamburger" data-ng-click="toggleNavigationLeft()">dehaze</i>
-   </button>
-   <md-menu-content>
- 
-     <md-menu-item></md-menu-item>
-   </md-menu-content>
- </md-menu>
-</md-menu-bar> -->
-</header>
+<div class="flex-fixed" data-id="globalHeaderNode">
+   <header class="global-header-view">
+      <nav role="navigation">
+         <div class="navigation-canvas">
+            <div>
+               <div class="global-header-left">
+                  <!-- <p ng-click="clicked()">click</p> -->
+                  <div>
+                     <div class="global-header-item-container" data-ng-click="toggleNavigationLeft()" data-id="leftNode"><span class="global-header-left global-header-item"><button class="global-header-item-button collapse-trigger"><i class="material-icons white">view_headline</i><label style="display: inline;"><span class="label company-name text-relative-top" data-id="labelNode">USK Corp</span></label></button></span></div>
+                  </div>
+               </div>
+               <div class="global-header-toast" style="display: none;">
+                  <div>
+                     <div class="global-header-item-container" data-id="toastNode">
+                        <div>
+                           <!-- react-empty: 1 -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="global-header-right">
+                  <div>
+                     <div class="global-header-item-container" data-id="rightNode">
+                        <span class="global-header-item openable messages hide" data-id="shell/global-header/messages" style="border-left: none !important;">
+                           <button class="global-header-item-button" data-id="buttonNode" aria-haspopup="true" aria-label="New Messages">
+                              <i data-id="iconNode" class="hi hi-message"><span class="chatcount hide">123</span></i>
+                              <span class="label" data-id="labelNode"></span>
+                              <div class="flyout-tip"></div>
+                           </button>
+                        </span>
+                        <span class="global-header-item create" data-id="shell/global-header/create" style="border-left: none !important;">
+                           <button class="global-header-item-button icon-relative-top" data-id="buttonNode" aria-haspopup="true" aria-label="Create">
+                              <i class="material-icons white " ng-click="addRecord()">add_circle</i>
+                              <span class="label" data-id="labelNode"></span>
+                              <div class="flyout-tip"></div>
+                           </button>
+                        </span>
+                        <span class="global-header-item create" data-id="shell/global-header/create" style="border-left: none !important;" >
+                           <button   class="global-header-item-button icon-relative-top" data-id="buttonNode" aria-haspopup="true" aria-label="Create">
+                              <i class="material-icons white"  ng-click="exportData('tableId')">import_export</i>
+                              <span class="label" data-id="labelNode"></span>
+                              <div class="flyout-tip"></div>
+                           </button>
+                        </span>
+                        <span class="global-header-item create" data-id="shell/global-header/create" style="border-left: none !important;">
+                           <button class="global-header-item-button icon-relative-top" data-id="buttonNode" aria-haspopup="true" aria-label="Create">
+                              <i class="material-icons white ">file_download</i>
+                              <span class="label" data-id="labelNode"></span>
+                              <div class="flyout-tip"></div>
+                           </button>
+                        </span>
+                        <span class="global-header-item search" data-id="shell/global-header/search" accesskey="f" style="border-left: none !important;">
+                           <button class="global-header-item-button icon-relative-top" data-id="buttonNode" aria-haspopup="true" aria-label="Search Transactions">
+                              <i class="material-icons white" ng-click="toggleSearch()">search</i>
+                              <span class="label" data-id="labelNode"></span>
+                              <div class="flyout-tip"></div>
+                           </button>
+                        </span>
+                        <span class="global-header-item settings" data-id="shell/global-header/settings" style="border-left: none !important;">
+                           <button class="global-header-item-button" data-id="buttonNode" aria-haspopup="true" aria-label="Settings">
+                              <i data-id="iconNode" class="hi hi-settings-o"></i>
+                              <span class="label" data-id="labelNode"></span>
+                              <div class="flyout-tip"></div>
+                           </button>
+                        </span>
+                        <span class="global-header-item help" data-id="shell/global-header/qbo_help" accesskey="h" style="border-left: none !important;">
+                           <button class="global-header-item-button" data-id="buttonNode" aria-haspopup="true">
+                              <i data-id="iconNode" class="hi hi-help-o"></i>
+                              <span class="label" data-id="labelNode"></span>
+                              <div class="flyout-tip"></div>
+                           </button>
+                        </span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="client-green-line"> </div>
+         </div>
+      </nav>
+   </header>
+   <div layout="row" layout-xs="column" layout-sm="column" layout-margin>
+      <div flex="40" >
+      <strong ng-show="currentDataEnable">{{currentController}}</strong>
+      </div>
+      <div flex="40" >
+      <strong ng-show="currentDataEnable">{{currentTableLength}}</strong>
+      </div>
+      <div flex="20" class="searchHeight">
+         <md-input-container class="md-block" ng-if="toggleStart == true"> <label>Search</label> <input type="text" data-ng-change="searchRecord(filterTable)" data-ng-model="filterTable"> </md-input-container>
+      </div>
+   </div>
+</div>

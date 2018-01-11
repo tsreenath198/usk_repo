@@ -1,32 +1,24 @@
 <md-content layout-padding>
 <form name="questionCreateForm">
+<!-- <md-input-container class="md-block"> <input
+        type="hidden" name="Id" ng-model="record.id"> </md-input-container> -->
+        
     <md-input-container class="md-block"> <label>End Client</label>
-    <input required name="end_client" ng-model="record.endClient"> </md-input-container>
-
-    <md-input-container class="md-block"> <input
-        type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+    <input required name="end_client" required ng-model="record.endClient"> </md-input-container>
 
     <md-input-container class="md-block"> <label>Question</label>
-    <input  name="Question" ng-model="record.question">
+    <textarea name="Question" required ng-model="record.question"></textarea>
     </md-input-container>
 
     <md-input-container class="md-block"> <label>Answer</label>
-    <input  name="answer" ng-model="record.answers">
+    <textarea name="answer" required ng-model="record.answers"></textarea>
     </md-input-container>
 
-    <md-input-container class="md-block"> <label>Date</label>
-    <input  name="Date" type="date" ng-model="record.date">
-    </md-input-container>
-
-    <md-input-container class="md-block"> <label>Description</label>
-    <input  name="Description" ng-model="record.description">
-    </md-input-container>
-
-    <md-button class="md-raised md-primary" ng-click="saveRecord()"
-        ng-hide="updatePage"> Save </md-button>
+     <md-button class="md-raised md-primary" ng-click="saveRecord()"
+        ng-hide="updatePage" ng-disabled="questionCreateForm.$invalid"> Save </md-button>
     <md-button class="md-raised md-primary" ng-click="updateRecord()"
-        ng-show="updatePage"> Update </md-button>
-    <md-button class="md-raised ">
+        ng-show="updatePage" ng-disabled="questionCreateForm.$invalid"> Update </md-button>
+    <md-button class="md-raised " ng-click="cancelRecord()">
     Cancel </md-button>
 </form>
 </md-content>

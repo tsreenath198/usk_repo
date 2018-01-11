@@ -1,22 +1,20 @@
 <md-content layout-padding>
 <form name="employeeCreateForm">
 	<md-input-container class="md-block"> <label>Name</label>
-	<input  name="name" ng-model="record.name"> </md-input-container>
+	<input  name="name" ng-model="record.name" required> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Phone</label>
-	<input  name="phone" ng-model="record.phone"> </md-input-container>
+	<input  name="phone" ng-model="record.phone" required only-digits> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Email</label>
-	<input  name="email" ng-model="record.email"> </md-input-container>
+	<input  name="email" ng-model="record.email" required> </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Role</label>
-	<md-select ng-model="record.role"> <md-option>
-	<em>None</em></md-option> <md-option ng-repeat="role in roles"
-		ng-selected="role.value === record.role" ng-value="role.value">
-	{{role.value}} </md-option> </md-select> </md-input-container>
+	<md-select ng-model="record.role" required> <md-option ng-value="0"> <em>Select <em></md-option><md-option ng-repeat="role in roles|orderBy:'name'" ng-selected="role.designation === record.role" ng-value="role.designation">
+	{{role.designation}} </md-option> </md-select> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Base Salary</label>
-	<input  name="baseSalary" ng-model="record.baseSalary"> </md-input-container>
+	<input  name="baseSalary" ng-model="record.baseSalary" required only-digits> </md-input-container>
 
 	<md-input-container class="md-block"> <input
 		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
@@ -25,10 +23,10 @@
 	<input name="Description" ng-model="record.description"> </md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
-		ng-hide="updatePage"> Save </md-button>
+		ng-hide="updatePage" ng-disabled="employeeCreateForm.$invalid"> Save </md-button>
 
 	<md-button class="md-raised md-primary" ng-click="updateData()"
-		ng-show="updatePage"> Update </md-button>
-	<md-button class="md-raised "> Cancel </md-button>
+		ng-show="updatePage" ng-disabled="employeeCreateForm.$invalid"> Update </md-button>
+	<md-button class="md-raised " ng-click="cancelRecord()"> Cancel </md-button>
 </form>
 </md-content>

@@ -1,0 +1,43 @@
+<md-dialog>
+  <form ng-cloak>
+    <!-- <md-toolbar>
+      <div class="md-toolbar-tools">
+       <span flex="50" >
+        <h2></h2>
+       </span>
+       <span flex="45" >
+       <h2>Records Count : {{trainersData.length}}</h2>
+       </span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+         <i class="material-icons" ng-click="cancel()">highlight_off</i>
+        </md-button>
+      </div>
+    </md-toolbar> -->
+
+    <md-dialog-content>
+      <md-table-container>
+	<table md-table>
+		<thead md-head>
+			<tr md-row ng-class-odd="'tableHead'">
+				<th md-column><span>Trainers</span></th>
+				 
+				
+			</tr>
+		</thead>
+		<tbody md-body>
+			<tr md-row 
+				ng-repeat="data in trainersData">				
+				<td md-cell>{{data.name}}</td>
+				
+			</tr>
+		</tbody>
+	</table>
+	</md-table-container>
+    </md-dialog-content>
+
+ 
+  </form>
+</md-dialog>
+
+
+	

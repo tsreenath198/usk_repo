@@ -1,24 +1,23 @@
-<div class="demo-md-panel-animation md-padding">
-    <div layout="row">
-        <div flex="100" class="mB20 mL20"></div>
-    </div>
-      
-    <div layout="row" layout-xs="column" layout-sm="column" layout-margin >
-<div flex="50">
-<div><h4>Payment Pending</h4></div>
-	<md-table-container>
-    <table md-table id="paymentTable">
+       
+    <div class="dashboardSpacing" layout="row" layout-xs="column" layout-sm="column" layout-margin >
+
+    <!-- <div class="dashboardSpacing" layout="row" layout-xs="column" layout-sm="column" layout-margin > -->
+<div flex="50" flex-sm="120">
+<h4>Payment Pending</h4>
+<div class="overflow">
+<!--<md-table-container>-->
+    <table md-table id="paymentTable" >
         <thead md-head md-order="payment.order">
-            <tr md-row>
+            <tr md-row ng-class-odd="'tableHead'">
               
-                <th md-column ><span>CandidateName</span></th>
-                <th md-column ><span>ClientName</span></th>
+                <th md-column ><span>Consultant</span></th>
+                <th md-column ><span>Client</span></th>
                 <th md-column>Category</th>
-                <th md-column>AssistedBy</th>
+                <th md-column>Supported By</th>
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row
+            <tr md-row ng-class-odd="'odd'"
                 ng-repeat="data in applications.paymentSummaries | orderBy: payment.order | filter: filter | limitTo: payment.limit : (payment.page -1) * payment.limit track by $index">
                 
                 <td md-cell >{{data.candidateName}}</td>
@@ -28,103 +27,112 @@
                 </tr>
         </tbody>
     </table>
-    </md-table-container> <md-table-pagination md-limit="payment.limit"
-        md-limit-options="paymentSummariesOptions" md-page="payment.page"
-        md-total="{{paymentSummariesLength}}" md-page-select="paymentSummariesPage .pageSelect"></md-table-pagination>
+    <!--</md-table-container> -->
+   </div> 
 </div>
 
-<div flex="50">
-<div><h4>Support</h4></div>
-	<md-table-container>
+<div flex="50"  flex-sm="120">
+<h4>Support</h4>
+<div class="overflow">
+	<md-table-container >
     <table md-table id="supportTable">
         <thead md-head md-order="support.order">
-            <tr md-row>
+            <tr md-row ng-class-odd="'tableHead'">
                
-                <th md-column ><span>SupportedBy</span></th>
-                <th md-column ><span>TraineeName</span></th>
-                <th md-column>StartDate</th>
-                <th md-column>Technology</th>
-                <th md-column>Status</th>
+                <th md-column ><span>Supported By</span></th>
+                <th md-column ><span>Consultant</span></th>
+                <th md-column width=100>Start Date</th>
+              <!--   <th md-column>Technology</th> -->
+                <th md-column width=100>Status</th>
 
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row
+            <tr md-row ng-class-odd="'odd'"
                 ng-repeat="data in applications.supportSummaries | orderBy: support.order | filter: filter | limitTo: support.limit : (support.page -1) * support.limit track by $index">
                
-                <td md-cell >{{data.supportedBy}}</td>
+                <td md-cell >{{data.trainerName}}</td>
                 <td md-cell >{{data.traineeName}}</td>
                 <td md-cell >{{data.startDate}}</td>
-                <td md-cell >{{data.technology}}</td>
+               <!--  <td md-cell >{{data.technology}}</td> -->
                 <td md-cell >{{data.status}}</td>
                  </tr>
         </tbody>
     </table>
-    </md-table-container> <md-table-pagination md-limit="support.limit"
-        md-limit-options="supportSummariesOptions" md-page="support.page"
-        md-total="{{supportSummariesLength}}" md-page-select="supportSummariesPage .pageSelect"></md-table-pagination>
+    </md-table-container> 
+    </div>
 </div>
 </div>
 
 <div layout="row" layout-xs="column" layout-sm="column" layout-margin >
-<div flex="50">
-<div><h4>Interview</h4></div>
+<div flex="50"  flex-sm="120" class="overflow">
+<h4>Interview</h4>
+<div>
 	<md-table-container>
     <table md-table id="interviewTable">
         <thead md-head md-order="interview.order">
-            <tr md-row>
+            <tr md-row ng-class-odd="'tableHead'">
                
-                <th md-column ><span>InterviewDate</span></th>
-                <th md-column ><span>TraineeName</span></th>
-                <th md-column>SupportedBy</th>
+                <th md-column ><span>Interview Date</span></th>
+                <th md-column ><span>Consultant</span></th>
+                <th md-column>Supported By</th>
                 <th md-column>Status</th>
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row
+            <tr md-row ng-class-odd="'odd'"
                 ng-repeat="data in applications.interviewSummaries | orderBy: interview.order | filter: filter | limitTo: interview.limit : (interview.page -1) * interview.limit track by $index">
                
                 <td md-cell >{{data.interviewDate}}</td>
                 <td md-cell >{{data.traineeName}}</td>
-                 <td md-cell >{{data.supportedBy}}</td>
+                 <td md-cell >{{data.employeeName}}</td>
                   <td md-cell >{{data.status}}</td>
                
             </tr>
         </tbody>
     </table>
-    </md-table-container> <md-table-pagination md-limit="interview.limit"
-        md-limit-options="interviewSummariesOptions" md-page="interview.page"
-        md-total="{{interviewSummariesLength}}" md-page-select="interviewSummariesPage .pageSelect"></md-table-pagination>
+    </md-table-container> 
+    </div>
 </div>
-<div flex="50">
-<div><h4>Batch</h4></div>
+<div flex="50"  flex-sm="120" class="overflow">
+<h4>Batch</h4>
+<div>
 	<md-table-container>
     <table md-table id="batchTable">
         <thead md-head md-order="batch.order">
-            <tr md-row>
+            <tr md-row ng-class-odd="'tableHead'">
                 
-                <th md-column ><span>BatchId</span></th>
-                <th md-column ><span>NumberOfStudents</span></th>
-                <th md-column>TrainerName</th>
+                <th md-column ><span>Batch Id</span></th>
+                <th md-column ><span>Count</span></th>
+                <th md-column>Trainer</th>
                 <th md-column>Technology</th>
+                <th md-column>Status </th>
             </tr>
         </thead>
         <tbody md-body>
-            <tr md-row
+            <tr md-row ng-class-odd="'odd'"
                 ng-repeat="data in applications.batchSummaries | orderBy: batch.order | filter: filter | limitTo: batch.limit : (batch.page -1) * batch.limit track by $index">
               
                 <td md-cell >{{data.batchId}}</td>
-                <td md-cell >{{data.numberOfStudent}}</td>
+                <td md-cell >{{data.numberOfStudents}}</td>
                 <td md-cell >{{data.trainerName}}</td>
                 <td md-cell >{{data.technology}}</td>
+                <td md-cell >{{data.status}}</td>
                
             </tr>
         </tbody>
     </table>
-    </md-table-container> <md-table-pagination md-limit="batch.limit"
-        md-limit-options="batchSummariesOptions" md-page="batch.page"
-        md-total="{{batchSummariesLength}}" md-page-select="batchSummariesPage .pageSelect"></md-table-pagination>
-</div></div>
+
+   <div class="overlay loadingImg" ng-show="loading">
+        <h1 style="text-align: center; margin-top: 20%">loading....</h1>
+    </div>
+    <div class="overlay" ng-show="error">
+        <h1 style="text-align: center; margin-top: 20%">Response Error</h1>
+    </div>
+    </md-table-container>
+</div> 
+</div>
+</div>
     <!--start-->
  
-  </div></div>
+  </div>

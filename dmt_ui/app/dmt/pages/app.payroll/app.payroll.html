@@ -1,0 +1,80 @@
+<div class="demo-md-panel-animation md-padding">
+    <div class="overlay loadingImg" ng-show="loading">
+            <h1 style="text-align: center; margin-top: 20%">loading....</h1>
+        </div> 
+        <md-content layout="column" flex> <md-table-container>
+        
+        <table md-table id="salaryTable">
+            <thead md-head md-order="query.order">
+                <tr md-row ng-class-odd="'tableHead'">
+                    <th md-column><span> <md-checkbox ng-click="selectAll()" ng-model="data.checkboxValue"
+                     aria-label="Checkbox 2"
+                            ng-true-value="'on'" ng-false-value="'off'"
+                            class="md-warn md-align-top-left" flex></span></th>
+                    <th md-column ><span>Employee </span></th>
+                    <th md-column ><span>End Date</span></th>
+                        <th md-column><span>S Count</span></th>
+                        <th md-column><span>S Details</span></th>
+                        <th md-column><span>S Rate</span></th>
+                        <th md-column><span>E Count</span></th>
+                        <th md-column><span>El Details</span></th>
+                        <th md-column><span>E Rate</span></th>
+                        <th md-column><span>R Count</span></th>
+                        <th md-column><span>R Details</span></th>
+                        <th md-column><span>R Rate</span></th>
+                        <th md-column><span>M Count</span></th>
+                        <th md-column><span>M Details</span></th>
+                        <th md-column><span>M Rate</span></th>
+                        <th md-column><span>Total</span></th>
+                        <!-- <th md-column><span>Invoice</span></th> -->
+                    <th md-column>Actions</th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <tr md-row ng-class-odd="'odd'"
+                    ng-repeat="data in payrollsData | orderBy: query.order | filter: filterByText | limitTo: query.limit : (query.page -1) * query.limit track by $index">
+                    <td md-cell><md-checkbox ng-model="data.checkboxValue"
+                            ng-click="rowSelect(data)" aria-label="Checkbox 2"
+                            ng-true-value="'on'" ng-false-value="'off'"
+                            class="md-warn md-align-top-left" flex></td>
+                    <td md-cell >{{data.employeeName}}</td>
+                    <td md-cell >{{data.endDate}}</td>
+                    <td md-cell>{{data.supCount}}</td>
+                    <td md-cell>{{data.supDetails}}</td>
+                    <td md-cell>{{data.supRate}}</td>
+                    <td md-cell>{{data.evaCount}}</td>
+                    <td md-cell>{{data.evaDetails}}</td>
+                    <td md-cell>{{data.evaRate}}</td>
+                    <td md-cell>{{data.resCount}}</td>
+                    <td md-cell>{{data.resDetails}}</td>
+                    <td md-cell>{{data.resRate}}</td>
+                    <td md-cell>{{data.misCount}}</td>
+                    <td md-cell>{{data.misDetails}}</td>
+                    <td md-cell>{{data.misRate}}</td>
+                    <td md-cell>{{data.total}}</td>
+                    <!-- <td md-cell>{{data.invoice}}</td> -->
+                    <td md-cell><span> <md-tooltip> Update </md-tooltip> <i
+                            class="material-icons cursor" ng-click="setRowData(data);toggleRight()"
+                            ng-hide="isOpenRight()">border_color</i></span><span><md-tooltip>
+                            Delete </md-tooltip> <i class="material-icons cursor"  ng-click="deleteRow($event,data)">delete_forever</i></span> <span><md-tooltip>
+                            {{data.description}} </md-tooltip> <i class="material-icons cursor">description</i></span></td>
+                </tr>
+            </tbody>
+        </table>
+        </md-table-container> 
+        </md-content>
+    
+        <div layout="column" ng-cloak>
+            <section layout="row" flex>
+                <md-sidenav class="md-sidenav-right md-whiteframe-4dp"
+                    md-component-id="right"> <md-toolbar
+                    class="md-theme-light">
+                <h1 class="md-toolbar-tools">PayRoll Create</h1>
+                </md-toolbar> <create-salary /> </md-sidenav>
+            </section>
+        </div>
+    
+    
+    </div>
+    
+    

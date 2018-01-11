@@ -1,34 +1,36 @@
 <md-content layout-padding>
 <form name="batchAttendanceCreateForm">
 	<md-input-container class="md-block" > <label>Batch Id</label>
-	<md-select ng-model="record.batchId" ng-change="showTrainees(record)"><md-option
+	<md-select ng-model="record.batchId" ng-change="showTrainees(record)" required><md-option
 		 ng-repeat="batch in batches track by $index" ng-value="{{batch.id}}" 
 		ng-selected="batch.id === record.batch">{{
 	batch.id }}</md-option> </md-optgroup> </md-select></md-input-container>
 
-	<md-input-container class="md-block" flex-gt-sm><label>Technology</label>
+	<!-- <md-input-container class="md-block" flex-gt-sm><label>Technology</label>
 	<input  name="technology" ng-model="record.techologyName">{{batch.technologyName}}</md-input-container>
 	<md-input-container class="md-block" flex-gt-sm> <label>Trainer
-		Name</label> <input  name="technology" ng-model="record.trainerName">{{batch.trainerName}}</md-input-container>
+		Name</label> <input  name="technology" ng-model="record.trainerName">{{batch.trainerName}}</md-input-container> -->
 	
-	<md-input-container class="md-block" > <label>Date</label> 
-	<input  type="date" name="startDate"
-		ng-model="record.startDate"> </md-input-container>
+	<md-input-container class="md-block"><label>Date</label> 
+	<input  type="date" name="date"
+		ng-model="record.date" required></md-input-container>
 
 <md-input-container class="md-block" flex-gt-sm> <label>Trainee
-		Name</label> <md-select ng-model="record.traineeId"><md-option
-		ng-repeat="trainee in traineesList" ng-value="trainee"
-		>{{trainee.id}}</md-option> </md-select> </md-input-container>
+		Name</label> <md-select ng-model="trainees" required  multiple><md-option
+		ng-repeat="trainee in traineesList |orderBy:'name'" ng-value="{{trainee.id}}"
+		>{{trainee.name}}</md-option> </md-select> </md-input-container>
 	
+	<md-input-container class="md-block"> <input
+		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
 	<md-input-container class="md-block"><label>Description</label>
 	<input  name="Description" ng-model="record.description">
 	</md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
-		ng-hide="updatePage"> Save </md-button>
+		ng-hide="updatePage" ng-disabled="batchAttendanceCreateForm.$invalid"> Save </md-button>
 	<md-button class="md-raised md-primary" ng-click="updateData()"
-		ng-show="updatePage"> Update </md-button>
-	<md-button class="md-raised " ng-click="saveRecord()">
+		ng-show="updatePage" ng-disabled="batchAttendanceCreateForm.$invalid"> Update </md-button>
+	<md-button class="md-raised" ng-click="cancelRecord()">
 	Cancel </md-button>
 </form>
 

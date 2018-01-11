@@ -1,0 +1,36 @@
+<md-content layout-padding>
+    <form name="expenseCreateForm">
+
+        <md-input-container class="md-block">
+            <label>
+                Date</label>
+            <input type="date" ng-model="record.date" required/> </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Purpose of Expense</label>
+            <input name="purposeofexepense" type="text" ng-model="record.purposeOfExpense"> </md-input-container>
+        <md-input-container class="md-block">
+            <label>Credit</label>
+            <input name="credit" type="text" ng-model="record.credit" required only-digits> </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Debit</label>
+            <input name="debit" type="text" ng-model="record.debit" required only-digits> </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Balance</label>
+            <input name="balance" type="text" ng-model="record.balance" required only-digits> </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Description
+            </label>
+            <input name="Description" ng-model="record.description">
+        </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="saveRecord()" ng-hide="updatePage" ng-disabled="expenseCreateForm.$invalid">
+            Save </md-button>
+        <md-button class="md-raised md-primary" ng-click="updateRecord()" ng-show="updatePage" ng-disabled="expenseCreateForm.$invalid">
+            Update </md-button>
+        <md-button class="md-raised" ng-click="cancelRecord()">
+            Cancel </md-button>
+    </form>
+</md-content>

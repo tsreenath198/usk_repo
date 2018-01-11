@@ -1,48 +1,19 @@
 <section layout="row" flex>
-    <i class="material-icons toggleNavLeft" data-ng-click="toggleNavigationLeft()">dehaze</i>
-
-    <md-sidenav class="md-sidenav-left" md-component-id="left" md-disable-backdrop md-whiteframe="4">
-
-      <md-toolbar class="md-theme-indigo">
-        <span class="md-toolbar-tools">Menu Items</span>
-         <a href="#" class="toggleNavRight" data-ng-click="toggleNavigationLeft()" align="right">Close</a>
-     <!--    <i class="material-icons toggleNavRight" data-ng-click="toggleNavigationLeft()" >keyboard_arrow_left</i> -->
+      <md-sidenav class="md-sidenav-left md-whiteframe-4dp"
+        md-component-id="left"> <md-toolbar
+        class="md-theme-light">
+      <div layout="row" layout-xs="column" layout-sm="column" layout-margin>
+    <div flex="80">DMT</div>  
+    <i class="material-icons cursor" data-ng-click="toggleNavigationLeft()" >clear</i>  
+       <i class="material-icons cursor" ui-sref="app.dashboard" data-ng-click="toggleNavigationLeft()">home</i>
+         </div>  
       </md-toolbar> 
+       <div ng-repeat="tab in leftTabs">
+        <div class="primaryNavItem" >       
+       <a ui-sref="{{tab.route}}" ng-model="selected" ng-click="toggleNavigationLeft()" ng-class="{'selectedNavItem': clicked}">{{tab.value}}</a>
+      </div>
+       </div> 
+       </md-sidenav>
+    </section>
 
-     <ul>
-<li ng-repeat="tab in leftTabs">
-<a ui-sref="{{tab.route}}"  data-ng-click="toggleNavigationLeft()">{{tab.value}}</a>
-</li>
-     </ul>
 
-   <!--  <md-content class="md-padding">
-      <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links">
-        <md-nav-item ng-repeat="tab in leftTabs" md-nav-sref="{{tab.route}}" name="{{tab.value}}">{{tab.value}}</md-nav-item>
-      </md-nav-bar>
-      <span>{{currentNavItem}}</span>
-    </md-content> -->
-    </md-sidenav>
-</section>
-
-<!-- <div layout="row" layout-align="space-between start" layout-wrap >
-    <md-content class="md-padding">
-        <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" layout-align="space-between start">
-            <md-nav-item md-nav-sref="app.dashboard" name="dashboard">Dash Board</md-nav-item>
-            <md-nav-item md-nav-sref="app.userDetails" name="userDetails">UserDetails</md-nav-item>
-          <md-nav-item md-nav-sref="app.task" name="task">Task</md-nav-item> 
-            <md-nav-item md-nav-sref="app.technology" name="technology">Technology</md-nav-item>
-
-             <md-nav-item md-nav-sref="app.course" name="course">Course</md-nav-item>
-             <md-nav-item md-nav-sref="app.support" name="support">Support</md-nav-item>
-              <md-nav-item md-nav-sref="app.trainer" name="trainer">Trainer</md-nav-item>
-               <md-nav-item md-nav-sref="app.trainee" name="trainee">Trainee</md-nav-item>
-                <md-nav-item md-nav-sref="app.timesheet" name="timesheet">Timesheet</md-nav-item>
-                 <md-nav-item md-nav-sref="app.employee" name="Employee">Employee</md-nav-item>
-                  <md-nav-item md-nav-sref="app.batch" name="batch">batch</md-nav-item>
-                   <md-nav-item md-nav-sref="app.interview" name="interview">interview</md-nav-item>
-                   <md-nav-item md-nav-sref="app.client" name="client">Client</md-nav-item>
-                    <md-nav-item md-nav-sref="app.salary" name="Salary">Salary</md-nav-item>
-                     <md-nav-item md-nav-sref="app.oppurtunityTracker" name="oppurtunityTracker">Oppurtunity Tracker</md-nav-item>
-        </md-nav-bar>
-    </md-content>
-</div>  -->

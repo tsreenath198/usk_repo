@@ -4,9 +4,11 @@
 		Date</label> <input required type="date" name="invoiceDate"
 		ng-model="record.invoiceDate"> </md-input-container>
 
-	<md-input-container class="md-block"> <label>Invoice
-		Type</label> <input required name="invoiceType" ng-model="record.invoiceType">
-	</md-input-container>
+	<md-input-container class="md-block" flex-gt-sm> <label>Invoice
+		Type</label> <md-select ng-model="record.invoiceType"> <md-option>
+	<em>None</em></md-option> <md-option ng-repeat="invoiceType in invoiceTypes"
+		ng-selected="invoiceType.value === record.invoiceType"
+		ng-value="invoiceType.value"> {{invoiceType.value}} </md-option> </md-select> </md-input-container>
 
 	<md-input-container class="md-block"> <label>Actual
 		Amount</label> <input required name="actualAmount"
@@ -27,10 +29,12 @@
 	<input name="Description" ng-model="record.description"> </md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
-		ng-hide="updatePage"> Save </md-button>
+		ng-hide="updatePage" ng-disabled="inVoiceCreateForm.$invalid">
+	Save </md-button>
 	<md-button class="md-raised md-primary" ng-click="updateData()"
-		ng-show="updatePage">Update </md-button>
-	<md-button class="md-raised " ng-click="saveRecord()">
+		ng-show="updatePage" ng-disabled="inVoiceCreateForm.$invalid">Update
+	</md-button>
+	<md-button class="md-raised " ng-click="cancelRecord()">
 	Cancel </md-button>
 </form>
 </md-content>

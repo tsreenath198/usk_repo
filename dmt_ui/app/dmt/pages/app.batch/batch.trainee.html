@@ -1,0 +1,68 @@
+<md-dialog aria-label="Mango (Fruit)">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+       <span flex="30" >
+        <h2>Batch({{traineeId}}) Details</h2>
+       </span>
+       <span flex="20" >
+       <h2>Records Count : {{traineesData.length}}</h2>
+			 </span>
+			 <span flex="45" >
+				 <a href="" ng-click="getBatchAttendance(traineeId,$event)">BatchAttendance</a>
+			</span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+         <i class="material-icons" ng-click="cancel()">highlight_off</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <md-table-container>
+	<table md-table>
+		<thead md-head md-order="query.order">
+			<tr md-row ng-class-odd="'tableHead'">
+				<th md-column><span>Name</span></th>
+				 <th md-column><span>Phone</span></th>
+				<th md-column><span>Email</span></th>
+				<th md-column ng-show="headerEnable.alternatePhone"><span>Alternate Phone</span></th>
+				<th md-column ng-show="headerEnable.clientId"><span>Client</span></th>
+				<th md-column ng-show="headerEnable.skypeId" ><span>Skype Id</span></th>
+				<th md-column ng-show="headerEnable.timezone" ><span>Time Zone</span></th>
+				<th md-column ng-show="headerEnable.batchId" ><span>Batch</span></th>
+				<th md-column><span>Technology</span></th>
+				<th md-column><span>Paid Status</span></th>
+				<th md-column><span>Received Status</span></th>
+				<th md-column ng-show="headerEnable.traineeFeeStatus"><span>Status</span></th> 
+				
+			</tr>
+		</thead>
+		<tbody md-body>
+			<tr md-row ng-class-odd="'odd'"
+				ng-repeat="data in traineesData">				
+				<td md-cell>{{data.name}}</td>
+			 <td md-cell>{{data.phone}}</td>
+				<td md-cell>{{data.email}}</td>
+				<td md-cell ng-show="headerEnable.alternatePhone">{{data.altenatePhone}}</td>
+				<td md-cell ng-show="headerEnable.clientId">{{data.clientId}}</td>
+				<td md-cell ng-show="headerEnable.skypeId">{{data.skypeId}}</td>
+				<td md-cell  ng-show="headerEnable.timezone">{{data.timezone}}</td>
+				<td md-cell  ng-show="headerEnable.batchId">{{data.batchId}}</td>
+				
+				<td md-cell>{{data.technologyName}}</td>
+				<td md-cell>{{data.paidStatus}}</td>
+				<td md-cell>{{data.receivedStatus}}</td>
+				<td md-cell ng-show="headerEnable.traineeFeeStatus">{{data.traineeFeeStatus}}</td>
+				
+			</tr>
+		</tbody>
+	</table>
+	</md-table-container>
+    </md-dialog-content>
+
+ 
+  </form>
+</md-dialog>
+
+
+	

@@ -1,33 +1,70 @@
 <md-content layout-padding>
 <form name="timesheetCreateForm">
-	<md-input-container class="md-block"> <label>
-		Date</label> <input  type="date" name="date"
-		ng-model="record.date"> </md-input-container>
 
-	<md-input-container class="md-block"> <label>Employee Id</label> 
-	<input  name="employeeId" ng-model="record.employeeId">
-	</md-input-container>
+<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
+		<div flex="33">
+			<md-input-container class="md-block"> <label>
+		Date</label> <input required type="date" name="date" ng-model="record.date">
+			</md-input-container>
+		</div>
+		<div flex="33">
+		<md-input-container class="md-block" flex-gt-sm> <label>Time</label> <md-select ng-model="record.inTime"> <md-optgroup
+		label="time"> <md-option
+		ng-repeat="time in times" ng-value="time.value"
+		ng-selected="time.value === record.inTime">{{
+	time.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+		</div>
+		<div flex="33">
+		<md-input-container class="md-block" flex-gt-sm> <label>Employee</label> <md-select ng-model="record.employeeId"> <md-optgroup
+		label="time"> <md-option
+		ng-repeat="employee in employees|orderBy:'name'" ng-value="employee.id"
+		ng-selected="employee.id === record.employeeId">{{
+	employee.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+		</div>
 
-	<md-input-container class="md-block"> <label>Category</label> <input  name="category"
-		ng-model="record.category"> </md-input-container>
+</div>	
+	<div layout="row" layout-xs="column" ng-repeat="task in taskList"
+		layout-sm="column" layout-margin>
+		<div flex="30" class="green box">
+			<md-input-container class="md-block" flex-gt-sm> <label>Category</label> <md-select ng-model="task.category"> <md-optgroup
+		label="Category"> <md-option
+		ng-repeat="category in categories" ng-value="category.value"
+		ng-selected="category.value === record.category">{{
+	category.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+		</div>
 
-	<md-input-container class="md-block"> <label>Category Reference Number</label> <input  name="categoryRefNo"
-		ng-model="record.categoryRefNo"> </md-input-container>
+		<!-- <div flex="30" class="blue box">
+			<md-input-container class="md-block" flex-gt-sm>
+			<label>Reference Number</label> <input name="referenceId"  
+				ng-model="task.referenceId"> </md-input-container>
+		</div> -->
 
-	<md-input-container class="md-block"> <label>Duration Hours</label> <input   name="durationInHours"
-		ng-model="record.durationInHours"> </md-input-container>
+		<div flex="30" class="blue box">
+			<md-input-container class="md-block" flex-gt-sm>
+			<label>Description</label> <input name="Description"
+				ng-model="task.description"> </md-input-container>
+		</div>
 
-	<md-input-container class="md-block"> <input
-		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
+		<div>
+			<button ng-click="addMoreCategories()" >
+				<i class="material-icons">add</i>
+			</button>
 
-	<md-input-container class="md-block"> <label>Description</label>
-	<input name="Description" ng-model="record.description"> </md-input-container>
-
+		</div>
+		<div>
+			<button ng-click="removeCategories()" data-ng-disabled="taskList.length == 1">
+			<i class="material-icons">remove</i>
+			</button>
+			</div>
+	</div>
+	
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
-		ng-hide="updatePage"> Save </md-button>
+		ng-hide="updatePage" ng-disabled="timesheetCreateForm.$invalid">
+	Save </md-button>
 	<md-button class="md-raised md-primary" ng-click="updateData()"
-		ng-show="updatePage">Update </md-button>
-	<md-button class="md-raised " ng-click="saveRecord()">
+		ng-show="updatePage" ng-disabled="timesheetCreateForm.$invalid">Update
+	</md-button>
+	<md-button class="md-raised" ng-click="cancelRecord()">
 	Cancel </md-button>
 </form>
 </md-content>

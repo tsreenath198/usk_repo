@@ -1,16 +1,19 @@
 <section class="loginform cf">
-<form name="login" action="index_submit" method="POST" accept-charset="utf-8">
 <div class="demo-md-panel-animation md-padding">
 	<div layout="row" layout-xs="column" layout-sm="column" layout-margin>
 		<div flex="40">
-			<md-input-container class="md-block"> <label> Username</label> <input required name="username"
-				ng-model="userName"> </md-input-container>
-				<md-input-container class="md-block"> <label> Password</label> <input required type="password" name="password" ng-model="password"> </md-input-container>
-				<button ng-click="validate()" disabled="disabled">Login</button>
+			<md-input-container class="md-block"> 
+			<label> Username</label> 
+			<input required name="username"	ng-model="record.username"> 
+			</md-input-container>
+			<md-input-container class="md-block"> 
+			<label> Password</label> 
+			<input required type="password" name="password" ng-model="record.password"> 
+			</md-input-container>
+			<input type="button" value="submit" ng-click="login()"/>
 		</div>
 		
 	</div>
 </div>
-</form>
 </section>
 

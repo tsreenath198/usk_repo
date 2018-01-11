@@ -1,51 +1,42 @@
 <md-content layout-padding>
 <form name="supportInteractionCreateForm">
-
 <md-input-container class="md-block"> <label>Count</label>
-	<input  name="count" type="number" ng-model="record.count"> </md-input-container>
+	<input  name="count" required="required" only-digits ng-model="record.count"> </md-input-container>
 
 <md-input-container class="md-block"> <label>Date</label>
-	<input  name="count" type="date" ng-model="record.date"> </md-input-container>
+	<input  name="count" type="date" required="required" ng-model="record.date">
+	 </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Employee</label>
-	<md-select ng-model="record.employeeId"> <md-option>
-	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
+	<md-select ng-model="record.employeeId" required> <md-optgroup
+		label="Employee">  <md-option ng-repeat="employee in employees|orderBy:'name'"
 		ng-selected="employee.id === record.employeeId" ng-value="{{employee.id}}">
-	{{employee.name}} </md-option> </md-select> </md-input-container>
+	{{employee.name}} </md-option></md-optgroup> </md-select> </md-input-container>
 
-	<md-input-container class="md-block" flex-gt-sm> <label>Lead </label>
-	<md-select ng-model="record.leadId"> <md-option>
-	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
-		ng-selected="employee.id === record.leadId" ng-value="{{employee.id}}">
-	{{employee.name}} </md-option> </md-select> </md-input-container>
-
-	<!-- <md-input-container class="md-block" flex-gt-sm> <label>Lead </label>
-	<md-select ng-model="record.leadId"> <md-option>
-	<em>None</em> </md-option> <md-option ng-repeat="employee in employees"
-		ng-selected="employee.id === record.leadId" ng-value="{{tech.name}}">
-	{{employee.name}} </md-option> </md-select>
-	 </md-input-container> -->
-
+	<md-input-container class="md-block" flex-gt-sm> <label>Lead</label>
+	<md-select ng-model="leadId" required ng-change="getLead(leadId)"><md-optgroup
+		label="Lead"><md-option>
+	<em>None</em> </md-option> <md-option  ng-repeat="employee in employees|orderBy:'name'"
+		ng-selected="employee.id === leadId" ng-value="{{employee}}">
+	{{employee.name}} </md-option></md-optgroup> </md-select> </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Trainee </label>
-	<md-select ng-model="record.traineeId"> <md-option>
-	<em>None</em> </md-option> <md-option ng-repeat="trainee in trainees"
+	<md-select ng-model="record.traineeId" required><md-optgroup
+		label="Trainee">  <md-option>
+	<em>None</em> </md-option> <md-option ng-repeat="trainee in trainees|orderBy:'name'"
 		ng-selected="trainee.id === record.traineeId" ng-value="{{trainee.id}}">
-	{{trainee.name}} </md-option> </md-select> </md-input-container>
+	{{trainee.name}} </md-option> </md-optgroup></md-select> </md-input-container>
 
 	
 	<md-input-container class="md-block"> <label>Description
 	</label> <input name="Description" ng-model="record.description">
 	</md-input-container>
 
-	<md-input-container class="md-block"> <input
-		type="hidden" name="Id" ng-model="record.id"> </md-input-container>
-
-	<md-button class="md-raised md-primary" ng-click="saveRecord()"
-		ng-hide="updatePage"> Save </md-button>
-	<md-button class="md-raised md-primary" ng-click="updateRecord()"
+		<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage" ng-disabled="supportInteractionCreateForm.$invalid"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-disabled="supportInteractionCreateForm.$invalid" ng-click="updateRecord()"
 		ng-show="updatePage"> Update </md-button>
-	<md-button class="md-raised " ng-click="saveRecord()">
+	<md-button class="md-raised"  ng-click="cancelRecord()">
 	Cancel </md-button>
 </form>
 

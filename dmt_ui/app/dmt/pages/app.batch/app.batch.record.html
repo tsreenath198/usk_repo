@@ -2,20 +2,20 @@
 <md-content layout-padding>
 <form name="batchCreateForm">
 	<md-input-container class="md-block" flex-gt-sm> <label>Technology
-		Name</label> <md-select ng-model="record.technologyId"> <md-option
-		ng-repeat="technology in technologies" ng-value="technology.id"
+		Name</label> <md-select ng-model="record.technologyId" required> <md-option
+		ng-repeat="technology in technologies|orderBy:'name'" ng-value="technology.id"
 		ng-selected="technology.id === record.technology">{{
 	technology.name }}</md-option> </md-select> </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Trainer
-		Name</label> <md-select ng-model="record.trainerId"> <md-option
-		ng-repeat="trainer in trainers" ng-value="trainer.id"
-		ng-selected="trainer.id === record.trainer">{{
+		Name</label> <md-select ng-model="record.trainerId" required> <md-option
+		ng-repeat="trainer in trainers|orderBy:'name'" ng-value="trainer.id"
+		ng-selected="trainer.id === record.trainerId">{{
 	trainer.name }}</md-option> </md-select> </md-input-container>
 
-	<md-input-container class="md-block"> <label>Start
-		Date</label> <input  type="date" name="startDate"
-		ng-model="record.startDate"> </md-input-container>
+	<md-input-container class="md-block"><label>Start
+		Date</label> <input  type="date"  name="startDate"
+		ng-model="record.startDate" required> </md-input-container>
 
 	<md-input-container class="md-block"> <label>End
 		Date</label> <input  type="date" name="endDate"
@@ -28,21 +28,21 @@
 	<input  name="invoice" ng-model="record.invoice"> </md-input-container>
 
 	<md-input-container class="md-block" flex-gt-sm> <label>Paid
-		Status</label> <md-select ng-model="record.paidStatus"> <md-option>
+		Status</label> <md-select ng-model="record.paidStatus" required> <md-option>
 	<em>None</em> </md-option> <md-option ng-repeat="paidstatus in paidstatuses"
 		ng-selected="paidstatus.value === record.paidstatus"
 		ng-value="paidstatus.value"> {{paidstatus.value}}</md-option></md-select></md-input-container>
 
-	<md-input-container class="md-block" flex-gt-sm> <label>Received
-		Status</label> <md-select ng-model="record.receivedStatus"> <md-option>
+	<md-input-container class="md-block" flex-gt-sm><label>Received
+		Status</label> <md-select ng-model="record.receivedStatus" required> <md-option>
 	<em>None</em> </md-option> <md-option
 		ng-repeat="receivedstatus in receivedstatuses"
-		ng-selected="receivedstatus.value === record.receivedstatus"
+		ng-selected="receivedstatus.value === record.receivedStatus"
 		ng-value="receivedstatus.value"> {{receivedstatus.value}}
 	</md-option> </md-select> </md-input-container>
 
-	<md-input-container class="md-block" flex-gt-sm> <label>Status</label>
-	<md-select ng-model="record.status"> <md-option>
+	<md-input-container class="md-block" flex-gt-sm><label>Status</label>
+	<md-select ng-model="record.status" required> <md-option>
 	<em>None</em> </md-option> <md-option ng-repeat="status in statuses"
 		ng-selected="status.value === record.status" ng-value="status.value">
 	{{status.value}} </md-option> </md-select> </md-input-container>
@@ -61,10 +61,10 @@
 	</md-input-container>
 
 	<md-button class="md-raised md-primary" ng-click="saveRecord()"
-		ng-hide="updatePage"> Save </md-button>
+		ng-hide="updatePage" ng-disabled="batchCreateForm.$invalid"> Save </md-button>
 	<md-button class="md-raised md-primary" ng-click="updateData()"
-		ng-show="updatePage"> Update </md-button>
-	<md-button class="md-raised " ng-click="saveRecord()">
+		ng-show="updatePage" ng-disabled="batchCreateForm.$invalid"> Update </md-button>
+	<md-button class="md-raised " ng-click="cancelRecord()">
 	Cancel </md-button>
 </form>
 

@@ -1,7 +1,7 @@
 package in.uskcorp.tool.dmt.util;
 
+import java.sql.Date;
 import java.sql.ResultSet;
-import java.util.Date;
 
 public final class ResultSetUtil {
 
@@ -18,8 +18,23 @@ public final class ResultSetUtil {
 		return null;
 	}
 
-	public static java.sql.Date converttoSQLDate(Date utilDate) {
+	public static java.sql.Date converttoUtilDate(Date utilDate) {
 		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 		return sqlDate;
 	}
+
+	public static Date getDate1(ResultSet rs, String columnName) {
+		try {
+			return rs.getDate(columnName);
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return null;
+	}
+
+	public static java.sql.Date converttoSQLDate(java.util.Date date) {
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		return sqlDate;
+	}
+
 }

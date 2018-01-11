@@ -19,8 +19,10 @@ public class Trainee {
 	private String paidStatus;
 	private String receivedStatus;
 	private int technologyId;
-	private String technologyName;
 	
+	private String detail;
+	
+
 	public int getId() {
 		return id;
 	}
@@ -147,14 +149,6 @@ public class Trainee {
 
 	public void setTechnologyId(int technologyId) {
 		this.technologyId = technologyId;
-	}
-
-	public String getTechnologyName() {
-		return technologyName;
-	}
-
-	public void setTechnologyName(String technologyName) {
-		this.technologyName = technologyName;
 	}
 
 }

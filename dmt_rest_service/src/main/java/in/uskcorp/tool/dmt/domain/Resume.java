@@ -3,17 +3,43 @@ package in.uskcorp.tool.dmt.domain;
 import java.util.Date;
 
 public class Resume {
- 
+
 	private int id;
-//	private String traineeName;
 	private int traineeId;
-	private String preparedBy;
+	private int preparedBy;
 	private String paid;
 	private Date date;
 	private Date createdDate;
 	private Date updatedDate;
 	private String receivedStatus;
 	private String description;
+	private String details;
+	private int count;
+	private int rate;
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
 
 	public String getDescription() {
 		return description;
@@ -39,11 +65,11 @@ public class Resume {
 		this.traineeId = traineeId;
 	}
 
-	public String getPreparedBy() {
+	public int getPreparedBy() {
 		return preparedBy;
 	}
 
-	public void setPreparedBy(String preparedBy) {
+	public void setPreparedBy(int preparedBy) {
 		this.preparedBy = preparedBy;
 	}
 
@@ -71,15 +97,7 @@ public class Resume {
 		this.receivedStatus = receivedStatus;
 	}
 
-	/*public String getTraineeName() {
-		return traineeName;
-	}
-
-	public void setTraineeName(String traineeName) {
-		this.traineeName = traineeName;
-	}
-*/
-	 public String getPaid() {
+	public String getPaid() {
 		return paid;
 	}
 
@@ -95,6 +113,4 @@ public class Resume {
 		this.date = date;
 	}
 
-
-	
 }

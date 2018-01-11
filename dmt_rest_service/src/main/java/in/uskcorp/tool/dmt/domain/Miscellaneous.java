@@ -1,22 +1,19 @@
 package in.uskcorp.tool.dmt.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
-public class UserRole {
+public class Miscellaneous {
 	private int id;
+	private int employeeId;
+	private String details;
+	private int count;
+	private int rate;
+	private Date date;
 	private String name;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
 	private int activeFlag;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -56,6 +53,54 @@ public class UserRole {
 
 	public void setActiveFlag(int activeFlag) {
 		this.activeFlag = activeFlag;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
 	}
 
 }

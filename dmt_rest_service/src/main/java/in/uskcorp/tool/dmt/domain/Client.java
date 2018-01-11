@@ -1,6 +1,7 @@
 package in.uskcorp.tool.dmt.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class Client {
 	private int id;
@@ -10,7 +11,17 @@ public class Client {
 	private Date updatedDate;
 	private Date createdDate;
 	private int activeFlag;
-	private String description;
+	private String description; 
+
+	private List<Contact> Contact;
+
+	public List<Contact> getContact() {
+		return Contact;
+	}
+
+	public void setContact(List<Contact> contact) {
+		Contact = contact;
+	}
 
 	public int getId() {
 		return id;

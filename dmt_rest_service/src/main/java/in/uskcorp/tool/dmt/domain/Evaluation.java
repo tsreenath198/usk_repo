@@ -1,26 +1,26 @@
 package in.uskcorp.tool.dmt.domain;
 
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
-public class BatchAttendance {
+public class Evaluation {
 	private int id;
-	private int batchId;
+	private int employeeId;
+	private String details;
+	private int count;
+	private int rate;
 	private Date date;
-	private int traineeId;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
 	private int activeFlag;
+	private String name;
 
-	private List<Trainee> trainees;
-	
-	public List<Trainee> getTrainees() {
-		return trainees;
+	public String getName() {
+		return name;
 	}
 
-	public void setTrainees(List<Trainee> trainees) {
-		this.trainees = trainees;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getId() {
@@ -31,12 +31,36 @@ public class BatchAttendance {
 		this.id = id;
 	}
 
-	public int getBatchId() {
-		return batchId;
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setBatchId(int batchId) {
-		this.batchId = batchId;
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
 	}
 
 	public Date getDate() {
@@ -45,14 +69,6 @@ public class BatchAttendance {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public int getTraineeId() {
-		return traineeId;
-	}
-
-	public void setTraineeId(int traineeId) {
-		this.traineeId = traineeId;
 	}
 
 	public Date getCreatedDate() {
@@ -86,4 +102,5 @@ public class BatchAttendance {
 	public void setActiveFlag(int activeFlag) {
 		this.activeFlag = activeFlag;
 	}
+
 }

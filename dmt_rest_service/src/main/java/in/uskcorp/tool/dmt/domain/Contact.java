@@ -5,6 +5,24 @@ public class Contact {
 	private String poc;
 	private String email;
 	private String telephone;
+	private Long clientId;
+	private String designation;
+	
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public Long getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Long clientId) {
+		this.clientId = clientId;
+	}
 
 	public int getId() {
 		return id;
@@ -37,4 +55,5 @@ public class Contact {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
+
 }

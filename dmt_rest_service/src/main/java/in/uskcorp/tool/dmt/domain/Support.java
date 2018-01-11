@@ -21,6 +21,7 @@ public class Support {
 	private String description;
 	private String traineeName;
 	private String employeeName;
+	private int numberOfInteractions;
 
 	public int getId() {
 		return id;
@@ -165,5 +166,15 @@ public class Support {
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
+
+	public int getNumberOfInteractions() {
+		return numberOfInteractions;
+	}
+
+	public void setNumberOfInteractions(int numberOfInteractions) {
+		this.numberOfInteractions = numberOfInteractions;
+	}
+
+	
 
 }

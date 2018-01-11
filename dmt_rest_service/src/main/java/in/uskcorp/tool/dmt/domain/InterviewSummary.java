@@ -5,7 +5,7 @@ import java.util.Date;
 public class InterviewSummary {
 	private Date interviewDate;
 	private String traineeName;
-	private String supportedBy;
+	private String EmployeeName;
 	private String status;
 
 	
@@ -42,6 +42,14 @@ public class InterviewSummary {
 		this.traineeName = traineeName;
 	}
 
+	public String getEmployeeName() {
+		return EmployeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		EmployeeName = employeeName;
+	}
+
 	/*public String getEmployeeName() {
 		return employeeName;
 	}
@@ -54,13 +62,7 @@ public class InterviewSummary {
 		return client;
 	}
 */
-	public String getSupportedBy() {
-		return supportedBy;
-	}
 
-	public void setSupportedBy(String supportedBy) {
-		this.supportedBy = supportedBy;
-	}
 
 	
 }

@@ -3,7 +3,7 @@ package in.uskcorp.tool.dmt.domain;
 import java.util.Date;
 
 public class SupportSummary {
-	private String supportedBy;
+	private String trainerName;
 	private String traineeName;
 	private Date startDate;
 	private String technology;
@@ -11,16 +11,18 @@ public class SupportSummary {
 	
 	//private String status;
 
-	public String getSupportedBy() {
-		return supportedBy;
-	}
-
-	public void setSupportedBy(String supportedBy) {
-		this.supportedBy = supportedBy;
-	}
+	
 
 	public String getTraineeName() {
 		return traineeName;
+	}
+
+	public String getTrainerName() {
+		return trainerName;
+	}
+
+	public void setTrainerName(String trainerName) {
+		this.trainerName = trainerName;
 	}
 
 	public void setTraineeName(String traineeName) {

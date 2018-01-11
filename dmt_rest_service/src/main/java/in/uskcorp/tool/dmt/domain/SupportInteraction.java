@@ -9,12 +9,41 @@ public class SupportInteraction {
 	private String lead;
 	private int leadId;
 	private int traineeId;
-	private int employeeId;
+	private int trainerId;
 	private String traineeName;
-	private String employeeName;
+	private String trainerName;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
+	
+	private String details;
+	private int rate;
+	private String month;
+	
+	
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
 
 	public int getId() {
 		return id;
@@ -64,12 +93,12 @@ public class SupportInteraction {
 		this.traineeId = traineeId;
 	}
 
-	public int getEmployeeId() {
-		return employeeId;
+	public int getTrainerId() {
+		return trainerId;
 	}
 
-	public void setEmployeeId(int employeeId) {
-		this.employeeId = employeeId;
+	public void setTrainerId(int trainerId) {
+		this.trainerId = trainerId;
 	}
 
 	public String getTraineeName() {
@@ -80,12 +109,12 @@ public class SupportInteraction {
 		this.traineeName = traineeName;
 	}
 
-	public String getEmployeeName() {
-		return employeeName;
+	public String getTrainerName() {
+		return trainerName;
 	}
 
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
+	public void setTrainerName(String trainerName) {
+		this.trainerName = trainerName;
 	}
 
 	public String getDescription() {

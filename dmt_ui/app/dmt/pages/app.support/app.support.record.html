@@ -1,0 +1,83 @@
+<md-content layout-padding>
+<form name="SupportCreateForm">
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Trainee</label>
+	<md-select ng-model="record.traineeId" required> <md-optgroup
+		label="Trainee"> <md-option
+		ng-repeat="trainee in trainees|orderBy:'name'" ng-value="{{trainee.id}}"
+		ng-selected="trainee.id === record.traineeId">{{
+	trainee.name }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Trainer</label>
+	<md-select ng-model="record.trainerId" required> <md-optgroup
+		label="Trainer"> <md-option
+		ng-repeat="trainer in trainers|orderBy:'name'	" ng-value="trainer.id"
+		ng-selected="trainer.id === record.trainerId">{{
+	trainer.name }}</md-option> </md-optgroup> </md-select> </md-input-container>	
+	
+	<md-input-container class="md-block"> <label>Start
+		Date</label> <input type="date" ng-model="record.startDate" required/> </md-input-container>
+	<md-input-container class="md-block"> <label>End
+		Date</label> <input type="date" required="required" ng-model="record.endDate" /> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Alloted
+		Time</label> <md-select ng-model="record.allottedTime"> <md-optgroup
+		label="Employees"> <md-option
+		ng-repeat="time in timeConstants" ng-value="time.value"
+		ng-selected="time.value === record.allottedTime">{{
+	time.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block"> <label>End
+		Client</label> <input   name="endclient" ng-model="record.endClient" >
+	</md-input-container>
+
+	<md-input-container class="md-block"> <label>Technology
+		Used</label> <input   name="Technology Used"
+		ng-model="record.technologyUsed"> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Paid
+		By</label> <md-select ng-model="record.paidBy" required> <md-optgroup
+		label="Paid BY"> <md-option
+		ng-repeat="paidBy in paidByConstants" ng-value="paidBy.value"
+		ng-selected="paidBy.value === record.paidBy">{{
+	paidBy.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Paid
+		Status</label> <md-select ng-model="record.paidStatus" required> <md-optgroup
+		label="Paid Status"> <md-option
+		ng-repeat="paid in paidConstants" ng-value="paid.value"
+		ng-selected="paid.value === record.paidStatus">{{
+	paid.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Received
+		Status </label> <md-select ng-model="record.receivedStatus" required> <md-optgroup
+		label="Received Status"> <md-option 
+		ng-repeat="received in receivedConstants" ng-value="received.value"
+		ng-selected="received.value === record.receivedStatus">{{
+	received.value }}</md-option> </md-optgroup> </md-select> </md-input-container>
+
+
+	<md-input-container class="md-block" flex-gt-sm> <label>Status</label>
+	<md-select ng-model="record.status" required> <md-option ng-repeat="status in statuses"
+		ng-selected="status.value === record.status" ng-value="status.value">
+	{{status.value}} </md-option> </md-select> </md-input-container>
+
+	<md-input-container class="md-block"> <label>Invoice</label>
+	 <input   name="invoice" ng-model="record.invoice">
+	</md-input-container>
+
+	<md-input-container class="md-block"> <label>Description</label>
+	<input   name="Description" ng-model="record.description">
+	</md-input-container>
+
+	<md-button class="md-raised md-primary" ng-click="saveRecord()"
+		ng-hide="updatePage" ng-disabled="SupportCreateForm.$invalid"> Save </md-button>
+	<md-button class="md-raised md-primary" ng-click="updateRecord()"
+		ng-show="updatePage"  ng-disabled="SupportCreateForm.$invalid"> Update </md-button>
+	<md-button class="md-raised " ng-click="cancelRecord()">
+	Cancel </md-button>
+</form>
+</md-content>
+
+<!-- SELECT b.*,tr.name as trainee from trainee tr,batch_attendance b where tr.id = b.trainee_id AND b.active_flag=0 ORDER BY batch_id asc
+ -->

@@ -37,14 +37,14 @@
                         </span>
                         <span class="global-header-item create" data-id="shell/global-header/create" style="border-left: none !important;" >
                            <button   class="global-header-item-button icon-relative-top" data-id="buttonNode" aria-haspopup="true" aria-label="Create">
-                              <i class="material-icons white"  ng-click="exportData('tableId')">import_export</i>
+                              <i class="material-icons white"  ng-click="exportData()">import_export</i>
                               <span class="label" data-id="labelNode"></span>
                               <div class="flyout-tip"></div>
                            </button>
                         </span>
                         <span class="global-header-item create" data-id="shell/global-header/create" style="border-left: none !important;">
                            <button class="global-header-item-button icon-relative-top" data-id="buttonNode" aria-haspopup="true" aria-label="Create">
-                              <i class="material-icons white ">file_download</i>
+                              <i class="material-icons white" ng-click="tablesToExcel(['paymentTable', 'supportTable','interviewTable','batchTable'], ['first','sec','thir','four'], 'myfile.xls')">file_download</i>
                               <span class="label" data-id="labelNode"></span>
                               <div class="flyout-tip"></div>
                            </button>

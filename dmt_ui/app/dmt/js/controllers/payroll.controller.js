@@ -15,53 +15,18 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
         $scope.updatePage = false;
+        $scope.currentPage = 'Create';
         $scope.payrollsData = [];
         $scope.selected = [];
 
         $scope.record = {
             "employeeId": "",
-            "endDate": "",
-            "basicSalary": "",
-            "trDetails": "",
-            "trCount": "",
-            "trRate": "",
-            "trTotal": "",
-            "supportDetails": "",
-            "supportCount": "",
-            "supportRate": "",
-            "supportTotal": "",
-            "evaluationDetails": "",
-            "evaluationCount": "",
-            "evaluationRate": "",
-            "evaluationTotal": "",
-            "resumeDetails": "",
-            "resumeCount": "",
-            "resumeRate": "",
-            "resumeTotal": "",
-            "misDetails": "",
-            "misCount": "",
-            "misRate": "",
-            "misTotal": "",
-            "trainingCount":"",
-            "createdDate": "",
+            "date":"",
+            "createdDate":"",
             "description": ""
         };
         payrollService.getAllEmployees().then(function (response) {
             $scope.employees = response.data;
-        });
-
-        $scope.getBatchesIntoPayRoll = function (id,date) {
-            $rootScope.empId = id;
-            $rootScope.date = date;
-            payrollService.getAllBatchesBasedOnEmployeeId($rootScope.empId,$rootScope.date).then(function (response) {
-                $scope.batchesData = response.data;
-                console.log($scope.batchesData);
-            });
-
-        }
-
-        payrollService.getAllMonth().then(function (response) {
-            $scope.months = response.data;
         });
         $scope.loading = true;
         payrollService.getAllPayRolls().then(function (response) {
@@ -108,41 +73,18 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
 }
 
     $scope.setRowData = function (row) {
-
         $scope.rowData = row;
         $scope.updatePage = true;
         $scope.record = {
             "employeeId": row.employeeId,
-            "endDate": row.endDate,
-            "basicSalary": row.basicSalary,
-            "trDetails": row.trDetails,
-            "trCount": row.trCount,
-            "trRate": row.trRate,
-            "trTotal": row.trTotal,
-            "supportDetails": row.supportDetails,
-            "supportCount": row.supportCount,
-            "supportRate": row.supportRate,
-            "supportTotal": row.supportTotal,
-            "evaluationDetails": row.evaluationDetails,
-            "evaluationCount": row.evaluationCount,
-            "evaluationRate": row.evaluationRate,
-            "evaluationTotal": row.evaluationTotal,
-            "resumeDetails": row.resumeDetails,
-            "resumeCount": row.resumeCount,
-            "resumeRate": row.resumeRate,
-            "resumeTotal": row.resumeTotal,
-            "misDetails": row.misDetails,
-            "misCount": row.misCount,
-            "misRate": row.misRate,
-            "misTotal": row.misTotal,
-            "updatedDate": "",
+            "date":row.date,
+            "updatedDate":"",
             "description": row.description,
             "id": row.id
         };
-        // console.log($scope.create.status);
+        $scope.currentPage = 'Update';
     };
     $scope.updateRecord = function () {
-        //console.log($scope.record);
         payrollService.update($scope.record).then(function (response) {
 
         });
@@ -154,29 +96,7 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
         $scope.updatePage = false;
         $scope.record = {
             "employeeId": "",
-            "month": "",
-            "basicSalary": "",
-            "trDetails": "",
-            "trCount": "",
-            "trRate": "",
-            "trTotal": "",
-            "supportDetails": "",
-            "supportCount": "",
-            "supportRate": "",
-            "supportTotal": "",
-            "evaluationDetails": "",
-            "evaluationCount": "",
-            "evaluationRate": "",
-            "evaluationTotal": "",
-            "resumeDetails": "",
-            "resumeCount": "",
-            "resumeRate": "",
-            "resumeTotal": "",
-            "misDetails": "",
-            "misCount": "",
-            "misRate": "",
-            "misTotal": "",
-            "createdDate": "",
+            "date":"",
             "description": ""
         };
     };
@@ -205,20 +125,13 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
             };
             $scope.headerCheckbox = ($scope.headerCheckbox == true) ? false : true;
         };
-        //console.log($scope.selected);
     };
-
-
-
     $scope.deleteRow = function (ev, row) {
-
         var confirm = $mdDialog
             .confirm()
             .title('Are you sure want to Delete Record?')
-
             .ariaLabel('Lucky day').targetEvent(ev).ok(
             'Ok').cancel('Cancel');
-
         $mdDialog
             .show(confirm)
             .then(
@@ -231,20 +144,8 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
             function () {
                 $scope.status = 'You decided to keep your Task.';
             });
-
-
     };
-
-    $scope.exportData = function (tableId) {
-        // $scope.tasksOptions = [ $scope.tasksData.length ];
-        var exportHref = Excel.tableToExcel(tableId, 'sheet name');
-        $timeout(function () {
-            location.href = exportHref;
-        }, 100); // trigger download
-    }
-
     /* Tooltip Starrts */
-
     $scope.demo = {
         showTooltip: false,
         tipDirection: ''
@@ -271,7 +172,6 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
 
     function debounce(func, wait, context) {
         var timer;
-
         return function debounced() {
             var context = $scope, args = Array.prototype.slice
                 .call(arguments);

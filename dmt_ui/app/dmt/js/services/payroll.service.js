@@ -4,8 +4,6 @@ function payrollService($http, $window, __env) {
 	var service = {
 		getAllPayRolls : getAllPayRolls,
 		getAllEmployees : getAllEmployees,
-		getAllMonth : getAllMonth,
-		getAllBatchesBasedOnEmployeeId:getAllBatchesBasedOnEmployeeId,
 		create : create,
 		update : update,
 		deleteRow:deleteRow
@@ -20,20 +18,7 @@ function payrollService($http, $window, __env) {
 	}
 	function getAllMonth() {
     return $http.get("./mock/month.json");
-  }
-
-  
- 
-  function getAllBatchesBasedOnEmployeeId(date,id) {
-	$http({
-		url : url +'/payroll/readByMonthAndId?date=date&&employeeId=id',
-		method : "POST"
-	}).then(function(response) {
-		// success
-	}, function(response) { // optional
-		// failed
-	});
-}
+  }  
 
 function deleteRow(data) {
 		return $http({
@@ -47,7 +32,7 @@ function deleteRow(data) {
 	}
 	function create(data) {
 		return $http({
-			url : url +'/payroll/readByMonthAndId?month=data&&employeeId=data',
+			url : url +'/payroll/readByMonthAndId',
 			method : "POST",
 			data : data
 		}).then(function(response) {

@@ -99,7 +99,7 @@ gulp.task('replace', function() {
 });
 // default task
 gulp.task('default',
-  ['lint', 'connect']
+  ['connect']
 );
 gulp.task('build', function() {
   runSequence(

@@ -30,6 +30,10 @@ function leftNavController($scope, leftNavService, Excel, $state, $mdDialog,
     }
   }
   $rootScope.currentTableLength;
+
+  $scope.logout = function(){
+      $state.go('login');
+  }
  
   $scope.searchRecord = function(text) {     
         switch($rootScope.currentController){

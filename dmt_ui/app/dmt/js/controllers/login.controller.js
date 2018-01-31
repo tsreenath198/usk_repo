@@ -13,7 +13,7 @@ function loginController($scope, loginService, Excel, $state, $mdDialog,$locatio
 			"password" : ""
 		};
 		$scope.login = function(){
-			if($scope.record.username !== "" && $scope.record.password !== ""){
+			if($scope.record.userName !== "" && $scope.record.password !== ""){
 				$location.path("/dashboard");
 				loginService.validate($scope.record).then(function(response) {
 							

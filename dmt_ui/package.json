@@ -37,6 +37,7 @@
     "yargs": "^5.0.0"
   },
   "dependencies": {
+    "gulp-install": "^1.1.0",
     "npm-git-install": "^0.2.0"
   }
 }

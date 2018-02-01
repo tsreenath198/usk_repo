@@ -73,6 +73,7 @@ function oppurtunityTrackerController($scope, oppurtunityTrackerService, Excel, 
 			$scope.oppurtunityTrackersData = response.data;
 			$scope.oppurtunityTrackersLength = response.data.length;
 			$rootScope.currentTableLength = 'Records Count :' + response.data.length;
+			
 			$scope.oppurtunityTrackersOptions = [200, 300];
 			$scope.oppurtunityTrackerPage = {
 				pageSelect: true

@@ -1,12 +1,12 @@
 /*(function() {*/
-    'use strict';
-    dmtApplication
-        .controller("EventsController", EventsController);
+'use strict';
+dmtApplication
+    .controller("EventsController", EventsController);
 
-    function EventsController($scope) {
-       $scope.toggle = function(){
-        $scope.isVisible = ! $scope.isVisible;
+function EventsController($scope) {
+    $scope.toggle = function () {
+        $scope.isVisible = !$scope.isVisible;
     };
-    $scope.isVisible= false;
+    $scope.isVisible = false;
 
 }

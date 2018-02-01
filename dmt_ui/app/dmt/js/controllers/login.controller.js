@@ -2,23 +2,24 @@
 'use strict';
 dmtApplication.controller("loginController", loginController);
 
-function loginController($scope, loginService, Excel, $state, $mdDialog,$location,
-		$mdToast, $timeout, $mdSidenav, $log) {
+function loginController($scope, loginService, Excel, $state, $mdDialog, $location,
+	$mdToast, $timeout, $mdSidenav, $log) {
 	var self = {
-		init : init
+		init: init
 	};
+
 	function init() {
-		$scope.record = {			
-			"username" : "",
-			"password" : ""
+		$scope.record = {
+			"username": "",
+			"password": ""
 		};
-		$scope.login = function(){
-			if($scope.record.userName !== "" && $scope.record.password !== ""){
+		$scope.login = function () {
+			if ($scope.record.userName !== "" && $scope.record.password !== "") {
 				$location.path("/dashboard");
-				loginService.validate($scope.record).then(function(response) {
-							
+				loginService.validate($scope.record).then(function (response) {
+
 				});
-			}else{
+			} else {
 				alert("Provide Username and password");
 			}
 		};
@@ -26,4 +27,3 @@ function loginController($scope, loginService, Excel, $state, $mdDialog,$locatio
 	init();
 	return self;
 };
-

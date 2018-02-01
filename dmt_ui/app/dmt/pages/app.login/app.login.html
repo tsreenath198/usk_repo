@@ -4,13 +4,13 @@
 		<div flex="40">
 			<md-input-container class="md-block"> 
 			<label> Username</label> 
-			<input required name="username"	ng-model="record.username"> 
+			<input required name="username"	ng-model="record.userName"> 
 			</md-input-container>
 			<md-input-container class="md-block"> 
 			<label> Password</label> 
 			<input required type="password" name="password" ng-model="record.password"> 
 			</md-input-container>
-			<input type="button" value="submit" ng-click="login()"/>
+			<md-button class="md-raised md-primary" ng-click="login()"> Login </md-button>
 		</div>
 		
 	</div>

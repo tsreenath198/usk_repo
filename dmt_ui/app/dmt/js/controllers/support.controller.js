@@ -62,38 +62,38 @@ function supportController($scope, supportService, Excel, $state, $mdDialog, $ro
             "paidBy": "",
             "invoice": ""
         };
-        supportService.getAllStatus().then(function(response) {
+        supportService.getAllStatus().then(function (response) {
             $scope.statuses = response.data;
         });
-        supportService.getAllEmployees().then(function(response) {
+        supportService.getAllEmployees().then(function (response) {
             $scope.employees = response.data;
         });
 
-        supportService.getAllTrainees().then(function(response) {
+        supportService.getAllTrainees().then(function (response) {
             $scope.trainees = response.data;
         });
-        supportService.getAllTrainers().then(function(response) {
+        supportService.getAllTrainers().then(function (response) {
             $scope.trainers = response.data;
         });
-        supportService.getAlltimeConstants().then(function(response) {
+        supportService.getAlltimeConstants().then(function (response) {
             $scope.timeConstants = response.data;
         });
-        supportService.getAllpaidByConstants().then(function(response) {
+        supportService.getAllpaidByConstants().then(function (response) {
             $scope.paidByConstants = response.data;
         });
-        supportService.getAllreceivedConstants().then(function(response) {
+        supportService.getAllreceivedConstants().then(function (response) {
             $scope.receivedConstants = response.data;
         });
-        supportService.getAllpaidConstants().then(function(response) {
+        supportService.getAllpaidConstants().then(function (response) {
             $scope.paidConstants = response.data;
         });
         $scope.loading = true;
-        supportService.getAllSupports().then(function(response) {
+        supportService.getAllSupports().then(function (response) {
 
             $scope.supportsData = response.data;
             //console.log($scope.supportsData);
             $scope.supportsLength = response.data.length;
-            $rootScope.currentTableLength = 'Records Count :'+response.data.length;
+            $rootScope.currentTableLength = 'Records Count :' + response.data.length;
             $scope.supportsOptions = [200, 300];
             $scope.supportPage = {
                 pageSelect: true
@@ -104,33 +104,27 @@ function supportController($scope, supportService, Excel, $state, $mdDialog, $ro
                 page: 1
             };
             $scope.loading = false;
-        }, function(error) {
+        }, function (error) {
             alert("failed");
             $scope.loading = false;
         });
-        var deregisterListener = $rootScope.$on("CallSupportMethod", function() {
+        var deregisterListener = $rootScope.$on("CallSupportMethod", function () {
             if ($rootScope.$$listeners["CallSupportMethod"].length > 1) {
                 $rootScope.$$listeners["CallSupportMethod"].pop();
             }
+            $scope.currentPage = "Create";
             $scope.toggleRight();
             $scope.emptyForm();
-            // $scope.destroyListener();
-        });
-        var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(event, args) {
-            if ($rootScope.$$listeners["CallSupportSearchMethod"].length > 1) {
-                $rootScope.$$listeners["CallSupportSearchMethod"].pop();
-            }            
-            $scope.filterByText = args.text;
         });
 
-var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(event, args) {
+        var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function (event, args) {
             if ($rootScope.$$listeners["CallSupportSearchMethod"].length > 1) {
                 $rootScope.$$listeners["CallSupportSearchMethod"].pop();
-            }            
+            }
             $scope.filterByText = args.text;
         });
-        $scope.saveRecord = function() {
-            supportService.create($scope.record).then(function(response) {
+        $scope.saveRecord = function () {
+            supportService.create($scope.record).then(function (response) {
 
             });
             window.location.reload();
@@ -140,14 +134,14 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
     init();
 
 
-    $scope.setDate = function(date) {
+    $scope.setDate = function (date) {
         $scope.minDate = date;
         $scope.minStartedDate = new Date($scope.minDate.getFullYear(),
             $scope.minDate.getMonth(), $scope.minDate.getDate());
         $scope.minEndDate = $scope.minStartedDate;
     };
 
-    $scope.rowData = function(row) {
+    $scope.rowData = function (row) {
         $scope.currentPage = 'Update';
         $scope.updatePage = true;
         $scope.record = {
@@ -169,18 +163,18 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
         };
     };
 
-    $scope.updateRecord = function() {
-        supportService.update($scope.record).then(function(response) {});
+    $scope.updateRecord = function () {
+        supportService.update($scope.record).then(function (response) {});
         window.location.reload();
         $scope.cancelRecord();
         $scope.currentPage = 'Create';
     };
-    $scope.cancelRecord = function() {
-        $mdSidenav('right').close().then(function() {
+    $scope.cancelRecord = function () {
+        $mdSidenav('right').close().then(function () {
             $log.debug("close RIGHT is done");
         });
     }
-    $scope.emptyForm = function() {
+    $scope.emptyForm = function () {
         $scope.updatePage = false;
         $scope.record = {
             "traineeId": "",
@@ -199,11 +193,11 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
         };
     };
 
-    $scope.rowSelect = function(row) {
+    $scope.rowSelect = function (row) {
         $scope.selected.push(row);
     };
     $scope.headerCheckbox = false;
-    $scope.selectAll = function() {
+    $scope.selectAll = function () {
         if (!$scope.headerCheckbox) {
             for (var i in $scope.supportsData) {
                 $scope.supportsData[i]["checkboxValue"] = 'on';
@@ -217,10 +211,10 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
             };
             $scope.headerCheckbox = ($scope.headerCheckbox == true) ? false : true;
         };
-      //  console.log($scope.selected);
+        //  console.log($scope.selected);
     };
 
-    $scope.deleteRow = function(ev, data) {
+    $scope.deleteRow = function (ev, data) {
         // Appending dialog to document.body to cover sidenav in docs app
 
         var confirm = $mdDialog
@@ -233,22 +227,22 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
         $mdDialog
             .show(confirm)
             .then(
-                function() {
-                    supportService.deleteRow(data.id).then(function(response) {});
+                function () {
+                    supportService.deleteRow(data.id).then(function (response) {});
                     window.location.reload();
                 },
-                function() {
+                function () {
                     $scope.status = 'You decided to keep your Task.';
                 });
 
     };
 
 
-   
 
-    $scope.exportTable = function(tableId) {
+
+    $scope.exportTable = function (tableId) {
         var exportHref = Excel.tableToExcel(tableId, 'sheet name');
-        $timeout(function() {
+        $timeout(function () {
             location.href = exportHref;
         }, 100);
     }
@@ -263,11 +257,11 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
     };
 
     $scope.demo.delayTooltip = undefined;
-    $scope.$watch('demo.delayTooltip', function(val) {
+    $scope.$watch('demo.delayTooltip', function (val) {
         $scope.demo.delayTooltip = parseInt(val, 10) || 0;
     });
 
-    $scope.$watch('demo.tipDirection', function(val) {
+    $scope.$watch('demo.tipDirection', function (val) {
         if (val && val.length) {
             $scope.demo.showTooltip = true;
         }
@@ -277,7 +271,7 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
     /* Side nav starts */
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
-    $scope.isOpenRight = function() {
+    $scope.isOpenRight = function () {
         return $mdSidenav('right').isOpen();
     };
 
@@ -289,7 +283,7 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
                 args = Array.prototype.slice
                 .call(arguments);
             $timeout.cancel(timer);
-            timer = $timeout(function() {
+            timer = $timeout(function () {
                 timer = undefined;
                 func.apply(context, args);
             }, wait || 10);
@@ -297,51 +291,51 @@ var deregisterListener = $rootScope.$on("CallSupportSearchMethod", function(even
     }
 
     function buildDelayedToggler(navID) {
-        return debounce(function() {
-            $mdSidenav(navID).toggle().then(function() {
+        return debounce(function () {
+            $mdSidenav(navID).toggle().then(function () {
                 $log.debug("toggle " + navID + " is done");
             });
         }, 200);
     }
 
     function buildToggler(navID) {
-        return function() {
-            $mdSidenav(navID).toggle().then(function() {
+        return function () {
+            $mdSidenav(navID).toggle().then(function () {
                 $log.debug("toggle " + navID + " is done");
             });
         }
     }
-    init(); 
+    init();
     var originatorEv;
-    $scope.openMenu = function($mdOpenMenu, ev) {
-    originatorEv = ev;
-    $mdOpenMenu(ev);
-            };
-            $scope.menuItemClick = function(index,key) {
-                
-       
-                    if (key == 'endClient') {
-                        $scope.endClient = true;
-                        $scope.technologyUsed = false;
-                        $scope.allottedTime = false;
-                    } else if (key == 'technologyUsed') {
-                        $scope.endClient = false;
-                        $scope.technologyUsed = true;
-                        $scope.allottedTime = false;
+    $scope.openMenu = function ($mdOpenMenu, ev) {
+        originatorEv = ev;
+        $mdOpenMenu(ev);
+    };
+    $scope.menuItemClick = function (index, key) {
 
-                    } else if (key == 'allottedTime') {
-                        $scope.endClient = false;
-                        $scope.technologyUsed = false;
-                        $scope.allottedTime = true;
-                    }
-                
-            
-               
-          };
+
+        if (key == 'endClient') {
+            $scope.endClient = true;
+            $scope.technologyUsed = false;
+            $scope.allottedTime = false;
+        } else if (key == 'technologyUsed') {
+            $scope.endClient = false;
+            $scope.technologyUsed = true;
+            $scope.allottedTime = false;
+
+        } else if (key == 'allottedTime') {
+            $scope.endClient = false;
+            $scope.technologyUsed = false;
+            $scope.allottedTime = true;
+        }
+
+
+
+    };
     /* Side nav ends */
 
     return self;
-    };
+};
 
 /*dmtApplication.directive('support', function($state) {
     return {

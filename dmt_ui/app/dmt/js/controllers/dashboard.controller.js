@@ -3,7 +3,7 @@
 dmtApplication
     .controller("DashboardController", DashboardController);
 
-function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$rootScope) {
+function DashboardController($scope, DashboardService, $mdDialog, $mdToast, $rootScope) {
     var self = {
         init: init,
         isPanelShown: false,
@@ -24,15 +24,16 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$root
     };
 
     function init() {
-       
-      $rootScope.loading = true;
-      $rootScope.currentDataEnable = false;
-        DashboardService.getAllApplications().then(function(response) {
-            $scope.applications = response.data;    
+
+        $rootScope.loading = true;
+        $rootScope.currentController = "Dashboard"
+        $rootScope.currentDataEnable = false;
+        DashboardService.getAllApplications().then(function (response) {
+            $scope.applications = response.data;
             $rootScope.loading = false;
-        }, function(error) {
-  alert("failed");
-                    $scope.loading=false;
+        }, function (error) {
+            alert("failed");
+            $scope.loading = false;
         });
 
     }
@@ -42,14 +43,14 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$root
             "app": self.name
         };
         if ($scope.form.$valid) {
-            DashboardService.saveApplication(item).then(function(response) {
+            DashboardService.saveApplication(item).then(function (response) {
                 self.applications.push(item);
                 self.messageOnSuccessOrFailure("Successfully added record");
                 self.showAndHidePanel();
                 self.submitted = false;
                 $scope.form.$setPristine();
                 $scope.form.$setUntouched();
-            }, function(error) {
+            }, function (error) {
                 if (error.status === 409) {
                     self.recordAlreadyExist = true;
                     //self.messageOnSuccessOrFailure(error.message);
@@ -70,15 +71,15 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$root
         var item = {
             "app": app
         };
-        DashboardService.deleteApplication(item).then(function(response) {
-            angular.forEach(self.applications, function(application, index) {
+        DashboardService.deleteApplication(item).then(function (response) {
+            angular.forEach(self.applications, function (application, index) {
                 if (application.app === app) {
                     self.applications.splice(index, 1);
                     self.messageOnSuccessOrFailure("Successfully deleted record");
                 }
             });
 
-        }, function(error) {
+        }, function (error) {
             if (error.status === 404) {
                 self.messageOnSuccessOrFailure(error.message);
             }
@@ -116,11 +117,11 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$root
                 '</md-dialog-actions>' +
                 '</md-dialog>',
 
-            controller: function($scope) {
-                $scope.closeDialog = function() {
+            controller: function ($scope) {
+                $scope.closeDialog = function () {
                     $mdDialog.hide();
                 };
-                $scope.delete = function() {
+                $scope.delete = function () {
                     self.deleteApplication(app);
                     $mdDialog.hide();
                 };
@@ -140,9 +141,9 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$root
                 '</div>' +
                 '</md-dialog>',
 
-            controller: function($scope, $timeout) {
+            controller: function ($scope, $timeout) {
                 self.iconDisabled = true;
-                $timeout(function() {
+                $timeout(function () {
                     $mdDialog.hide();
                     self.iconDisabled = false;
                 }, 3000);
@@ -152,7 +153,7 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$root
     }
 
     function containsObject(obj, list) {
-        return list.filter(function(listItem) {
+        return list.filter(function (listItem) {
             return angular.equals(listItem, obj)
         }).length > 0;
     }
@@ -166,7 +167,7 @@ function DashboardController($scope, DashboardService, $mdDialog, $mdToast,$root
     $scope.messageOnSuccessOrFailure = self.messageOnSuccessOrFailure;
     $scope.tooltip = self.tooltip;
     $scope.tooltip.delayTooltip = undefined;
-    $scope.$watch('tooltip.delayTooltip', function(val) {
+    $scope.$watch('tooltip.delayTooltip', function (val) {
         $scope.tooltip.delayTooltip = parseInt(val, 10) || 0;
     });
 

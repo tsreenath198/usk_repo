@@ -7,6 +7,7 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
     var self = {
         init: init
     };
+
     function init() {
         // console.log($state.current.name);
         $rootScope.currentController = 'Payroll';
@@ -21,8 +22,8 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
 
         $scope.record = {
             "employeeId": "",
-            "date":"",
-            "createdDate":"",
+            "date": "",
+            "createdDate": "",
             "description": ""
         };
         payrollService.getAllEmployees().then(function (response) {
@@ -52,6 +53,7 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
             if ($rootScope.$$listeners["CallPayRollMethod"].length > 1) {
                 $rootScope.$$listeners["CallPayRollMethod"].pop();
             }
+            $scope.currentPage = "Create";
             $scope.toggleRight();
             $scope.emptyForm();
             // $scope.destroyListener();
@@ -70,15 +72,15 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
         });
         $scope.cancelRecord();
         window.location.reload();
-}
+    }
 
     $scope.setRowData = function (row) {
         $scope.rowData = row;
         $scope.updatePage = true;
         $scope.record = {
             "employeeId": row.employeeId,
-            "date":row.date,
-            "updatedDate":"",
+            "date": row.date,
+            "updatedDate": "",
             "description": row.description,
             "id": row.id
         };
@@ -96,7 +98,7 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
         $scope.updatePage = false;
         $scope.record = {
             "employeeId": "",
-            "date":"",
+            "date": "",
             "description": ""
         };
     };
@@ -131,19 +133,19 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
             .confirm()
             .title('Are you sure want to Delete Record?')
             .ariaLabel('Lucky day').targetEvent(ev).ok(
-            'Ok').cancel('Cancel');
+                'Ok').cancel('Cancel');
         $mdDialog
             .show(confirm)
             .then(
-            function () {
-                payrollService.deleteRow(row.id).then(function (response) {
+                function () {
+                    payrollService.deleteRow(row.id).then(function (response) {
 
+                    });
+                    window.location.reload();
+                },
+                function () {
+                    $scope.status = 'You decided to keep your Task.';
                 });
-                window.location.reload();
-            },
-            function () {
-                $scope.status = 'You decided to keep your Task.';
-            });
     };
     /* Tooltip Starrts */
     $scope.demo = {
@@ -173,7 +175,8 @@ function payrollController($scope, payrollService, $rootScope, Excel, $state, $m
     function debounce(func, wait, context) {
         var timer;
         return function debounced() {
-            var context = $scope, args = Array.prototype.slice
+            var context = $scope,
+                args = Array.prototype.slice
                 .call(arguments);
             $timeout.cancel(timer);
             timer = $timeout(function () {

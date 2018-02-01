@@ -16,6 +16,7 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
         $rootScope.currentController = 'Batch';
         var current = $state.current.name;
         $rootScope.currentDataEnable = true;
+        $scope.currrentPage = "Create";
         $scope.currentState = current.split(/[\s.]+/);
         $scope.currentRoute = $scope.currentState[$scope.currentState.length - 1];
         $scope.customFullscreen = false;
@@ -25,15 +26,24 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
         $scope.selected = [];
         $scope.headerEnable = {};
         $scope.exportData = [];
-        $scope.headers = [{ "key": "technology", "value": "Technology" }, { "key": "status", "value": "Status" }, { "key": "time", "value": "Time" }];
+        $scope.headers = [{
+            "key": "technology",
+            "value": "Technology"
+        }, {
+            "key": "status",
+            "value": "Status"
+        }, {
+            "key": "time",
+            "value": "Time"
+        }];
 
         $scope.headerEnable = {
             "technology": false
         }, {
-                "status": false
-            }, {
-                "time": false
-            };
+            "status": false
+        }, {
+            "time": false
+        };
 
         $scope.getDate = function (start, end) {
             if (start != null && end == null) {
@@ -143,6 +153,7 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
             if ($rootScope.$$listeners["CallBatchMethod"].length > 1) {
                 $rootScope.$$listeners["CallBatchMethod"].pop();
             }
+            $scope.currentPage = "Create";
             $scope.toggleRight();
             $scope.emptyForm();
         });
@@ -157,11 +168,13 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
                 //console.log(response);
             });
             $scope.cancelRecord();
+            $scope.currrentPage = "Create";
             window.location.reload();
         }
         $scope.setRowData = function (row) {
             $scope.rowData = row;
             $scope.updatePage = true;
+            $scope.currrentPage = "Update";
             $scope.record = {
                 "technologyId": row.technologyId,
                 "trainerId": row.trainerId,
@@ -180,7 +193,7 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
 
         };
         $scope.updateData = function () {
-            batchService.update($scope.record).then(function (response) { });
+            batchService.update($scope.record).then(function (response) {});
             $scope.cancelRecord();
             window.location.reload();
             $scope.currentPage = 'Create';
@@ -236,18 +249,17 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
                 .confirm()
                 .title('Are you sure want to Delete Record?')
                 .ariaLabel('Lucky day').targetEvent(ev).ok(
-                'Ok').cancel('Cancel');
+                    'Ok').cancel('Cancel');
             $mdDialog
                 .show(confirm)
                 .then(
-                function () {
-                    batchService.deleteRow(row.id).then(function (response) {
+                    function () {
+                        batchService.deleteRow(row.id).then(function (response) {});
+                        window.location.reload();
+                    },
+                    function () {
+                        $scope.status = 'You decided to keep your Task.';
                     });
-                    window.location.reload();
-                },
-                function () {
-                    $scope.status = 'You decided to keep your Task.';
-                });
         };
         $scope.cancel = function () {
             $mdDialog.cancel();
@@ -255,13 +267,13 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
         $scope.getBatch = function (id, ev) {
             $rootScope.traId = id;
             $mdDialog.show({
-                controller: DialogController,
-                templateUrl: 'pages/app.batch/batch.trainee.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-            })
+                    controller: DialogController,
+                    templateUrl: 'pages/app.batch/batch.trainee.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                })
                 .then(function (answer) {
                     $scope.status = 'You said the information was "' + answer + '".';
                 }, function () {
@@ -296,13 +308,14 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
         $scope.isOpenRight = function () {
             return $mdSidenav('right').isOpen();
         };
+
         function debounce(func, wait, context) {
             var timer;
 
             return function debounced() {
                 var context = $scope,
                     args = Array.prototype.slice
-                        .call(arguments);
+                    .call(arguments);
                 $timeout.cancel(timer);
                 timer = $timeout(function () {
                     timer = undefined;
@@ -310,6 +323,7 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
                 }, wait || 10);
             };
         }
+
         function buildDelayedToggler(navID) {
             return debounce(function () {
                 $mdSidenav(navID).toggle().then(function () {
@@ -317,6 +331,7 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
                 });
             }, 200);
         }
+
         function buildToggler(navID) {
             return function () {
                 // Component lookup should always be available since we are not
@@ -352,6 +367,7 @@ function batchController($scope, batchService, $mdDialog, $rootScope, $mdToast, 
     };
     return self;
 };
+
 function DialogController($scope, batchService, $mdDialog, $rootScope, $mdToast, $timeout,
     $state, $mdSidenav, $log) {
     $scope.traineeId = $rootScope.traId;
@@ -365,13 +381,13 @@ function DialogController($scope, batchService, $mdDialog, $rootScope, $mdToast,
     $scope.getBatchAttendance = function (idd, evv) {
         $rootScope.traId = idd;
         $mdDialog.show({
-            controller: AttendanceController,
-            templateUrl: 'pages/app.batch/batch.attendance.html',
-            parent: angular.element(document.body),
-            targetEvent: evv,
-            clickOutsideToClose: true,
-            fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
-        })
+                controller: AttendanceController,
+                templateUrl: 'pages/app.batch/batch.attendance.html',
+                parent: angular.element(document.body),
+                targetEvent: evv,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+            })
             .then(function (answer) {
                 $scope.status = 'You said the information was "' + answer + '".';
             }, function () {
@@ -379,20 +395,25 @@ function DialogController($scope, batchService, $mdDialog, $rootScope, $mdToast,
             });
     }
 }
+
 function AttendanceController($scope, batchService, $mdDialog, $rootScope, $mdToast, $timeout,
     $state, $mdSidenav, $log) {
     $scope.traineesData = $rootScope.traineesData;
-    var log=[];
-    for(var i=0;i<$scope.traineesData.length;i++){
-        log.push({name:$scope.traineesData[i].name,isPresent:false,batchId:$scope.traineesData[i].batchId});
+    var log = [];
+    for (var i = 0; i < $scope.traineesData.length; i++) {
+        log.push({
+            name: $scope.traineesData[i].name,
+            isPresent: false,
+            batchId: $scope.traineesData[i].batchId
+        });
     }
     $scope.attendance = log;
-   // angular.forEach($scope.traineesData, function(item,id) {
-       // log.push({name:item.name,isPresent:false});
+    // angular.forEach($scope.traineesData, function(item,id) {
+    // log.push({name:item.name,isPresent:false});
     //});
-    $scope.saveAttendance= function(date){
-        $scope.attendance["date"]=date;
-        $scope.attd= $scope.attendance;
+    $scope.saveAttendance = function (date) {
+        $scope.attendance["date"] = date;
+        $scope.attd = $scope.attendance;
         $scope.att = angular.toJson($scope.attd);
         console.log($scope.att);
         batchService.create($scope.attendance).then(function (response) {
@@ -411,23 +432,28 @@ dmtApplication.filter('capitalize', function () {
     }
 });
 dmtApplication
-.factory(
+    .factory(
         'Excel',
-        function($window) {
-            var uri = 'data:application/vnd.ms-excel;base64,', template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>', base64 = function(
+        function ($window) {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+                base64 = function (
                     s) {
-                return $window.btoa(unescape(encodeURIComponent(s)));
-            }, format = function(s, c) {
-                return s.replace(/{(\w+)}/g, function(m, p) {
-                    return c[p];
-                })
-            };
+                    return $window.btoa(unescape(encodeURIComponent(s)));
+                },
+                format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                };
             return {
-                tableToExcel : function(tableId, worksheetName) {
-                    var table = $(tableId), ctx = {
-                        worksheet : worksheetName,
-                        table : table.html()
-                    }, href = uri + base64(format(template, ctx));
+                tableToExcel: function (tableId, worksheetName) {
+                    var table = $(tableId),
+                        ctx = {
+                            worksheet: worksheetName,
+                            table: table.html()
+                        },
+                        href = uri + base64(format(template, ctx));
                     return href;
                 }
             };

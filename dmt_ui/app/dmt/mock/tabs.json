@@ -16,11 +16,6 @@
     "route": "app.trainer"
   },
   {
-    "key": "support",
-    "value": "Support",
-    "route": "app.support"
-  },
-  {
     "key": "interview",
     "value": "Interview",
     "route": "app.interview"
@@ -34,11 +29,6 @@
     "key": "client",
     "value": "Client",
     "route": "app.client"
-  },
-  {
-    "key": "supportInteraction",
-    "value": "Support Interaction",
-    "route": "app.supportInteraction"
   },
    {
     "key": "technology",
@@ -106,8 +96,6 @@
     "value": "Employee",
     "route": "app.employee"
   },
-  
-  
   
    {
     "key": "batchAttendance",

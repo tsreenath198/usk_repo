@@ -88,44 +88,7 @@ function technologyController($scope, technologyService, $mdDialog, $mdToast, $s
             $scope.filterByText = args.text;
         });
 
-        $scope.saveRecord = function () {
-            technologyService.create($scope.create).then(function (response) {
-            });
-            $mdSidenav('right').close().then(function () {
-                $log.debug("close RIGHT is done");
-            });
-            window.location.reload();
-            $scope.currentPage = 'Create';
-        }
 
-        $scope.updateRow = function (row) {
-            $scope.currentPage = 'Update';
-            $scope.rowData = row;
-            $scope.updatePage = true;
-            $scope.create = {
-                "name": "",
-                "createdDate": "",
-                "description": ""
-            };
-        };
-        $scope.updateData = function () {
-            technologyService.update($scope.create).then(function (response) {
-            });
-
-            $mdSidenav('right').close().then(function () {
-                $log.debug("close RIGHT is done");
-            });
-            window.location.reload();
-            $scope.currentPage = 'Create';
-        }
-        $scope.emptyForm = function () {
-            $scope.updatePage = false;
-            $scope.record = {};
-        };
-
-        $scope.rowSelect = function (row) {
-            $scope.selected.push(row);
-        };
         $scope.headerCheckbox = false;
         $scope.selectAll = function () {
             if (!$scope.headerCheckbox) {
@@ -144,23 +107,7 @@ function technologyController($scope, technologyService, $mdDialog, $mdToast, $s
             //   console.log($scope.selected);
         };
 
-        $scope.deleteRow = function (ev, row) {
-            // Appending dialog to document.body to cover sidenav in docs app
-            var confirm = $mdDialog
-                .confirm()
-                .title('Are you sure want to Delete Record?')
-
-                .ariaLabel('Lucky day').targetEvent(ev).ok(
-                    'Ok').cancel('Cancel');
-
-            $mdDialog.show(confirm).then(function () {
-                technologyService.deleteRow(row.id).then(function (response) {});
-                window.location.reload();
-            }, function () {
-                $scope.status = 'You decided to keep your Task.';
-            });
-
-        };
+        
 
         /* Tooltip Starrts */
 
@@ -226,6 +173,65 @@ function technologyController($scope, technologyService, $mdDialog, $mdToast, $s
         /* Side nav ends */
     }
     init();
+    $scope.updateData = function () {
+        technologyService.update($scope.create).then(function (response) {
+                init();
+            }),
+            function (error) {
+                console.log(error)
+            };
+
+        $mdSidenav('right').close().then(function () {
+            $log.debug("close RIGHT is done");
+        });
+
+        $scope.currentPage = 'Create';
+    }
+    $scope.saveRecord = function () {
+        technologyService.create($scope.create).then(function (response) {});
+        $mdSidenav('right').close().then(function () {
+            $log.debug("close RIGHT is done");
+        });
+        window.location.reload();
+        $scope.currentPage = 'Create';
+    }
+
+    $scope.updateRow = function (row) {
+        $scope.currentPage = 'Update';
+        $scope.rowData = row;
+        $scope.updatePage = true;
+        $scope.create = {
+            "name": row.name,
+            "updatedDate": new Date(),
+            "description": row.description
+        };
+    };
+
+    $scope.emptyForm = function () {
+        $scope.updatePage = false;
+        $scope.record = {};
+    };
+    $scope.deleteRow = function (ev, row) {
+        // Appending dialog to document.body to cover sidenav in docs app
+        var confirm = $mdDialog
+            .confirm()
+            .title('Are you sure want to Delete Record?')
+
+            .ariaLabel('Lucky day').targetEvent(ev).ok(
+                'Ok').cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+            technologyService.deleteRow(row.id).then(function (response) {});
+            window.location.reload();
+        }, function () {
+            $scope.status = 'You decided to keep your Task.';
+        });
+
+    };
+
+    $scope.rowSelect = function (row) {
+        $scope.selected.push(row);
+    };
 
     return self;
 };

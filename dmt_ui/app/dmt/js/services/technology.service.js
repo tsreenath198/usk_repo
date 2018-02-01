@@ -37,10 +37,6 @@
       url : url + '/technologies/update',
       method : "POST",
       data : jsonData
-    }).then(function(response) {
-      // success
-    }, function(response) { // optional
-      // failed
     });
   }
   function deleteRow(id) {

@@ -6,10 +6,10 @@ import in.uskcorp.tool.dmt.service.UserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,18 +30,19 @@ public class UserDetailsController extends APIController<UserDetails> {
 	}
 
 	@RequestMapping(value = DMTRestURIConstants.READ_BY_VALUES, method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<String> readByValues(
-			@RequestBody UserDetails userDetails) {
-		try {
-			userDetailsService.readByValues(userDetails.getUserName(),
-					userDetails.getPassword());
-			
-			return new ResponseEntity<String>(HttpStatus.OK);
+	public @ResponseBody boolean readByValues(
+			@RequestBody UserDetails userDetails, BindingResult result) {
+		UserDetails user = new UserDetails();
+		boolean te = userDetailsService.readByValues(userDetails);
+		if (!result.hasFieldErrors()) {
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>(HttpStatus.SERVICE_UNAVAILABLE);
-
+			if (!userDetailsService.readByValues(userDetails)) {
+				result.addError(new ObjectError("err", "Invalid Credentials"));
+			} else {
+				user.setUserName("username" + user.getUserName() + ""
+						+ "password" + user.getPassword());
+			}
 		}
+		return te;
 	}
 }

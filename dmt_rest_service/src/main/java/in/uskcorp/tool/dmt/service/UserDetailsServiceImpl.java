@@ -22,9 +22,10 @@ public class UserDetailsServiceImpl extends UserDetailsService {
 	}
 
 	@Override
-	public UserDetails readByValues(String username, String password) {
-		return userDetailsDAO.readByValues(username,password);
+	public boolean readByValues(UserDetails userDetails) {
+		return userDetailsDAO.readByValues( userDetails);
 	}
+
 
 	
 	

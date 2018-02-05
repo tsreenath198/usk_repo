@@ -22,6 +22,15 @@ public class Support {
 	private String traineeName;
 	private String employeeName;
 	private int numberOfInteractions;
+	private String invoice;
+
+	public String getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(String invoice) {
+		this.invoice = invoice;
+	}
 
 	public int getId() {
 		return id;
@@ -174,7 +183,5 @@ public class Support {
 	public void setNumberOfInteractions(int numberOfInteractions) {
 		this.numberOfInteractions = numberOfInteractions;
 	}
-
-	
 
 }

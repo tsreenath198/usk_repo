@@ -48,9 +48,20 @@ public class UserDetailsDAOImpl extends UserDetailsDAO {
 	}
 
 	@Override
-	public UserDetails readByValues(String username, String password) {
-		return getJdbcTemplate().queryForObject(SQLConstants.USERCREDS_SELECT,
-				new Object[] { username, password }, getRowMapper(false));
-	}
+	public boolean readByValues(UserDetails userDetails) {
+		boolean userExists = false;
+		int rowcount = getJdbcTemplate().queryForInt(
+				SQLConstants.USERCREDS_SELECT, userDetails.getUserName(),
+				userDetails.getPassword());
 
+		/*
+		 * int rowcount = getJdbcTemplate().queryForInt(
+		 * SQLConstants.USERCREDS_SELECT, username, password,
+		 * getRowMapper(false));
+		 */
+		if (rowcount == 1) {
+			userExists = true;
+		}
+		return userExists;
+	}
 }

@@ -129,9 +129,9 @@ public class SQLConstants {
 	public static final String SUPPORT_UPDATE = "UPDATE support set trainee_id=?,trainer_id=?,start_date=?,end_date=?,allotted_time=?,end_client=?,status=?,paid_status=?,received_status=?,technology_used=?,updated_date=?,description=?,paid_by=?,numberOf_Interactions=?,invoice=? WHERE id = ?";
 	public static final String SUPPORT_SELECT_BY_ID = "SELECT * FROM support where id = ?";
 
-	public static final String USERCREDS_SELECT = "select * From user_creds where  username=? AND password=? AND active_flag='0'";
+	public static final String USERCREDS_SELECT = "select count(*) From user_creds where  username=? AND password=? AND active_flag='0'";
 	public static final String USERCREDS_INSERT = "INSERT INTO user_creds ( username, password, role) values(?,?,?)";
-	public static final String USERCREDS_DELETE = "UPDATE user_creds set active_flag=1  WHERE id = ?";
+	public static final String USERCREDS_DELETE = "UPDATE user_creds set active_flag=1  WHE	RE id = ?";
 	public static final String USERCREDS_SELECT_BY_ID = "SELECT * FROM usercreds where id = ?";
 
 	public static final String BATCH_DASHBOARD_WITHOUT_DATE = "SELECT b.id as 'batchId' , tr.name as 'name', tech.name as 'technologyName',count(tre.id) as 'noofStudent' FROM batch b,"
@@ -260,7 +260,7 @@ public class SQLConstants {
 	public static final String INVOICE_SELECT_BY_ID = "SELECT * FROM invoice where id = ?";
 
 	public static final String EMPLOYEE_SELECT = "SELECT * FROM employee where active_flag=0 ORDER BY name asc";
-	public static final String EMPLOYEE_INSERT = "INSERT INTO employee (name,phone,email,role,description) values(?,?,?,?,?)";
+	public static final String EMPLOYEE_INSERT = "INSERT INTO employee (name,phone,email,role,base_salary, created_date, description) values(?,?,?,?,?,?,?)";
 	public static final String EMPLOYEE_DELETE = "UPDATE employee set active_flag=1 WHERE id = ?";
 	public static final String EMPLOYEE_UPDATE = "UPDATE employee set name=?,phone=?,email=?,role=?,base_salary=?,updated_date=?,description=? WHERE id = ?";
 	public static final String EMPLOYEE_SELECT_BY_ID = "SELECT * FROM employee where id = ?";
@@ -276,7 +276,7 @@ public class SQLConstants {
 	public static final String PAYROLL_SELECT_BY_ID = "SELECT e.id,e.employee_id,e.details,e.count,e.rate,m.details,m.count,m.rate FROM evaluation e, miscellaneous m where e.employee_id= m.employee_id  and e.employee_id=?";
 
 	public static final String PAYROLL_SELECT_BY_MONTH = "SELECT e.id,e.employee_id,e.month,e.details,e.count,e.rate,m.details,m.count,m.rate FROM evaluation e, miscellaneous m where  e.month = ?";
-	public static final String PAYROLL_SELECT_BY_MONTH_AND_ID = "SELECT  e.id,e.employee_id,t.name,e.date,e.details as eva_details,e.count as eva_count,e.rate as eva_rate,m.details as mis_details,m.count as mis_count,m.rate as mis_rate, r.details as res_details,r.rate as res_rate,r.count as res_count,si.details as sup_details,si.rate as sup_rate,si.count as sup_count FROM evaluation e, trainer t,miscellaneous m, resume r,support_interaction si where e.employee_id= m.employee_id and e.employee_id=r.employee_id and e.employee_id = si.employee_id and e.date = m.date and e.date = r.date and e.date = si.date and e.employee_id and e.employee_id=t.id and e. employee_id = ? and e.date between ? and ?";
+	public static final String PAYROLL_SELECT_BY_MONTH_AND_ID = "SELECT  e.id,e.employee_id,t.name,e.date,e.details as eva_details,e.count as eva_count,e.rate as eva_rate,m.details as mis_details,m.count as mis_count,m.rate as mis_rate, r.details as res_details,r.rate as res_rate,r.count as res_count,si.details as sup_details,si.rate as sup_rate,si.count as sup_count FROM evaluation e, trainer t,miscellaneous m, resume r,support_interaction si where e.employee_id= m.employee_id and e.employee_id=r.employee_id and e.employee_id = si.employee_id and e.date = m.date and e.date = r.date and e.date = si.date and e.employee_id and e.employee_id=t.id and e.date=  ? and e. employee_id = ? ";
 	public static final String PAYROLL_INSERT = "INSERT INTO payroll (employee_id,start_date,end_date,employee_name,eva_details,eva_count,eva_rate,mis_details,mis_count,mis_rate,res_details,res_count,res_rate,sup_details,sup_count,sup_rate,total) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	public static final String PAYROLL_UPDATE = "UPDATE payroll set employee_Name=?,basic_Salary=?,details=?,count=?,rate=?,total=?,description=?,month_Year=? WHERE id = ?";
 	public static final String PAYROLL_DELETE = "UPDATE payroll set active_flag=1 WHERE id = ?";

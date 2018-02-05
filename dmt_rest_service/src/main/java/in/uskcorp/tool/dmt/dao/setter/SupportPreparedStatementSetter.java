@@ -29,25 +29,23 @@ public class SupportPreparedStatementSetter implements PreparedStatementSetter {
 	public void setValues(PreparedStatement arg0) throws SQLException {
 
 		arg0.setInt(1, support.getTraineeId());
-		arg0.setInt(2, support.getSupportedBy());
-		arg0.setInt(3, support.getTrainerId());
-		arg0.setDate(4, ResultSetUtil.converttoSQLDate(support.getStartDate()));
-		arg0.setDate(5, ResultSetUtil.converttoSQLDate(support.getEndDate()));
-		arg0.setString(6, support.getAllottedTime());
-		arg0.setString(7, support.getEndClient());
-		arg0.setString(8, support.getStatus());
-		arg0.setString(9, support.getPaidStatus());
-		arg0.setString(10, support.getReceivedStatus());
-		arg0.setString(11, support.getTechnologyUsed());
-		arg0.setDate(12, ResultSetUtil.converttoSQLDate(new Date()));
-		arg0.setString(13, support.getDescription());
-		arg0.setString(14, support.getPaidBy());
+		// arg0.setInt(2, support.getSupportedBy());
+		arg0.setInt(2, support.getTrainerId());
+		arg0.setDate(3, ResultSetUtil.converttoSQLDate(support.getStartDate()));
+		arg0.setDate(4, ResultSetUtil.converttoSQLDate(support.getEndDate()));
+		arg0.setString(5, support.getAllottedTime());
+		arg0.setString(6, support.getEndClient());
+		arg0.setString(7, support.getStatus());
+		arg0.setString(8, support.getPaidStatus());
+		arg0.setString(9, support.getReceivedStatus());
+		arg0.setString(10, support.getTechnologyUsed());
+		arg0.setDate(11, ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setString(12, support.getDescription());
+		arg0.setString(13, support.getPaidBy());
 		arg0.setInt(14, support.getNumberOfInteractions());
-
-		
-
+		arg0.setString(15, support.getInvoice());
 		if (!isInsert) {
-			arg0.setInt(15, support.getId());
+			arg0.setInt(16, support.getId());
 		}
 
 	}

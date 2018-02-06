@@ -12,10 +12,6 @@ function loginService($http, $window, __env) {
 			url : url + '/userDetails/readByValues',
 			method : "POST",
 			data : data
-		}).then(function(response) {
-			// success
-		}, function(response) { // optional
-			// failed
 		});
 	}
 }

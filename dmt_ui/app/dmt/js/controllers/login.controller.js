@@ -10,15 +10,24 @@ function loginController($scope, loginService, Excel, $state, $mdDialog, $locati
 
 	function init() {
 		$scope.record = {
-			"username": "",
+			"userName": "",
 			"password": ""
 		};
 		$scope.login = function () {
 			if ($scope.record.userName !== "" && $scope.record.password !== "") {
-				$location.path("/dashboard");
+				//$location.path("/dashboard");
 				loginService.validate($scope.record).then(function (response) {
-
-				});
+					
+					if(!response.data){
+						$scope.errorMessage = "Invalid Username and Password";
+					}else{
+						$scope.errorMessage = "";
+						$location.path('/dashboard');
+					}
+					
+				}), (function (error) {
+					console.log(error);
+				})
 			} else {
 				alert("Provide Username and password");
 			}

@@ -42,7 +42,7 @@
   			return $http.get("./mock/feeStatus.json");
   		}
     	 function getAllTechnologies(){
-   			return $http.get(url + "/technologies/readAll");
+   			return $http.get(url + "/technology/readAll");
    		}
 
     	 function create(jsonData) {

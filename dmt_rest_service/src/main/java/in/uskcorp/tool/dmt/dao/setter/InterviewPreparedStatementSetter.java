@@ -33,15 +33,22 @@ public class InterviewPreparedStatementSetter implements
 		arg0.setString(4, interview.getInterviewer());
 		arg0.setString(5, interview.getTime());
 		arg0.setString(6, interview.getStatus());
-		arg0.setDate(7, ResultSetUtil.converttoSQLDate(new Date()));
-		arg0.setString(8, interview.getPaidStatus());
+		arg0.setString(7, interview.getPaidStatus());
+		arg0.setString(8, interview.getTechnology());
 		arg0.setString(9, interview.getReceivedStatus());
-		arg0.setString(10, interview.getDescription());
-		arg0.setDate(11, ResultSetUtil.converttoSQLDate(new Date()));
-		arg0.setString(10, interview.getTechnology());
+		arg0.setDate(10, ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setString(11, interview.getDescription());
+		arg0.setDate(12, ResultSetUtil.converttoSQLDate(new Date()));
 		if (!isInsert) {
-			arg0.setInt(12, interview.getId());
+			arg0.setInt(13, interview.getId());
 		}
-
 	}
 }
+
+//public static final String INTERVIEW_INSERT = "INSERT INTO interview ( trainee_id,assisted_by,client_id,interviewer,time,status,paid_status,technology,
+//received_status,created_date,description,date) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+
+
+
+//public static final String INTERVIEW_UPDATE = "UPDATE interview set  trainee_id=?,assisted_by=?,client_id=?,interviewer=?,
+//time=?,status=?,paid_status=?,technology=?,received_status=?,updated_date=?,description=?,date=?, WHERE id = ?";

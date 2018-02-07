@@ -18,8 +18,8 @@ public final class ResultSetUtil {
 		return null;
 	}
 
-	public static java.sql.Date converttoUtilDate(Date utilDate) {
-		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+	public static java.sql.Date converttoUtilDate(java.util.Date date) {
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		return sqlDate;
 	}
 

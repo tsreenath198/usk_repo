@@ -7,7 +7,8 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
-public class UserDetailsPreparedStatementSetter implements PreparedStatementSetter {
+public class UserDetailsPreparedStatementSetter implements
+		PreparedStatementSetter {
 
 	private UserDetails userCredentials;
 	private boolean isInsert;
@@ -20,7 +21,6 @@ public class UserDetailsPreparedStatementSetter implements PreparedStatementSett
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
 
-		//arg0.setInt(1, userCredentials.getId());
 		arg0.setString(1, userCredentials.getUserName());
 		arg0.setString(2, userCredentials.getFirstName());
 		arg0.setString(3, userCredentials.getLastName());
@@ -29,7 +29,6 @@ public class UserDetailsPreparedStatementSetter implements PreparedStatementSett
 		arg0.setString(6, userCredentials.getPassword());
 		arg0.setString(7, userCredentials.getRole());
 		arg0.setString(8, userCredentials.getDescription());
-		
 
 		if (!isInsert) {
 			arg0.setInt(9, userCredentials.getId());

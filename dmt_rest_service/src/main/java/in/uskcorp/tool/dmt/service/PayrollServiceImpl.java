@@ -27,8 +27,8 @@ public class PayrollServiceImpl extends PayrollService {
 	}
 
 	@Override
-	public Payroll readByMonthAndId(Date month, Integer employeeId) {
-		return payrollDAO.readByMonthAndId(month, employeeId);
+	public Payroll readByMonthAndId(int employeeId, Date fromDate, Date toDate) {
+		return payrollDAO.readByMonthAndId(employeeId, fromDate, toDate);
 	}
 
 }

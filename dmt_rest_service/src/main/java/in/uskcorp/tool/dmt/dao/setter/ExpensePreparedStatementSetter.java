@@ -1,5 +1,6 @@
 package in.uskcorp.tool.dmt.dao.setter;
 
+import in.uskcorp.tool.dmt.dao.ExpenseDaoImpl;
 import in.uskcorp.tool.dmt.domain.Expense;
 import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
@@ -20,11 +21,21 @@ public class ExpensePreparedStatementSetter implements PreparedStatementSetter {
 
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
+		int credit = expense.getCredit();
+		int debit = expense.getDebit();
+		ExpenseDaoImpl expenseDaoImpl = new ExpenseDaoImpl();
+		int balance = expenseDaoImpl.getBalance();
+		if (credit > 0) {
+			balance = balance + credit;
+		} else {
+			balance = balance - debit;
+		}
+
 		arg0.setDate(1, ResultSetUtil.converttoSQLDate(expense.getDate()));
 		arg0.setString(2, expense.getPurposeOfExpense());
-		arg0.setInt(3, expense.getCredit());
-		arg0.setInt(4, expense.getDebit());
-		arg0.setInt(5, expense.getBalance());
+		arg0.setInt(3, credit);
+		arg0.setInt(4, debit);
+		arg0.setInt(5, balance);
 		arg0.setDate(6, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(7, expense.getDescription());
 		if (!isInsert) {

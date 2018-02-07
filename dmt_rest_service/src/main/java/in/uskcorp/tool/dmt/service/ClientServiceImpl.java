@@ -33,9 +33,9 @@ public class ClientServiceImpl extends ClientService {
 			clientId = clientDAO.getLastId();
 		}
 
-		for (Contact contact : a.getContact()) {
+		/*for (Contact contact : a.getContact()) {
 			contact.setClientId(clientId);
 			contactDAO.create(contact);
-		}
+		}*/
 	}
 }

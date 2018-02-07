@@ -21,13 +21,10 @@ public class ResumePreparedStatementSetter implements PreparedStatementSetter {
 
 	@Override
 	public void setValues(PreparedStatement arg0) throws SQLException {
-		System.out.println("Date::" + resume.getDate());
-		System.out.println("Updated Date::"
-				+ ResultSetUtil.converttoSQLDate(resume.getDate()));
 		arg0.setInt(1, resume.getTraineeId());
 		arg0.setInt(2, resume.getPreparedBy());
 		arg0.setString(3, resume.getPaid());
-		arg0.setDate(4, ResultSetUtil.converttoSQLDate(new Date()));
+		arg0.setDate(4, ResultSetUtil.converttoSQLDate(resume.getDate()));
 		arg0.setDate(5, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(6, resume.getReceivedStatus());
 		arg0.setString(7, resume.getDetails());
@@ -39,3 +36,5 @@ public class ResumePreparedStatementSetter implements PreparedStatementSetter {
 		}
 	}
 }
+
+

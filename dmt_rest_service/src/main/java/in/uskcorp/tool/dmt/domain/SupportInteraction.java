@@ -10,6 +10,9 @@ public class SupportInteraction {
 	private int leadId;
 	private int traineeId;
 	private int trainerId;
+	private int employeeId;
+	
+	
 	private String traineeName;
 	private String trainerName;
 	private Date createdDate;
@@ -69,6 +72,14 @@ public class SupportInteraction {
 		this.date = date;
 	}
 
+	public int getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(int employeeId) {
+		this.employeeId = employeeId;
+	}
+
 	public String getLead() {
 		return lead;
 	}
@@ -122,6 +133,7 @@ public class SupportInteraction {
 	}
 
 	public void setDescription(String description) {
+		
 		this.description = description;
 	}
 

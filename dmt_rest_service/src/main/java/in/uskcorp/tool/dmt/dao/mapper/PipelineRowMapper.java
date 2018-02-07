@@ -16,15 +16,16 @@ public class PipelineRowMapper implements RowMapper<Pipeline> {
 
 		pipeline.setId(resultSet.getInt("id"));
 		pipeline.setCandidateName(resultSet.getString("candidate_name"));
-		pipeline.setCreatedDate(ResultSetUtil.getDate(resultSet,
-				"created_date"));
 		pipeline.setEmail(resultSet.getString("email"));
 		pipeline.setPhone(resultSet.getLong("phone"));
 		pipeline.setRequirements(resultSet.getString("requirements"));
-		pipeline.setUpdatedDate(ResultSetUtil.getDate(resultSet,
-				"updated_date"));
-		pipeline.setDescription(resultSet.getString("description"));
+		pipeline.setCreatedDate(ResultSetUtil
+				.getDate(resultSet, "created_date"));
+		pipeline.setUpdatedDate(ResultSetUtil
+				.getDate(resultSet, "updated_date"));
 		
+		pipeline.setDescription(resultSet.getString("description"));
+
 		return pipeline;
 
 	}

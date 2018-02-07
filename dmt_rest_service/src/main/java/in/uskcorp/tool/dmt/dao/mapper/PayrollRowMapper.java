@@ -1,6 +1,7 @@
 package in.uskcorp.tool.dmt.dao.mapper;
 
 import in.uskcorp.tool.dmt.domain.Payroll;
+//import in.uskcorp.tool.dmt.util.ResultSetUtil;
 import in.uskcorp.tool.dmt.util.ResultSetUtil;
 
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ public class PayrollRowMapper implements RowMapper<Payroll> {
 		payroll.setId(resultSet.getInt("id"));
 		payroll.setEmployeeId(resultSet.getInt("employee_id"));
 		payroll.setEmployeeName(resultSet.getString("name"));
-		payroll.setDate(ResultSetUtil.getDate(resultSet, "date"));
+		payroll.setDate(resultSet.getDate("date"));
 		payroll.setEvaDetails(resultSet.getString("eva_details"));
 		payroll.setEvaRate(resultSet.getInt("eva_rate"));
 		payroll.setEvaCount(resultSet.getInt("eva_count"));
@@ -29,6 +30,11 @@ public class PayrollRowMapper implements RowMapper<Payroll> {
 		payroll.setSupDetails(resultSet.getString("sup_details"));
 		payroll.setSupRate(resultSet.getInt("sup_rate"));
 		payroll.setSupCount(resultSet.getInt("sup_count"));
+		payroll.setBaseSalary(resultSet.getInt("base_salary"));
+		payroll.setTrainingCount(resultSet.getInt("training_count"));
+		payroll.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));
+		payroll.setUpdatedDate(ResultSetUtil.getDate(resultSet, "updated_date"));
+		payroll.setDescription(resultSet.getString("description"));
 
 		int total = (resultSet.getInt("eva_rate")
 				* resultSet.getInt("eva_count") + (resultSet.getInt("mis_rate")

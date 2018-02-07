@@ -6,6 +6,8 @@ public class Payroll {
 	private int id;
 	private int employeeId;
 	private Date date;
+	private Date from;
+	private Date to;
 	private String employeeName;
 
 	private String evaDetails;
@@ -23,7 +25,54 @@ public class Payroll {
 	private String supDetails;
 	private int supCount;
 	private int supRate;
+
+	private int baseSalary;
+	private int trainingCount;
 	private int total;
+
+	private String description;
+	private Date createdDate;
+	private Date updatedDate;
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public Date getFrom() {
+		return from;
+	}
+
+	public void setFrom(Date from) {
+		this.from = from;
+	}
+
+	public Date getTo() {
+		return to;
+	}
+
+	public void setTo(Date to) {
+		this.to = to;
+	}
 
 	public String getSupDetails() {
 		return supDetails;
@@ -159,6 +208,22 @@ public class Payroll {
 
 	public void setTotal(int total) {
 		this.total = total;
+	}
+
+	public int getBaseSalary() {
+		return baseSalary;
+	}
+
+	public void setBaseSalary(int baseSalary) {
+		this.baseSalary = baseSalary;
+	}
+
+	public int getTrainingCount() {
+		return trainingCount;
+	}
+
+	public void setTrainingCount(int trainingCount) {
+		this.trainingCount = trainingCount;
 	}
 
 }

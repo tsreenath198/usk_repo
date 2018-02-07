@@ -23,15 +23,15 @@ public class TrainerPreparedStatementSetter implements PreparedStatementSetter {
 	public void setValues(PreparedStatement arg0) throws SQLException {
 
 		arg0.setString(1, trainer.getName());
-		arg0.setString(2, trainer.getReferredBy());
-		arg0.setInt(3, trainer.getTechnologyId());
-		arg0.setString(4, trainer.getPhone());
-		arg0.setString(5, trainer.getEmail());
-		arg0.setDate(6,
+		arg0.setString(2, trainer.getEmail());
+		arg0.setDate(3,
 				ResultSetUtil.converttoSQLDate(new Date()));
-
-		arg0.setString(7, trainer.getDescription());
-
+		arg0.setString(4, trainer.getDescription());
+		arg0.setString(5, trainer.getPhone());
+		arg0.setInt(6, trainer.getTechnologyId());
+		arg0.setString(7, trainer.getReferredBy());
+				
+		
 		if (!isInsert) {
 			arg0.setInt(8, trainer.getId());
 		}

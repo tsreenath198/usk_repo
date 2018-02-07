@@ -20,7 +20,7 @@ public class SupportRowMapper implements RowMapper<Support> {
 		Support support = new Support();
 		support.setId(resultSet.getInt("id"));
 		support.setTraineeId(resultSet.getInt("trainee_id"));
-		// support.setSupportedBy(resultSet.getInt("supported_by"));
+		//support.setSupportedBy(resultSet.getInt("supported_by"));
 		support.setTrainerId(resultSet.getInt("trainer_id"));
 		support.setStartDate(ResultSetUtil.getDate(resultSet, "start_date"));
 		support.setEndDate(ResultSetUtil.getDate(resultSet, "end_date"));
@@ -30,11 +30,12 @@ public class SupportRowMapper implements RowMapper<Support> {
 		support.setPaidStatus(resultSet.getString("paid_status"));
 		support.setReceivedStatus(resultSet.getString("received_status"));
 		support.setTechnologyUsed(resultSet.getString("technology_used"));
-		support.setPaidBy(resultSet.getString("paid_by"));
 		support.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));
 		support.setUpdatedDate(ResultSetUtil.getDate(resultSet, "updated_date"));
+		support.setPaidBy(resultSet.getString("paid_by"));
 		support.setDescription(resultSet.getString("description"));
-		support.setNumberOfInteractions(resultSet.getInt("numberOf_Interactions"));
+		
+		// support.setNumberOfInteractions(resultSet.getInt("numberOf_Interactions"));
 
 		if (isReadAll) {
 			support.setTraineeName(resultSet.getString("trainee_name"));
@@ -44,4 +45,6 @@ public class SupportRowMapper implements RowMapper<Support> {
 		return support;
 	}
 
-}
+}//public static final String SUPPORT_INSERT = "INSERT INTO support (trainee_id,trainer_id,start_date,end_date,allotted_time,end_client,
+//status,paid_status,received_status,technology_used,paid_by,created_date,description,numberOf_Interactions,invoice) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+

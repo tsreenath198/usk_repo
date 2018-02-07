@@ -56,10 +56,11 @@ public class PayrollDaoImpl extends PayrollDAO {
 	}
 
 	@Override
-	public Payroll readByMonthAndId(Date month, Integer employeeId) {
+	public Payroll readByMonthAndId(int employeeId, Date fromDate, Date toDate) {
 		return getJdbcTemplate().queryForObject(
 				SQLConstants.PAYROLL_SELECT_BY_MONTH_AND_ID,
-				new Object[] { employeeId, month }, getRowMapper(false));
+				new Object[] { employeeId, fromDate, toDate },
+				getRowMapper(false));
 
 	}
 }

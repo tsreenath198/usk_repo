@@ -29,7 +29,7 @@ public class SupportPreparedStatementSetter implements PreparedStatementSetter {
 	public void setValues(PreparedStatement arg0) throws SQLException {
 
 		arg0.setInt(1, support.getTraineeId());
-		// arg0.setInt(2, support.getSupportedBy());
+		//arg0.setInt(2, support.getSupportedBy());
 		arg0.setInt(2, support.getTrainerId());
 		arg0.setDate(3, ResultSetUtil.converttoSQLDate(support.getStartDate()));
 		arg0.setDate(4, ResultSetUtil.converttoSQLDate(support.getEndDate()));
@@ -40,13 +40,14 @@ public class SupportPreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(9, support.getReceivedStatus());
 		arg0.setString(10, support.getTechnologyUsed());
 		arg0.setDate(11, ResultSetUtil.converttoSQLDate(new Date()));
-		arg0.setString(12, support.getDescription());
-		arg0.setString(13, support.getPaidBy());
-		arg0.setInt(14, support.getNumberOfInteractions());
-		arg0.setString(15, support.getInvoice());
+		arg0.setString(12, support.getPaidBy());
+		arg0.setString(13, support.getDescription());
+		//arg0.setInt(15, support.getNumberOfInteractions());
 		if (!isInsert) {
-			arg0.setInt(16, support.getId());
+			arg0.setInt(14, support.getId());
 		}
 
 	}
 }
+//public static final String SUPPORT_INSERT = "INSERT INTO support (trainee_id,trainer_id,start_date,end_date,
+//allotted_time,end_client,status,paid_status,received_status,technology_used,paid_by,created_date,description) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";

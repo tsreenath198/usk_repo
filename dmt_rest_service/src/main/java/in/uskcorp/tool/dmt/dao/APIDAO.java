@@ -58,8 +58,8 @@ public abstract class APIDAO<T> {
 		jdbcTemplate.update(getDeleteQuery(), id);
 	}
 
-	/*
-	 * public void multipleDelete(List<T> listId) {
-	 * jdbcTemplate.update(getDeleteQuery(), listId); }
-	 */
+	
+	/* public void multipleDelete(List<T> listId) {
+	 jdbcTemplate.update(getDeleteQuery(), listId); }*/
+
 }

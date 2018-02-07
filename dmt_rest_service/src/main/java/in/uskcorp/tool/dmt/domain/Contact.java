@@ -1,12 +1,43 @@
 package in.uskcorp.tool.dmt.domain;
 
+import java.sql.Date;
+
 public class Contact {
 	private int id;
 	private String poc;
 	private String email;
 	private String telephone;
 	private Long clientId;
+	private Date createdDate;
+	private Date updatedDate;
+	
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public int getActiveFlag() {
+		return activeFlag;
+	}
+
+	public void setActiveFlag(int activeFlag) {
+		this.activeFlag = activeFlag;
+	}
+
 	private String designation;
+	private int activeFlag;
+	
 	
 	public String getDesignation() {
 		return designation;
@@ -56,4 +87,8 @@ public class Contact {
 		this.telephone = telephone;
 	}
 
-}
+	
+	
+	}
+
+	

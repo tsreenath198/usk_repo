@@ -8,7 +8,7 @@ public class Expense {
 	private String purposeOfExpense;
 	private int credit;
 	private int debit;
-	private int balance;
+	private long balance;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
@@ -54,11 +54,11 @@ public class Expense {
 		this.debit = debit;
 	}
 
-	public int getBalance() {
+	public long getBalance() {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
+	public void setBalance(long balance) {
 		this.balance = balance;
 	}
 

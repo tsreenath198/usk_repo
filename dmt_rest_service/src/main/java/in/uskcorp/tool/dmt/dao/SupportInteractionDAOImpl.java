@@ -23,7 +23,7 @@ public class SupportInteractionDAOImpl extends SupportInteractionDAO {
 
 	@Override
 	protected String getReadQuery() {
-		return null;
+		return SQLConstants.SUPPORT_INTERACTION_SELECT_BY_ID;
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class SupportInteractionDAOImpl extends SupportInteractionDAO {
 
 	@Override
 	protected String getDeleteQuery() {
-		return null;
+		return SQLConstants.SUPPORT_INTERACTION_DELETE;
 	}
 
 	@Override

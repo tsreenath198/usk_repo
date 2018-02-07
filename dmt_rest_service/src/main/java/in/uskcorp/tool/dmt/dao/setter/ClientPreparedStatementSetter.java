@@ -24,9 +24,8 @@ public class ClientPreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(2, client.getAddress());
 		arg0.setDate(3, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(4, client.getDescription());
-		//arg0.setString(5, client.getContacts());
 		if (!isInsert) {
-			arg0.setInt(6, client.getId());
+			arg0.setInt(5, client.getId());
 		}
 
 	}

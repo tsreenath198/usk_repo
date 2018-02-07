@@ -3,6 +3,10 @@ package in.uskcorp.tool.dmt.controller;
 import in.uskcorp.tool.dmt.domain.Payroll;
 import in.uskcorp.tool.dmt.service.APIService;
 import in.uskcorp.tool.dmt.service.PayrollService;
+import in.uskcorp.tool.dmt.util.ResultSetUtil;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,8 +50,12 @@ public class PayrollController extends APIController<Payroll> {
 	public @ResponseBody ResponseEntity<Payroll> readByMonthAndId(
 			@RequestBody Payroll payroll) {
 		try {
-			Payroll pay = payrollService.readByMonthAndId(payroll.getDate(),
-					payroll.getEmployeeId());
+			Date fromDate = getFirstDateOfMonth(ResultSetUtil
+					.converttoUtilDate(payroll.getDate()));
+			Date toDate = getLastDateOfMonth(ResultSetUtil
+					.converttoUtilDate(payroll.getDate()));
+			Payroll pay = payrollService.readByMonthAndId(
+					payroll.getEmployeeId(), fromDate, toDate);
 			return new ResponseEntity<Payroll>(pay, HttpStatus.OK);
 
 		} catch (Exception e) {
@@ -55,5 +63,21 @@ public class PayrollController extends APIController<Payroll> {
 			return new ResponseEntity<Payroll>(HttpStatus.SERVICE_UNAVAILABLE);
 
 		}
+	}
+
+	public static Date getFirstDateOfMonth(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.DAY_OF_MONTH,
+				cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return cal.getTime();
+	}
+
+	public static Date getLastDateOfMonth(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.DAY_OF_MONTH,
+				cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return cal.getTime();
 	}
 }

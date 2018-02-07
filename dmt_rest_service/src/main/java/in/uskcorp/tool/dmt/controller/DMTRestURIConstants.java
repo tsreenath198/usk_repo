@@ -11,7 +11,7 @@ public interface DMTRestURIConstants {
 	String EXPENSES="/expenses";
 	String PAYROLL = "/payroll";
 	String CLIENTS = "/clients";
-	String TECHNOLOGIES = "/technologies";
+	String TECHNOLOGIES = "/technology";
 	String BATCHES = "/batches";
 	String Employees = "/employees";
 	String SUPPORT_TRACKERS = "/supportTrackers";
@@ -35,6 +35,7 @@ public interface DMTRestURIConstants {
 	String USER_ROLES = "/userRoles";
 	String TIME_SHEETS = "/timeSheets";
 	String EMPLOYEE_ATTENDANCE = "/employeeAttendances";
+	String BANKING ="/banking";
 	/**
 	 * OPERATIONS HERE
 	 */

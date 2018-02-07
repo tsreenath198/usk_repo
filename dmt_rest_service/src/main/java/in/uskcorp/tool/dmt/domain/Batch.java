@@ -11,6 +11,7 @@ public class Batch {
 	private Date endDate;
 	private String status;
 	private String paidStatus;
+	private String receivedStatus;
 	private String trainerName;
 	private String technologyName;
 	private String description;
@@ -115,6 +116,16 @@ public class Batch {
 	public void setActiveFlag(int activeFlag) {
 		this.activeFlag = activeFlag;
 	}
+
+	public String getReceivedStatus() {
+		return receivedStatus;
+	}
+
+	public void setReceivedStatus(String receivedStatus) {
+		this.receivedStatus = receivedStatus;
+	}
+
+	
 	
 
 }

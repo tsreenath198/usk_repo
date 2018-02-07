@@ -19,6 +19,8 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
 		employee.setBaseSalary(resultSet.getFloat("base_salary"));
 		employee.setCreatedDate(ResultSetUtil
 				.getDate(resultSet, "created_date"));
+		employee.setUpdatedDate(ResultSetUtil
+				.getDate(resultSet, "updated_date"));
 		employee.setDescription(resultSet.getString("description"));
 		employee.setActiveFlag(resultSet.getInt("active_flag"));
 		return employee;

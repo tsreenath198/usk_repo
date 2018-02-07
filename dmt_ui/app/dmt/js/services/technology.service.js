@@ -13,7 +13,7 @@
           }, url = __env.baseUrl + __env.context
        return service;
        function getAllTechnologies() {
-                return $http.get(url + "/technologies/readAll");  
+                return $http.get(url + "/technology/readAll");  
               }
 
               function getAllTrainersBasedOnTechnologyName(id) {
@@ -22,7 +22,7 @@
 
     function create(jsonData) {
     return $http({
-      url : url + '/technologies/create',
+      url : url + '/technology/create',
       method : "POST",
       data : jsonData
     }).then(function(response) {
@@ -34,14 +34,14 @@
   
   function update(jsonData) {
     return $http({
-      url : url + '/technologies/update',
+      url : url + '/technology/update',
       method : "POST",
       data : jsonData
     });
   }
   function deleteRow(id) {
     return $http({
-      url : url + '/technologies/delete?id='+id,
+      url : url + '/technology/delete?id='+id,
       method : "POST"
     }).then(function(response) {
       // success

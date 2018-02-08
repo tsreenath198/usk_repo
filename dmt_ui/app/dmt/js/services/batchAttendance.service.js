@@ -4,7 +4,7 @@ dmtApplication.factory("batchAttendanceService", batchAttendanceService);
 function batchAttendanceService($http, __env, $window) {
 
 	var service = {
-		getAllBatchAttendances : getAllBatchAttendances,
+		getAllBatchAttendance : getAllBatchAttendance,
 		getAllBatches : getAllBatches,
 		trainees:trainees,
 		create : create,
@@ -17,7 +17,7 @@ function batchAttendanceService($http, __env, $window) {
 		return $http.get(url + "/batches/readAll");
 	}
 	function getAllBatchAttendances() {
-		return $http.get(url + "/batchAttendances/readAll");
+		return $http.get(url + "/batchAttendance/readAll");
 	}
 	
 	function trainees(batch_id) {
@@ -26,7 +26,7 @@ function batchAttendanceService($http, __env, $window) {
 
 	function create(jsonData) {
 		return $http({
-			url : url + '/batchAttendances/create',
+			url : url + '/batchAttendance/create',
 			method : "POST",
 			data : jsonData
 		}).then(function(response) {
@@ -37,7 +37,7 @@ function batchAttendanceService($http, __env, $window) {
 	}
 	function update(jsonData) {
 		return $http({
-			url : url + '/batchAttendances/update',
+			url : url + '/batchAttendance/update',
 			method : "POST",
 			data : jsonData
 		}).then(function(response) {
@@ -49,7 +49,7 @@ function batchAttendanceService($http, __env, $window) {
 	
 	function deleteRow(data) {
 		return $http({
-			url : url + '/batchAttendances/delete?id='+data,
+			url : url + '/batchAttendance/delete?id='+data,
 			method : "POST"
 		}).then(function(response) {
 			// success

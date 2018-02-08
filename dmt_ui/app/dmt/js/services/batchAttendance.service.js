@@ -16,7 +16,7 @@ function batchAttendanceService($http, __env, $window) {
 	function getAllBatches() {
 		return $http.get(url + "/batches/readAll");
 	}
-	function getAllBatchAttendances() {
+	function getAllBatchAttendance() {
 		return $http.get(url + "/batchAttendance/readAll");
 	}
 	

@@ -31,7 +31,7 @@ public interface DMTRestURIConstants {
 	String USERDETAILS = "/userDetails";
 	String SUPPORTINTERACTIONS = "/supportInteractions";
 	String EMPLOYEES_DESIGNATION = "/employeesDesignation";
-	String BATCH_ATTENDANCES = "/batchAttendances";
+	String BATCH_ATTENDANCE = "/batchAttendance";
 	String USER_ROLES = "/userRoles";
 	String TIME_SHEETS = "/timeSheets";
 	String EMPLOYEE_ATTENDANCE = "/employeeAttendances";

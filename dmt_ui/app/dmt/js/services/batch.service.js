@@ -39,7 +39,7 @@ function batchService($http, __env, $window) {
 		return $http.get("./mock/feeStatus.json");
 	}
 	function getAllTechnologies() {
-		return $http.get(url + "/technologies/readAll");
+		return $http.get(url + "/technology/readAll");
 	}
 
 	function getAllTraineesBasedOnBatchId(id) {

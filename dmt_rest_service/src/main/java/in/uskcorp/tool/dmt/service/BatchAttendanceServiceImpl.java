@@ -4,10 +4,7 @@ import in.uskcorp.tool.dmt.dao.APIDAO;
 import in.uskcorp.tool.dmt.dao.BatchAttendanceDAO;
 import in.uskcorp.tool.dmt.dao.TraineeDAO;
 import in.uskcorp.tool.dmt.domain.BatchAttendance;
-import in.uskcorp.tool.dmt.domain.Trainee;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

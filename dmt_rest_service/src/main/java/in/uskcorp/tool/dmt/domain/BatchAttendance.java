@@ -8,19 +8,28 @@ public class BatchAttendance {
 	private int batchId;
 	private Date date;
 	private int traineeId;
+	private String traineeName;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
 	private int activeFlag;
 
 	private List<Trainee> trainees;
-	
+
 	public List<Trainee> getTrainees() {
 		return trainees;
 	}
 
 	public void setTrainees(List<Trainee> trainees) {
 		this.trainees = trainees;
+	}
+
+	public String getTraineeName() {
+		return traineeName;
+	}
+
+	public void setTraineeName(String traineeName) {
+		this.traineeName = traineeName;
 	}
 
 	public int getId() {

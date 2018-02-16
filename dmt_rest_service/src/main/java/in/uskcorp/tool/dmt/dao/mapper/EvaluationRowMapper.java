@@ -24,9 +24,10 @@ public class EvaluationRowMapper implements RowMapper<Evaluation> {
 				"created_date"));
 		evaluation.setUpdatedDate(ResultSetUtil.getDate(resultSet,
 				"updated_date"));
-		evaluation.setActiveFlag(resultSet.getInt("active_flag"));
 		evaluation.setDescription(resultSet.getString("description"));
-		evaluation.setName(resultSet.getString("name"));
+		//evaluation.setActiveFlag(resultSet.getInt("active_flag"));
+
+		 evaluation.setName(resultSet.getString("name"));
 		return evaluation;
 	}
 }

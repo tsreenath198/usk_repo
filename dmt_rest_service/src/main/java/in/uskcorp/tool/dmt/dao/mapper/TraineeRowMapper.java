@@ -29,6 +29,7 @@ public class TraineeRowMapper implements RowMapper<Trainee> {
 		trainee.setPaidStatus(resultSet.getString("paid_status"));
 		trainee.setReceivedStatus(resultSet.getString("received_status"));
 		trainee.setTechnologyId(resultSet.getInt("technology_id"));
+		trainee.setTechnologyName(resultSet.getString("technology_name"));
 		return trainee;
 	}
 

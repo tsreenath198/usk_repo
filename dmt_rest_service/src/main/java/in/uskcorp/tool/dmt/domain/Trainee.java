@@ -19,9 +19,16 @@ public class Trainee {
 	private String paidStatus;
 	private String receivedStatus;
 	private int technologyId;
-	
-	private String detail;
-	
+	private String technologyName;
+
+
+	public String getTechnologyName() {
+		return technologyName;
+	}
+
+	public void setTechnologyName(String technologyName) {
+		this.technologyName = technologyName;
+	}
 
 	public int getId() {
 		return id;

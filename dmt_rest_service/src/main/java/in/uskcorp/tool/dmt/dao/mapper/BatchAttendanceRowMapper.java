@@ -15,13 +15,13 @@ public class BatchAttendanceRowMapper implements RowMapper<BatchAttendance> {
 		batchAttendance.setId(resultSet.getInt("id"));
 		batchAttendance.setBatchId(resultSet.getInt("batch_id"));
 		batchAttendance.setDate(ResultSetUtil.getDate(resultSet, "date"));
-		//batchAttendance.setTraineeId(resultSet.getInt("trainee_id"));
+		batchAttendance.setTraineeId(resultSet.getInt("trainee_id"));
+		batchAttendance.setTraineeName(resultSet.getString("name"));
 		batchAttendance.setCreatedDate(ResultSetUtil.getDate(resultSet,
 				"created_date"));
 		batchAttendance.setUpdatedDate(ResultSetUtil.getDate(resultSet,
 				"updated_date"));
 		batchAttendance.setDescription(resultSet.getString("description"));
-		batchAttendance.setActiveFlag(resultSet.getInt("active_flag"));
 		return batchAttendance;
 	}
 }

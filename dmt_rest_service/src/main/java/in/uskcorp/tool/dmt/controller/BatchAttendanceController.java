@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(DMTRestURIConstants.BATCH_ATTENDANCES)
+@RequestMapping(DMTRestURIConstants.BATCH_ATTENDANCE)
 public class BatchAttendanceController extends APIController<BatchAttendance> {
 	@Autowired
 	@Qualifier("batchAttendanceServiceImpl")

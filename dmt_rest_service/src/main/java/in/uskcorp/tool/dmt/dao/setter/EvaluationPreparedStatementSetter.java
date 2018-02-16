@@ -26,10 +26,11 @@ public class EvaluationPreparedStatementSetter implements
 		arg0.setString(2, evaluation.getDetails());
 		arg0.setInt(3, evaluation.getCount());
 		arg0.setInt(4, evaluation.getRate());
-		arg0.setDate(5, evaluation.getDate());
+		arg0.setDate(5, ResultSetUtil.converttoSQLDate(evaluation.getDate()));
 		arg0.setDate(6, ResultSetUtil.converttoSQLDate(new Date()));
 		arg0.setString(7, evaluation.getDescription());
-		arg0.setInt(8, evaluation.getActiveFlag());
+		//arg0.setInt(8, evaluation.getActiveFlag());
+		arg0.setString(8, evaluation.getName());
 		if (!isInsert) {
 			arg0.setInt(9, evaluation.getId());
 		}

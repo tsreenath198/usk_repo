@@ -206,8 +206,7 @@ public class SQLConstants {
 	public static final String EMPLOYEE_DESIGNATION_UPDATE = "UPDATE employee_designation set designation=?,updated_date=?,description=? WHERE id = ?";
 	public static final String EMPLOYEE_DESIGNATION_SELECT_BY_ID = "SELECT * FROM employee_designation where id = ?";
 
-	public static final String BATCH_ATTENDANCE_SELECT = "SELECT * FROM batch_attendance where active_flag=0 ORDER BY batch_id asc";
-
+	public static final String BATCH_ATTENDANCE_SELECT = "select ba.*,t.name FROM batch_attendance ba,trainee t where ba.trainee_id=t.id and ba.active_flag=0";
 	public static final String BATCH_ATTENDANCE_SELECT_BY_BATCH_ID = "SELECT id,name FROM `trainee` WHERE  batch_id = ?";
 	public static final String BATCH_ATTENDANCE_INSERT = "INSERT INTO batch_attendance (batch_id,date,trainee_id,created_date,description) values(?,?,?,?,?)";
 	public static final String BATCH_ATTENDANCE_UPDATE = "UPDATE batch_attendance set batch_id=?,date=?,trainee_id=?,updated_date=?,description=? WHERE id = ?";
@@ -233,7 +232,7 @@ public class SQLConstants {
 	public static final String BATCH_UPDATE = "UPDATE batch set  technology_id=?,trainer_id=?,paid_status=?,received_status=?,updated_date=?,duration=?,start_date=?,end_date=?,time=?,description=?,status=? WHERE id = ?";
 	public static final String BATCH_SELECT_BY_ID = "SELECT * FROM batch where id = ?";
 
-	public static final String TRAINEE_SELECT = "SELECT DISTINCT tr.*,tr.client_id as client, cl.name as client_name,alternate_phone as 'alternatephone',"
+	public static final String TRAINEE_SELECT = "SELECT DISTINCT tr.*,tr.id as name, tr.client_id as client, cl.name as client_name,alternate_phone as 'alternatephone',"
 			+ "skype_id as 'skype',technology_id as 'technology', trainee_fee_status as 'feeStatus',batch_id as 'batch',`received_status` as 'receivedStatus',"
 			+ "`paid_status` as 'paidStatus',te.name as technology_name FROM trainee tr, client cl, technology te WHERE tr.active_flag=0 AND "
 			+ "tr.client_id = cl.id and tr.technology_id = te.id order by tr.created_date DESC";
@@ -247,7 +246,7 @@ public class SQLConstants {
 			+ "cl.name AS 'client_name','' as 'technology_name' FROM trainee tr,client cl  where tr.client_id = cl.id AND tr.active_flag=0 AND  tr.batch_id = ?";
 
 	public static final String TRAINER_SELECT = "SELECT t.*, t.`technology_id` as 'technology',t.`referred_by` as 'employee',"
-			+ " te.name as technology_name,e.name as employee_name FROM trainer t, technology te ,employee e WHERE "
+			+ " te.name as technology_name,e.name as employee_name  FROM trainer t, technology te ,employee e WHERE "
 			+ "t.technology_id= te.id AND t.`referred_by` = e.id UNION "
 			+ "SELECT t.*, t.`technology_id` as 'technology',t.`referred_by` as 'employee', te.name as technology_name,'' as employee_name"
 			+ " FROM trainer t, technology te WHERE t.technology_id= te.id";
@@ -278,17 +277,16 @@ public class SQLConstants {
 
 	public static final String PAYROLL_SELECT = "SELECT * FROM payroll where active_flag=0";
 	public static final String PAYROLL_SELECT_BY_ID = "SELECT e.id,e.employee_id,e.details,e.count,e.rate,m.details,m.count,m.rate FROM evaluation e, miscellaneous m where e.employee_id= m.employee_id  and e.employee_id=?";
-	public static final String PAYROLL_SELECT_BY_MONTH_AND_ID = "select (select Count(*) from batch b where b.paid_status != 'paid') as training_count ,e.description,e.id,e.employee_id,t.name,e.date,em.base_salary,e.details as eva_details,e.count as eva_count,e.rate as eva_rate,m.details as mis_details,m.count as mis_count,m.rate as mis_rate, r.details as res_details,r.rate as res_rate,r.count as res_count,si.details as sup_details,si.rate as sup_rate,si.count as sup_count FROM  evaluation e, trainer t,miscellaneous m, resume r,support_interaction si,employee em where e.employee_id= m.employee_id and e.employee_id=r.employee_id and e.employee_id = si.employee_id and e.date = m.date and e.date = r.date and e.date = si.date and e.employee_id and e.employee_id=t.id and t.name=em.name and e. employee_id = ? and  e.date between ? and ? ";
+	public static final String PAYROLL_SELECT_BY_MONTH_AND_ID = "select (select Count(*) from batch b where b.paid_status != 'paid') as training_count ,e.description,e.id,e.employee_id,t.name,e.date,em.base_salary,e.details as eva_details,e.count as eva_count,e.rate as eva_rate,m.details as mis_details,m.count as mis_count,m.rate as mis_rate, r.details as res_details,r.rate as res_rate,r.count as res_count,si.details as sup_details,si.rate as sup_rate,si.count as sup_count FROM  evaluation e, trainer t,miscellaneous m, resume r,support_interaction si,employee em where e.employee_id= m.employee_id and e.employee_id = si.employee_id and e.date = m.date and e.date = r.date and e.date = si.date and e.employee_id and e.employee_id=t.id and t.name=em.name and e. employee_id = ? and  e.date between ? and ? ";
 	public static final String PAYROLL_INSERT = "INSERT INTO payroll (employee_id,name,eva_details,eva_count,eva_rate,mis_details,mis_count,mis_rate,res_details,res_count,res_rate,sup_details,sup_count,sup_rate,total,base_salary,training_count,date,created_date,description) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 	public static final String PAYROLL_UPDATE = "UPDATE payroll set employee_id=?,name=?,eva_details=?,eva_count=?,eva_rate=?,mis_details=?,mis_count=?,mis_rate=?,res_details=?,res_count=?,res_rate=?,sup_details=?,sup_count=?,sup_rate=?,total=?,base_salary=?,training_count=?,date=?,updated_date=?,description=? WHERE id = ?";
 	public static final String PAYROLL_SELECT_BY_MONTH = "SELECT e.id,e.employee_id,e.month,e.details,e.count,e.rate,m.details,m.count,m.rate FROM evaluation e, miscellaneous m where  e.month = ?";
-    public static final String PAYROLL_DELETE = "UPDATE payroll set active_flag=1 WHERE id = ?";
-
+	public static final String PAYROLL_DELETE = "UPDATE payroll set active_flag=1 WHERE id = ?";
 
 	public static final String EVALUATION_SELECT = "SELECT ev.*, e.name FROM evaluation ev, employee e where ev.employee_id = e.id and  ev.active_flag=0 ORDER BY e.id DESC";
 	public static final String EVALUATION_SELECT_BY_ID = "SELECT * FROM evaluation where id = ?";
-	public static final String EVALUATION_INSERT = "INSERT INTO evaluation (employee_id,details,count,rate,date,created_date,description) values(?,?,?,?,?,?,?)";
-	public static final String EVALUATION_UPDATE = "UPDATE evaluation set employee_id=?,details=?,count=?,rate=?,date=? ,updated_date=?,description=? WHERE id = ?";
+	public static final String EVALUATION_INSERT = "INSERT INTO evaluation (employee_id,details,count,rate,date,created_date,description,name) values(?,?,?,?,?,?,?,?)";
+	public static final String EVALUATION_UPDATE = "UPDATE evaluation set employee_id=?,details=?,count=?,rate=?,date=? ,updated_date=?,description=?,name=? WHERE id = ?";
 	public static final String EVALUATION_DELETE = "UPDATE evaluation set active_flag=1 WHERE id = ?";
 
 	public static final String MISCELLANEOUS_SELECT = "SELECT ms.*, e.name FROM miscellaneous ms, employee e where ms.employee_id = e.id and  ms.active_flag=0 ORDER BY e.id DESC";

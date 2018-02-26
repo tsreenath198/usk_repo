@@ -17,7 +17,7 @@ public class PayrollRowMapper implements RowMapper<Payroll> {
 		payroll.setId(resultSet.getInt("id"));
 		payroll.setEmployeeId(resultSet.getInt("employee_id"));
 		payroll.setEmployeeName(resultSet.getString("name"));
-		payroll.setDate(resultSet.getDate("date"));
+		payroll.setDate(ResultSetUtil.getDate(resultSet, "date"));
 		payroll.setEvaDetails(resultSet.getString("eva_details"));
 		payroll.setEvaRate(resultSet.getInt("eva_rate"));
 		payroll.setEvaCount(resultSet.getInt("eva_count"));

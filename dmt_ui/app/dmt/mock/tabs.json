@@ -101,5 +101,23 @@
     "key": "batchAttendance",
     "value": "Batch Attendance",
     "route": "app.batchAttendance"
-  }
+  },
+  
+  {
+   "key": "support",
+   "value": "Support",
+   "route": "app.support"
+ },
+  
+ {
+  "key": "supportInteraction",
+  "value": "Support Interaction",
+  "route": "app.supportInteraction"
+},
+  
+{
+ "key": "salary",
+ "value": "Salary",
+ "route": "app.salary"
+}
 ]

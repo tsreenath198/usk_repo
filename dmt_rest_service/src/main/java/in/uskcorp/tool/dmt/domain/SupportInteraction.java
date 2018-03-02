@@ -9,21 +9,33 @@ public class SupportInteraction {
 	private String lead;
 	private int leadId;
 	private int traineeId;
-	private int trainerId;
-	private int employeeId;
-	
-	
 	private String traineeName;
-	private String trainerName;
+	private int employeeId;
+	private String employeeName;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
-	
+
 	private String details;
 	private int rate;
 	private String month;
-	
-	
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getTraineeName() {
+		return traineeName;
+	}
+
+	public void setTraineeName(String traineeName) {
+		this.traineeName = traineeName;
+	}
+
 	public String getDetails() {
 		return details;
 	}
@@ -104,28 +116,7 @@ public class SupportInteraction {
 		this.traineeId = traineeId;
 	}
 
-	public int getTrainerId() {
-		return trainerId;
-	}
-
 	public void setTrainerId(int trainerId) {
-		this.trainerId = trainerId;
-	}
-
-	public String getTraineeName() {
-		return traineeName;
-	}
-
-	public void setTraineeName(String traineeName) {
-		this.traineeName = traineeName;
-	}
-
-	public String getTrainerName() {
-		return trainerName;
-	}
-
-	public void setTrainerName(String trainerName) {
-		this.trainerName = trainerName;
 	}
 
 	public String getDescription() {
@@ -133,7 +124,7 @@ public class SupportInteraction {
 	}
 
 	public void setDescription(String description) {
-		
+
 		this.description = description;
 	}
 

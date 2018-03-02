@@ -8,12 +8,10 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-public class SupportInteractionRowMapper implements
-		RowMapper<SupportInteraction> {
+public class SupportInteractionRowMapper implements RowMapper<SupportInteraction> {
 
 	@Override
-	public SupportInteraction mapRow(ResultSet rs, int arg1)
-			throws SQLException {
+	public SupportInteraction mapRow(ResultSet rs, int arg1) throws SQLException {
 		SupportInteraction supIntr = new SupportInteraction();
 		supIntr.setId(rs.getInt("id"));
 		supIntr.setCount(rs.getInt("count"));
@@ -22,11 +20,8 @@ public class SupportInteractionRowMapper implements
 		supIntr.setLeadId(rs.getInt("lead_id"));
 		supIntr.setTraineeId(rs.getInt("trainee_id"));
 		supIntr.setEmployeeId(rs.getInt("employee_id"));
-	//	supIntr.setTrainerId(rs.getInt("trainer_id"));
-	
-		// supIntr.setTraineeName(rs.getString("trainee_name"));
-		// supIntr.setTrainerName(rs.getString("trainer_name"));
-		
+		supIntr.setTraineeName(rs.getString("trainee"));
+		supIntr.setEmployeeName(rs.getString("employee"));
 		supIntr.setCreatedDate(ResultSetUtil.getDate(rs, "created_date"));
 		supIntr.setUpdatedDate(ResultSetUtil.getDate(rs, "updated_date"));
 		supIntr.setDescription(rs.getString("description"));

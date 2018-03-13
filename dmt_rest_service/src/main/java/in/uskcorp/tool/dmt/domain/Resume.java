@@ -6,7 +6,9 @@ public class Resume {
 
 	private int id;
 	private int traineeId;
+	private String traineeName;
 	private int preparedBy;
+	private String employeeName;
 	private String paid;
 	private Date date;
 	private Date createdDate;
@@ -16,6 +18,27 @@ public class Resume {
 	private String details;
 	private int count;
 	private int rate;
+
+
+
+
+	public String getTraineeName() {
+		return traineeName;
+	}
+
+	public void setTraineeName(String traineeName) {
+		this.traineeName = traineeName;
+	}
+
+	
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
 
 	public String getDetails() {
 		return details;

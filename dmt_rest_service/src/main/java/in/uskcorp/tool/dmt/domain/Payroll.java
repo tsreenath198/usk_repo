@@ -2,14 +2,14 @@ package in.uskcorp.tool.dmt.domain;
 
 import java.util.Date;
 
+
 public class Payroll {
 	private int id;
 	private int employeeId;
 	private Date date;
 	private Date from;
 	private Date to;
-	private String employeeName;
-
+	private String  employee;
 	private String evaDetails;
 	private int evaCount;
 	private int evaRate;
@@ -46,6 +46,8 @@ public class Payroll {
 		return createdDate;
 	}
 
+
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
@@ -64,6 +66,14 @@ public class Payroll {
 
 	public void setFrom(Date from) {
 		this.from = from;
+	}
+
+	public String getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(String employee) {
+		this.employee = employee;
 	}
 
 	public Date getTo() {
@@ -122,13 +132,6 @@ public class Payroll {
 		this.employeeId = employeeId;
 	}
 
-	public String getEmployeeName() {
-		return employeeName;
-	}
-
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
-	}
 
 	public String getEvaDetails() {
 		return evaDetails;
@@ -225,5 +228,6 @@ public class Payroll {
 	public void setTrainingCount(int trainingCount) {
 		this.trainingCount = trainingCount;
 	}
+
 
 }

@@ -46,7 +46,8 @@ public class PayrollDaoImpl extends PayrollDAO {
 	@Override
 	protected PreparedStatementSetter getPreparedStatementSetter(Payroll a,
 			boolean isInsert) {
-		return new PayrollPreparedStatementSetter(a, isInsert);
+		boolean value = false ;
+		return new PayrollPreparedStatementSetter(a, isInsert, value);
 	}
 
 	public Payroll readByValues(int employeeId) {

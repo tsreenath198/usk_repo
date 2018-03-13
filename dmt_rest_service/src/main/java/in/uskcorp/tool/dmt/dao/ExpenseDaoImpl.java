@@ -84,7 +84,7 @@ public class ExpenseDaoImpl extends ExpenseDAO {
 			conn.close();
 
 		} catch (Exception e) {
-			System.out.println("null pointer exception");
+			System.out.println("");
 		}
 		return balance;
 	}

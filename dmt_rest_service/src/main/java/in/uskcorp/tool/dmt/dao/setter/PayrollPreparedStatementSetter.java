@@ -37,7 +37,7 @@ public class PayrollPreparedStatementSetter implements PreparedStatementSetter {
 		arg0.setString(2, payroll.getEmployee());		
 		
 		
-		if(value)
+		if(!value)
 		arg0.setString(3, payroll.getEvaDetails());
 		arg0.setInt(4, payroll.getEvaCount());
 		arg0.setInt(5, payroll.getEvaRate());

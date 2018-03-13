@@ -15,7 +15,9 @@ public class ResumeRowMapper implements RowMapper<Resume> {
 		Resume resume = new Resume();
 		resume.setId(resultSet.getInt("id"));
 		resume.setTraineeId(resultSet.getInt("trainee_id"));
+		resume.setTraineeName(resultSet.getString("trainee"));
 		resume.setPreparedBy(resultSet.getInt("prepared_by"));
+		resume.setEmployeeName(resultSet.getString("employee_name"));
 		resume.setPaid(resultSet.getString("paid"));
 		resume.setDate(ResultSetUtil.getDate(resultSet, "date"));
 		resume.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));

@@ -16,8 +16,7 @@ public class PayrollRowMapper implements RowMapper<Payroll> {
 		Payroll payroll = new Payroll();
 		payroll.setId(resultSet.getInt("id"));
 		payroll.setEmployeeId(resultSet.getInt("employee_id"));
-		payroll.setEmployeeName(resultSet.getString("name"));
-		payroll.setDate(ResultSetUtil.getDate(resultSet, "date"));
+		payroll.setEmployee(resultSet.getString("employee"));
 		payroll.setEvaDetails(resultSet.getString("eva_details"));
 		payroll.setEvaRate(resultSet.getInt("eva_rate"));
 		payroll.setEvaCount(resultSet.getInt("eva_count"));
@@ -30,8 +29,10 @@ public class PayrollRowMapper implements RowMapper<Payroll> {
 		payroll.setSupDetails(resultSet.getString("sup_details"));
 		payroll.setSupRate(resultSet.getInt("sup_rate"));
 		payroll.setSupCount(resultSet.getInt("sup_count"));
+		payroll.setTotal(resultSet.getInt("total"));
 		payroll.setBaseSalary(resultSet.getInt("base_salary"));
 		payroll.setTrainingCount(resultSet.getInt("training_count"));
+		payroll.setDate(ResultSetUtil.getDate(resultSet, "date"));
 		payroll.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));
 		payroll.setUpdatedDate(ResultSetUtil.getDate(resultSet, "updated_date"));
 		payroll.setDescription(resultSet.getString("description"));

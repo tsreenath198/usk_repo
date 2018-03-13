@@ -1,5 +1,4 @@
 package in.uskcorp.tool.dmt.controller;
-
 import in.uskcorp.tool.dmt.domain.Payroll;
 import in.uskcorp.tool.dmt.service.APIService;
 import in.uskcorp.tool.dmt.service.PayrollService;
@@ -50,16 +49,19 @@ public class PayrollController extends APIController<Payroll> {
 	public @ResponseBody ResponseEntity<Payroll> readByMonthAndId(
 			@RequestBody Payroll payroll) {
 		try {
-			Date fromDate = getFirstDateOfMonth(ResultSetUtil
-					.converttoUtilDate(payroll.getDate()));
-			Date toDate = getLastDateOfMonth(ResultSetUtil
-					.converttoUtilDate(payroll.getDate()));
+			Date fromDate = ResultSetUtil
+					.converttoUtilDate(getFirstDateOfMonth(payroll.getDate()));
+			Date toDate = ResultSetUtil
+					.converttoUtilDate(getLastDateOfMonth(payroll.getDate()));
+			System.out.println("employeeId : " + payroll.getEmployeeId());
+			System.out.println("fromDate : " + fromDate);
+			System.out.println("todate : " + toDate);
 			Payroll pay = payrollService.readByMonthAndId(
 					payroll.getEmployeeId(), fromDate, toDate);
 			return new ResponseEntity<Payroll>(pay, HttpStatus.OK);
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Exception");
 			return new ResponseEntity<Payroll>(HttpStatus.SERVICE_UNAVAILABLE);
 
 		}

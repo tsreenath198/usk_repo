@@ -19,19 +19,16 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
         $scope.updatePage = false;
         $scope.expenseData = [];
         $scope.selected = [];
+        $scope.creditModel = false;
+        $scope.debitModel = false;
 
         $scope.record = {
-            "date": "",
+            "date": new Date(),
             "purposeOfExpense": "",
-            "credit": "",
-            "debit": "",
-            "balance": "",
+            "amount": "",
+            "typeOfExpense": "",
             "description": ""
         };
-
-        expenseService.getAllEmployees().then(function (response) {
-            $scope.employees = response.data;
-        });
 
         $scope.loading = true;
         expenseService.getAllexpenses().then(function (response) {
@@ -72,6 +69,11 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     init();
 
     $scope.saveRecord = function () {
+        if($scope.debitModel){
+            $scope.record.typeOfExpense = false;
+        }else{
+            $scope.record.typeOfExpense = true;
+        }
         expenseService.create($scope.record).then(function (response) {
 
         });
@@ -81,24 +83,39 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     }
 
     $scope.setRowData = function (row) {
-
+        //TODO: TOE == typeOfExpense
+        // Enable/Disable checkbox based on TOE
+        if(row.typeOfExpense){
+            $scope.creditModel = true;
+        }else{
+            $scope.debitModel = true;
+        }
+        //TODO:Need to fix once functinality done in BE
+        //Set based on the credit/debit to amount.
+        if(row.credit == 0){
+            $scope.record.amount = row.debit;
+        }else{
+             $scope.record.amount = row.credit;
+        }
         $scope.rowData = row;
         $scope.updatePage = true;
         $scope.currentPage = "Create";
-        $scope.record = {
-            "date": row.date,
-            "purposeOfExpense": row.purposeOfExpense,
-            "credit": row.credit,
-            "debit": row.debit,
-            "balance": row.balance,
-            "updatedDate": "",
-            "description": row.description,
-            "id": row.id
-        };
+
+        //Making individual because of conitinally amount value.
+        $scope.record.date = new Date(row.date);
+         $scope.record.purposeOfExpense = row.purposeOfExpense;
+          $scope.record.typeOfExpense = "";
+           $scope.record.description = row.description;
+           $scope.record.id = row.id
+       
         // console.log($scope.create.status);
     };
     $scope.updateRecord = function () {
-        //console.log($scope.record);
+        if($scope.debitModel){
+            $scope.record.typeOfExpense = false;
+        }else{
+            $scope.record.typeOfExpense = true;
+        }
         expenseService.update($scope.record).then(function (response) {
 
         });
@@ -109,11 +126,10 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     $scope.emptyForm = function () {
         $scope.updatePage = false;
         $scope.record = {
-            "date": "",
+            "date": new Date(),
             "purposeOfExpense": "",
-            "credit": "",
-            "debit": "",
-            "balance": "",
+            "amount": "",
+            "typeOfExpense": "",
             "description": ""
         };
     };

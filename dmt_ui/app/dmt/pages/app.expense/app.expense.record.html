@@ -8,18 +8,19 @@
 
         <md-input-container class="md-block">
             <label>Purpose of Expense</label>
-            <input name="purposeofexepense" type="text" ng-model="record.purposeOfExpense"> </md-input-container>
-        <md-input-container class="md-block">
-            <label>Credit</label>
-            <input name="credit" type="text" ng-model="record.credit" required only-digits> </md-input-container>
+            <input name="purposeofexepense" type="text" ng-model="record.purposeOfExpense" required> </md-input-container>
+        
+         <md-input-container class="md-block">
+            <label>Amount</label>
+            <input name="amount" type="number" ng-model="record.amount" required> </md-input-container>
 
-        <md-input-container class="md-block">
-            <label>Debit</label>
-            <input name="debit" type="text" ng-model="record.debit" required only-digits> </md-input-container>
+           <md-checkbox ng-model="creditModel" ng-disabled="debitModel">
+                Credit
+              </md-checkbox> 
+               <md-checkbox  ng-model="debitModel" ng-disabled="creditModel">
+                Debit
+              </md-checkbox> 
 
-        <md-input-container class="md-block">
-            <label>Balance</label>
-            <input name="balance" type="text" ng-model="record.balance" required only-digits> </md-input-container>
 
         <md-input-container class="md-block">
             <label>Description

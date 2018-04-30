@@ -3,19 +3,47 @@ package in.uskcorp.tool.dmt.domain;
 import java.util.Date;
 
 public class Expense {
+
 	private int id;
 	private Date date;
 	private String purposeOfExpense;
+	private long balance;
+	private int amount;
 	private int credit;
 	private int debit;
-	private long balance;
 	private Date createdDate;
 	private Date updatedDate;
 	private String description;
 	private int activeFlag;
+	private boolean typeOfExpense;
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+
+	public long getBalance() {
+		return balance;
+	}
+
+	public void setBalance(long balance) {
+		this.balance = balance;
+	}
+
+
 
 	public int getId() {
 		return id;
+	}
+
+	public boolean isTypeOfExpense() {
+		return typeOfExpense;
+	}
+
+	public void setTypeOfExpense(boolean typeOfExpense) {
+		this.typeOfExpense = typeOfExpense;
 	}
 
 	public void setId(int id) {
@@ -52,14 +80,6 @@ public class Expense {
 
 	public void setDebit(int debit) {
 		this.debit = debit;
-	}
-
-	public long getBalance() {
-		return balance;
-	}
-
-	public void setBalance(long balance) {
-		this.balance = balance;
 	}
 
 	public Date getCreatedDate() {

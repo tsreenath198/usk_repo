@@ -1,31 +1,20 @@
 package in.uskcorp.tool.dmt.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-
-import in.uskcorp.tool.dmt.dao.mapper.ExpenseRowMapper;
-import in.uskcorp.tool.dmt.dao.setter.ExpensePreparedStatementSetter;
-import in.uskcorp.tool.dmt.domain.Expense;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.mysql.jdbc.Statement;
+import in.uskcorp.tool.dmt.dao.mapper.ExpenseRowMapper;
+import in.uskcorp.tool.dmt.dao.setter.ExpensePreparedStatementSetter;
+import in.uskcorp.tool.dmt.domain.Expense;
 
 @Repository("expenseDaoImpl")
-public class ExpenseDaoImpl extends ExpenseDAO {
-	@Autowired
-	@Qualifier("jdbcTemplate")
-	private JdbcTemplate jdbcTemplate;
+public class ExpenseDAOImpl extends ExpenseDAO {
 
 	@Override
 	protected RowMapper<Expense> getRowMapper(Boolean isReadAll) {
-		return new ExpenseRowMapper();
+		return new ExpenseRowMapper(isReadAll);
 	}
 
 	@Override
@@ -54,39 +43,25 @@ public class ExpenseDaoImpl extends ExpenseDAO {
 	}
 
 	@Override
-	protected PreparedStatementSetter getPreparedStatementSetter(Expense a,
-			boolean isInsert) {
+	protected PreparedStatementSetter getPreparedStatementSetter(Expense a, boolean isInsert) {
 		return new ExpensePreparedStatementSetter(a, isInsert);
 	}
 
 	@Override
-	public Expense getSummary() {
-		return (Expense) getJdbcTemplate().query(SQLConstants.BALANCE,
-				new ExpenseRowMapper());
+	public void insert(Expense e,long amount,String decide) {
+
+		getJdbcTemplate().update(getInsertQuery(),new ExpensePreparedStatementSetter(e, false, amount,decide));
 	}
+	@Override
+	public void edit(Expense e,long amount,String decide) {
 
-	public int getBalance() {
-		int balance = 0;
-		try {
-			String url = "jdbc:mysql://localhost:3306/dmt_tool_v4_dbb";
-			String driver = "com.mysql.jdbc.Driver";
-			Class.forName(driver);
-			Connection conn = DriverManager.getConnection(url, "root", "");
-			Statement stmt = (Statement) conn.createStatement();
-			ResultSet rs;
+		getJdbcTemplate().update(getUpdateQuery(),new ExpensePreparedStatementSetter(e, true, amount, decide));
+	}	
 
-			rs = stmt.executeQuery(SQLConstants.BALANCE);
-			while (rs.next()) {
-				balance = rs.getInt("balance");
-			}
-			rs.close();
-			stmt.close();
-			conn.close();
-
-		} catch (Exception e) {
-			System.out.println("");
-		}
-		return balance;
+	@Override
+	public long findBalance() {
+		long avlBal = getJdbcTemplate().queryForLong(SQLConstants.BALANCE);
+		return avlBal;
 	}
 
 }

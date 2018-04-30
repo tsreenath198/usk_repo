@@ -49,7 +49,7 @@ public class SQLConstants {
 
 	public static final String EMPLOYEE_ATTENDANCE_SELECT = "SELECT * FROM employee_attendence ORDER BY id desc";
 	public static final String EMPLOYEE_ATTENDANCE_INSERT = "INSERT INTO employee_attendence(employee_id, employee_name, date, created_date, updated_date, in_time, out_time) VALUES (?,?,?,?,?,?,?)";
-	public static final String EMPLOYEE_ATTENDANCE_DELETE = "UPDATE employee_attendence set active_flag=1 WHERE id = ?";                      
+	public static final String EMPLOYEE_ATTENDANCE_DELETE = "UPDATE employee_attendence set active_flag=1 WHERE id = ?";
 	public static final String EMPLOYEE_ATTENDANCE_UPDATE = "UPDATE employee_attendence SET employee_id=?,employee_name=?,date=?,created_date=?,updated_date=?,in_time=?,out_time=? WHERE id=?";
 	public static final String EMPLOYEE_ATTENDANCE_SELECT_BY_ID = "SELECT * FROM employee_attendence where id = ?";
 
@@ -218,10 +218,10 @@ public class SQLConstants {
 	public static final String TIME_SHEET_UPDATE = "UPDATE time_sheet set date=?,emploee_id=?,category=?,category_ref_no=?,duration_in_hours=?,updated_date=?,description=? WHERE id = ?";
 	public static final String TIME_SHEET_DELETE = "UPDATE time_sheet set active_flag=1 WHERE id = ?";
 
-	public static final String EXPENSE_SELECT = "SELECT * FROM expense where active_flag=0 ORDER BY id asc";
+	public static final String EXPENSE_SELECT = "SELECT s.id, s.description, s.active_flag,s.date, s.purpose_of_expense,s.debit, s.credit, @b := @b + s.credit - s.debit AS balance FROM (SELECT @b := 0) AS dummy CROSS JOIN expense AS s where s.active_flag=0 ORDER BY s.date ASC";
 	public static final String EXPENSE_SELECT_BY_ID = "SELECT * FROM expense where id = ? as";
-	public static final String EXPENSE_INSERT = "INSERT INTO expense (date,purpose_of_expense,credit,debit,balance,created_date,description) values(?,?,?,?,?,?,?)";
-	public static final String EXPENSE_UPDATE = "UPDATE expense set date=?,purpose_of_expense=?,credit=?,debit=?,balance=?,updated_date=?,description=? WHERE id = ?";
+	public static final String EXPENSE_INSERT = "INSERT INTO expense (date,purpose_of_expense,credit,debit,created_date,description) values(?,?,?,?,?,?)";
+	public static final String EXPENSE_UPDATE = "UPDATE expense set date=?,purpose_of_expense=?,credit=?,debit=?,updated_date=?,description=? WHERE id = ?";
 	public static final String EXPENSE_DELETE = "UPDATE expense set active_flag=1 WHERE id = ?";
 
 	public static final String BATCH_SELECT = "SELECT b.*,t.name as technology_name, tr.name as trainer_name FROM batch b,"
@@ -243,7 +243,7 @@ public class SQLConstants {
 			+ "batch_id=?,updated_date=?,description=?,phone=?,trainee_fee_status=?,paid_status=?,received_status=?,technology_id=? WHERE id = ?";
 	public static final String TRAINEE_SELECT_BY_ID = "SELECT * FROM trainee where id = ?";
 	public static final String TRAINEE_SELECT_BY_BATCHID = "SELECT tr.*,tr.name AS 'name',"
-			+ "cl.name AS 'client_name','' as 'technology_name' FROM trainee tr,client cl  where tr.client_id = cl.id AND tr.active_flag=0 AND  tr.batch_id = ?";
+			+ "cl.name AS 'client_name' FROM trainee tr,client cl  where tr.client_id = cl.id AND tr.active_flag=0 AND  tr.batch_id = ?";
 
 	public static final String TRAINER_SELECT = "SELECT DISTINCT t.*, t.`technology_id` as 'technology',t.`referred_by` as 'employee',"
 			+ " te.name as technology_name,e.name as employee_name  FROM trainer t, technology te ,employee e WHERE "
@@ -274,7 +274,7 @@ public class SQLConstants {
 	public static final String COFOUNDER_INSERT = "INSERT INTO coFounder (name,email,address,DOB) values(?,?,?,?)";
 	public static final String COFOUNDER_UPDATE = "UPDATE coFounder set name=?,email=?,address=?,DOB=? WHERE id = ?";
 	public static final String COFOUNDER_DELETE = "UPDATE coFounder set active_flag=1 WHERE id = ?";
-	
+
 	public static final String PAYROLL_SELECT = "SELECT * FROM payroll where active_flag=0 ORDER BY id desc";
 	public static final String PAYROLL_SELECT_BY_ID = "SELECT e.id,e.employee_id,e.details,e.count,e.rate,m.details,m.count,m.rate FROM evaluation e, miscellaneous m where e.employee_id= m.employee_id  and e.employee_id=?";
 	public static final String PAYROLL_SELECT_BY_MONTH_AND_ID = "select DISTINCT (select DISTINCT Count(*) from batch b where b.paid_status != 'paid') as training_count ,e.description,e.id,e.employee_id,t.name,e.date,em.base_salary,e.details as eva_details,e.count as eva_count,e.rate as eva_rate,m.details as mis_details,m.count as mis_count,m.rate as mis_rate, r.details as res_details,r.rate as res_rate,r.count as res_count,si.details as sup_details,si.rate as sup_rate,si.count as sup_count FROM  evaluation e, trainer t,miscellaneous m, resume r,support_interaction si,employee em where e.employee_id= m.employee_id and e.employee_id=r.employee_id and e.employee_id = si.employee_id and e.date = m.date and e.date = r.date and e.date = si.date and e.employee_id and e.employee_id=t.id and t.name=em.name and e. employee_id = ? and  e.date between ? and ? ";
@@ -301,5 +301,7 @@ public class SQLConstants {
 	public static final String BANKING_UPDATE = "UPDATE banking set accountNo=?,name=?,fatherName=?,address=?,ifsc_Code=?,conformAccountNo=?,phoneNo=?,email=? where id=?";
 	public static final String BANKING_DELETE = "UPDATE banking set active_flag=1 where id = ?";
 
-	public static final String BALANCE = "select balance from expense where id =(select MAX(id) from expense)";
+	//public static final String BALANCE = "select balance from expense where id =(select MAX(id) from expense)";
+	//my code
+	public static final String BALANCE = "SELECT SUM(COALESCE(credit,0) - COALESCE(debit,0))  as balance FROM expense";
 }

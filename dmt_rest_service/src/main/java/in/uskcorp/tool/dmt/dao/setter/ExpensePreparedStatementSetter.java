@@ -41,6 +41,8 @@ public class ExpensePreparedStatementSetter implements PreparedStatementSetter {
 			arg0.setLong(4, 0);
 			arg0.setDate(5, ResultSetUtil.converttoSQLDate(new Date()));
 			arg0.setString(6, expense.getDescription());
+			//System.out.println("activeflag:"+expense.isTypeOfExpense());
+			arg0.setBoolean(7, expense.isTypeOfExpense());
 		} else {
 			arg0.setDate(1, ResultSetUtil.converttoSQLDate(expense.getDate()));
 			arg0.setString(2, expense.getPurposeOfExpense());
@@ -48,11 +50,13 @@ public class ExpensePreparedStatementSetter implements PreparedStatementSetter {
 			arg0.setLong(4, amount);
 			arg0.setDate(5, ResultSetUtil.converttoSQLDate(new Date()));
 			arg0.setString(6, expense.getDescription());
+			System.out.println("activeflag:"+expense.isTypeOfExpense());
+			arg0.setBoolean(7, expense.isTypeOfExpense());
 		}
 		
 
 		if (isInsert) {
-			arg0.setInt(7, expense.getId());
+			arg0.setInt(8, expense.getId());
 		}
 
 	}

@@ -218,11 +218,12 @@ public class SQLConstants {
 	public static final String TIME_SHEET_UPDATE = "UPDATE time_sheet set date=?,emploee_id=?,category=?,category_ref_no=?,duration_in_hours=?,updated_date=?,description=? WHERE id = ?";
 	public static final String TIME_SHEET_DELETE = "UPDATE time_sheet set active_flag=1 WHERE id = ?";
 
-	public static final String EXPENSE_SELECT = "SELECT s.id, s.description, s.active_flag,s.date, s.purpose_of_expense,s.debit, s.credit, @b := @b + s.credit - s.debit AS balance FROM (SELECT @b := 0) AS dummy CROSS JOIN expense AS s where s.active_flag=0 ORDER BY s.date ASC";
+	public static final String EXPENSE_SELECT = "SELECT s.id, s.description, s.active_flag,s.date, s.purpose_of_expense,s.debit, s.credit, @b := @b + s.credit - s.debit AS balance FROM (SELECT @b := 0) AS dummy CROSS JOIN expense AS s ";
 	public static final String EXPENSE_SELECT_BY_ID = "SELECT * FROM expense where id = ? as";
-	public static final String EXPENSE_INSERT = "INSERT INTO expense (date,purpose_of_expense,credit,debit,created_date,description) values(?,?,?,?,?,?)";
+	public static final String EXPENSE_INSERT = "INSERT INTO expense (date,purpose_of_expense,credit,debit,created_date,description,active_flag) values(?,?,?,?,?,?,?)";
 	public static final String EXPENSE_UPDATE = "UPDATE expense set date=?,purpose_of_expense=?,credit=?,debit=?,updated_date=?,description=? WHERE id = ?";
 	public static final String EXPENSE_DELETE = "UPDATE expense set active_flag=1 WHERE id = ?";
+
 
 	public static final String BATCH_SELECT = "SELECT b.*,t.name as technology_name, tr.name as trainer_name FROM batch b,"
 			+ " technology t, trainer tr WHERE b.active_flag=0 AND b.technology_id = t.id and b.trainer_id = tr.id"

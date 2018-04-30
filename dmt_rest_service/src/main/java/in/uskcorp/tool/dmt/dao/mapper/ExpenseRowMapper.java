@@ -27,6 +27,7 @@ public class ExpenseRowMapper implements RowMapper<Expense> {
 		expense.setCreatedDate(ResultSetUtil.getDate(resultSet, "created_date"));
 		expense.setUpdatedDate(ResultSetUtil.getDate(resultSet, "updated_date"));
 		expense.setDescription(resultSet.getString("description"));
+		expense.setTypeOfExpense(resultSet.getBoolean("active_flag"));
 
 		if (isReadAll) {
 			expense.setActiveFlag(resultSet.getInt("active_flag"));

@@ -19,8 +19,6 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
         $scope.updatePage = false;
         $scope.expenseData = [];
         $scope.selected = [];
-        $scope.creditModel = false;
-        $scope.debitModel = false;
 
         $scope.record = {
             "date": new Date(),
@@ -31,7 +29,7 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
         };
 
         $scope.loading = true;
-        expenseService.getAllexpenses().then(function (response) {
+        expenseService.getAllexpenses().then(function(response) {
             $scope.expenseData = response.data;
             $scope.expenseLength = response.data.length;
             console.log($scope.expenseData);
@@ -46,20 +44,23 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
                 page: 1
             };
             $scope.loading = false;
-        }, function (error) {
+        }, function(error) {
             alert("failed");
             $scope.loading = false;
         });
-        var deregisterListener = $rootScope.$on("CallExpenseMethod", function () {
+        var deregisterListener = $rootScope.$on("CallExpenseMethod", function() {
             if ($rootScope.$$listeners["CallExpenseMethod"].length > 1) {
                 $rootScope.$$listeners["CallExpenseMethod"].pop();
             }
             $scope.currentPage = "Create";
+
+            $scope.creditModel = false;
+            $scope.debitModel = false;
             $scope.toggleRight();
             $scope.emptyForm();
             // $scope.destroyListener();
         });
-        var deregisterListener = $rootScope.$on("CallExpenseSearchMethod", function (event, args) {
+        var deregisterListener = $rootScope.$on("CallExpenseSearchMethod", function(event, args) {
             if ($rootScope.$$listeners["CallExpenseSearchMethod"].length > 1) {
                 $rootScope.$$listeners["CallExpenseSearchMethod"].pop();
             }
@@ -68,13 +69,13 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     }
     init();
 
-    $scope.saveRecord = function () {
-        if($scope.debitModel){
+    $scope.saveRecord = function() {
+        if ($scope.debitModel) {
             $scope.record.typeOfExpense = false;
-        }else{
+        } else {
             $scope.record.typeOfExpense = true;
         }
-        expenseService.create($scope.record).then(function (response) {
+        expenseService.create($scope.record).then(function(response) {
 
         });
         $scope.currentPage = "Create";
@@ -82,20 +83,23 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
         window.location.reload();
     }
 
-    $scope.setRowData = function (row) {
+    $scope.setRowData = function(row) {
+
+        $scope.creditModel = false;
+        $scope.debitModel = false;
         //TODO: TOE == typeOfExpense
         // Enable/Disable checkbox based on TOE
-        if(row.typeOfExpense){
+        if (row.typeOfExpense) {
             $scope.creditModel = true;
-        }else{
+        } else {
             $scope.debitModel = true;
         }
         //TODO:Need to fix once functinality done in BE
         //Set based on the credit/debit to amount.
-        if(row.credit == 0){
+        if (row.credit == 0) {
             $scope.record.amount = row.debit;
-        }else{
-             $scope.record.amount = row.credit;
+        } else {
+            $scope.record.amount = row.credit;
         }
         $scope.rowData = row;
         $scope.updatePage = true;
@@ -103,27 +107,27 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
 
         //Making individual because of conitinally amount value.
         $scope.record.date = new Date(row.date);
-         $scope.record.purposeOfExpense = row.purposeOfExpense;
-          $scope.record.typeOfExpense = "";
-           $scope.record.description = row.description;
-           $scope.record.id = row.id
-       
+        $scope.record.purposeOfExpense = row.purposeOfExpense;
+        $scope.record.typeOfExpense = "";
+        $scope.record.description = row.description;
+        $scope.record.id = row.id
+
         // console.log($scope.create.status);
     };
-    $scope.updateRecord = function () {
-        if($scope.debitModel){
+    $scope.updateRecord = function() {
+        if ($scope.debitModel) {
             $scope.record.typeOfExpense = false;
-        }else{
+        } else {
             $scope.record.typeOfExpense = true;
         }
-        expenseService.update($scope.record).then(function (response) {
+        expenseService.update($scope.record).then(function(response) {
 
         });
         $scope.cancelRecord();
         $scope.currentPage = "Create";
         window.location.reload();
     }
-    $scope.emptyForm = function () {
+    $scope.emptyForm = function() {
         $scope.updatePage = false;
         $scope.record = {
             "date": new Date(),
@@ -133,17 +137,17 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
             "description": ""
         };
     };
-    $scope.cancelRecord = function () {
-        $mdSidenav('right').close().then(function () {
+    $scope.cancelRecord = function() {
+        $mdSidenav('right').close().then(function() {
             $log.debug("close RIGHT is done");
         });
     };
 
-    $scope.rowSelect = function (row) {
+    $scope.rowSelect = function(row) {
         $scope.selected.push(row);
     };
     $scope.headerCheckbox = false;
-    $scope.selectAll = function () {
+    $scope.selectAll = function() {
         if (!$scope.headerCheckbox) {
             for (var i in $scope.expenseData) {
                 $scope.expenseData[i]["checkboxValue"] = 'on';
@@ -162,7 +166,7 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
 
 
 
-    $scope.deleteRow = function (ev, row) {
+    $scope.deleteRow = function(ev, row) {
 
         var confirm = $mdDialog
             .confirm()
@@ -174,21 +178,21 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
         $mdDialog
             .show(confirm)
             .then(
-                function () {
-                    expenseService.deleteRow(row.id).then(function (response) {});
+                function() {
+                    expenseService.deleteRow(row.id).then(function(response) {});
                     window.location.reload();
                 },
-                function () {
+                function() {
                     $scope.status = 'You decided to keep your Task.';
                 });
 
 
     };
 
-    $scope.exportData = function (tableId) {
+    $scope.exportData = function(tableId) {
         // $scope.tasksOptions = [ $scope.tasksData.length ];
         var exportHref = Excel.tableToExcel(tableId, 'sheet name');
-        $timeout(function () {
+        $timeout(function() {
             location.href = exportHref;
         }, 100); // trigger download
     }
@@ -201,11 +205,11 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     };
 
     $scope.demo.delayTooltip = undefined;
-    $scope.$watch('demo.delayTooltip', function (val) {
+    $scope.$watch('demo.delayTooltip', function(val) {
         $scope.demo.delayTooltip = parseInt(val, 10) || 0;
     });
 
-    $scope.$watch('demo.tipDirection', function (val) {
+    $scope.$watch('demo.tipDirection', function(val) {
         if (val && val.length) {
             $scope.demo.showTooltip = true;
         }
@@ -215,7 +219,7 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     /* Side nav starts */
     $scope.toggleLeft = buildDelayedToggler('left');
     $scope.toggleRight = buildToggler('right');
-    $scope.isOpenRight = function () {
+    $scope.isOpenRight = function() {
         return $mdSidenav('right').isOpen();
     };
 
@@ -227,7 +231,7 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
                 args = Array.prototype.slice
                 .call(arguments);
             $timeout.cancel(timer);
-            timer = $timeout(function () {
+            timer = $timeout(function() {
                 timer = undefined;
                 func.apply(context, args);
             }, wait || 10);
@@ -235,20 +239,20 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     }
 
     function buildDelayedToggler(navID) {
-        return debounce(function () {
+        return debounce(function() {
             // Component lookup should always be available since we are not
             // using `ng-if`
-            $mdSidenav(navID).toggle().then(function () {
+            $mdSidenav(navID).toggle().then(function() {
                 $log.debug("toggle " + navID + " is done");
             });
         }, 200);
     }
 
     function buildToggler(navID) {
-        return function () {
+        return function() {
             // Component lookup should always be available since we are not
             // using `ng-if`
-            $mdSidenav(navID).toggle().then(function () {
+            $mdSidenav(navID).toggle().then(function() {
                 $log.debug("toggle " + navID + " is done");
             });
         }
@@ -257,11 +261,11 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
     return self;
 };
 
-dmtApplication.directive('createExpense', function ($state) {
+dmtApplication.directive('createExpense', function($state) {
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: function () {
+        templateUrl: function() {
             var current = $state.current.name;
             return '../dmt/pages/' + current + '/' + current + '.record.html';
         }

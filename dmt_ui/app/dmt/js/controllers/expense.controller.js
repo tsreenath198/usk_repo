@@ -108,7 +108,7 @@ function expenseController($scope, expenseService, $rootScope, Excel, $state, $m
         //Making individual because of conitinally amount value.
         $scope.record.date = new Date(row.date);
         $scope.record.purposeOfExpense = row.purposeOfExpense;
-        $scope.record.typeOfExpense = "";
+        //$scope.record.typeOfExpense = "";
         $scope.record.description = row.description;
         $scope.record.id = row.id
 
